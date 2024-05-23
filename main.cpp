@@ -1,31 +1,31 @@
 #include "game/graphic_game/hpp_files/Window.hpp"
 #include "game/graphic_game/hpp_files/graphicInit.hpp"
-#include "game/graphic_game/hpp_files/Button.hpp"
+#include "game/gameLoop.hpp"
 #include <iostream>
 #include <vector>
-#include <vld.h>
+#include <SDL2/SDL.h>
 
-
-//main function to run the game
-//initializes the graphics, creates a window, and runs the main game loop
-
+// The main function of the game that initializes the graphics and creates the window
+// It also creates the buttons and the main loop of the game
+// The main loop will handle the events and render the game
 
 int main(int argc, char *argv[]) {
     if (!initGraphic()) {
-        std::cout << "Failed to initialize graphics. Exiting." << std::endl;
+        std::cout << "Échec de l'initialisation des graphiques. Sortie." << std::endl;
         return 1;
     }
 
     Window window("Intro", 1500, 720);
+    std::vector<Button*> buttons;
 
-    if(VLDReportLeaks() == 0)
-        std::cout << "No Memory Leaks" << std::endl;
-    else
-        std::cout << "Memory Leaks" << std::endl;
+    buttons.push_back(new Button(window.renderer, 1250, 620, 200, 50, "Start", 24));
 
-    std::cout << "la fenetre est fermée" << std::endl;
+    mainLoop(window, buttons);
 
-    window.~Window();
+    for (Button* button : buttons) {
+        delete button;
+    }
+
     closeGraphic();
 
     return EXIT_SUCCESS;

@@ -8,7 +8,9 @@
 enum class State {
     Intro,
     Menu,
-    Parking
+    Settings,
+    Game, 
+    Score
 };
 
 class Window {

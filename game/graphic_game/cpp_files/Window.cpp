@@ -1,4 +1,3 @@
-#include<vector>
 #include "../hpp_files/Window.hpp"
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
@@ -44,8 +43,14 @@ void Window::switchState(State newState) {
         case State::Menu: 
             SDL_SetWindowTitle(window, "Menu");
             break;
-        case State::Parking: 
-            SDL_SetWindowTitle(window, "Parking");
+        case State::Settings: 
+            SDL_SetWindowTitle(window, "Settings");
+            break;
+        case State::Game: 
+            SDL_SetWindowTitle(window, "Game");
+            break;
+        case State::Score:
+            SDL_SetWindowTitle(window, "Score");
             break;
         default:
             std::cerr << "État invalide !" << std::endl;
@@ -59,7 +64,7 @@ State Window::getCurrentState() {
 }
 
 void Window::drawText(const std::string &text, int x, int y, int size) {
-    TTF_Font* font = TTF_OpenFont("assets/font/ChangaOne-Italic.ttf", size);
+    TTF_Font* font = TTF_OpenFont("assets/font/MorrisRoman-Black.ttf", size);
 
     if (font == nullptr) {
         std::cerr << "Erreur lors du chargement de la police : " << TTF_GetError() << std::endl;
@@ -100,6 +105,8 @@ SDL_Texture* Window::loadTexture(const std::string &file) {
     SDL_Texture* newTexture = IMG_LoadTexture(renderer, file.c_str());
     if (newTexture == nullptr) {
         std::cerr << "Erreur lors du chargement de l'image " << file << " : " << IMG_GetError() << std::endl;
+    } else {
+        std::cout << "Image chargée avec succès : " << file << std::endl;
     }
     return newTexture;
 }
@@ -116,7 +123,7 @@ void Window::renderTexture(SDL_Texture* tex, int x, int y, int w, int h) {
 std::vector<SDL_Texture*> Window::loadGifFrames(const std::string &path, int frameCount) {
     std::vector<SDL_Texture*> frames;
     for (int i = 0; i < frameCount; ++i) {
-        std::string framePath = path + "/bryan_frame_" + (i < 10 ? "00" : (i < 100 ? "0" : "")) + std::to_string(i) + ".png";
+        std::string framePath = path + "/intro_" + (i < 10 ? "00" : (i < 100 ? "0" : "")) + std::to_string(i) + ".png";
         SDL_Texture* frame = loadTexture(framePath);
         if (frame != nullptr) {
             frames.push_back(frame);

@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -I src/include -I /usr/include/SDL2
+CXXFLAGS := -I src/include -I /usr/include/SDL2 -I game
 LDFLAGS := -L src/lib
 LIBS := -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image
 
@@ -12,7 +12,8 @@ LOGIC_DIR := $(SRC_DIR)/logic_game/cpp_files
 SRC_FILES := main.cpp \
              $(GRAPHIC_DIR)/Window.cpp \
              $(GRAPHIC_DIR)/graphicInit.cpp \
-             $(GRAPHIC_DIR)/Button.cpp
+             $(GRAPHIC_DIR)/Button.cpp \
+             $(SRC_DIR)/gameLoop.cpp
 
 # Object files
 OBJ_FILES := $(SRC_FILES:.cpp=.o)
@@ -31,16 +32,9 @@ $(TARGET): $(OBJ_FILES)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Test target for image_test
-imageTest: imageTest.o
-	$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS)
-
-imageTest.o: imageTest.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
 # Clean up build files
 clean:
-	rm -f $(OBJ_FILES) $(TARGET) imageTest.o imageTest
+	rm -f $(OBJ_FILES) $(TARGET)
 
 # Phony targets
-.PHONY: all clean imageTest
+.PHONY: all clean
