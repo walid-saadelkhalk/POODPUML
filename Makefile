@@ -10,7 +10,7 @@ LOGIC_DIR := $(SRC_DIR)/logic_game/cpp_files
 
 # Source files
 SRC_FILES := main.cpp \
-             $(GRAPHIC_DIR)/Window.cpp \
+             $(GRAPHIC_DIR)/World.cpp \
              $(GRAPHIC_DIR)/graphicInit.cpp \
              $(GRAPHIC_DIR)/Button.cpp \
              $(SRC_DIR)/gameLoop.cpp

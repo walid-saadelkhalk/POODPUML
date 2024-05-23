@@ -1,8 +1,8 @@
-#include "../hpp_files/Window.hpp"
+#include "../hpp_files/World.hpp"
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
 
-Window::Window(const char* title, int width, int height) {
+World::World(const char* title, int width, int height) {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cerr << "Erreur lors de l'initialisation de SDL : " << SDL_GetError() << std::endl;
         exit(1);
@@ -13,13 +13,13 @@ Window::Window(const char* title, int width, int height) {
         exit(1);
     }
 
-    window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
-    if (window == nullptr) {
+    world = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
+    if (world == nullptr) {
         std::cerr << "Erreur lors de la création de la fenêtre : " << SDL_GetError() << std::endl;
         exit(1);
     }
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    renderer = SDL_CreateRenderer(world, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == nullptr) {
         std::cerr << "Erreur lors de la création du renderer : " << SDL_GetError() << std::endl;
         exit(1);
@@ -28,29 +28,29 @@ Window::Window(const char* title, int width, int height) {
     currentState = State::Intro; 
 }
 
-Window::~Window() {
+World::~World() {
     SDL_DestroyRenderer(renderer); 
-    SDL_DestroyWindow(window);
+    SDL_DestroyWindow(world);
     IMG_Quit();
     SDL_Quit();
 }
 
-void Window::switchState(State newState) {
+void World::switchState(State newState) {
     switch(newState) {
         case State::Intro:
-            SDL_SetWindowTitle(window, "Intro");
+            SDL_SetWindowTitle(world, "Intro");
             break;
         case State::Menu: 
-            SDL_SetWindowTitle(window, "Menu");
+            SDL_SetWindowTitle(world, "Menu");
             break;
         case State::Settings: 
-            SDL_SetWindowTitle(window, "Settings");
+            SDL_SetWindowTitle(world, "Settings");
             break;
         case State::Game: 
-            SDL_SetWindowTitle(window, "Game");
+            SDL_SetWindowTitle(world, "Game");
             break;
         case State::Score:
-            SDL_SetWindowTitle(window, "Score");
+            SDL_SetWindowTitle(world, "Score");
             break;
         default:
             std::cerr << "État invalide !" << std::endl;
@@ -59,11 +59,11 @@ void Window::switchState(State newState) {
     currentState = newState;
 }
 
-State Window::getCurrentState() {
+State World::getCurrentState() {
     return currentState;
 }
 
-void Window::drawText(const std::string &text, int x, int y, int size) {
+void World::drawText(const std::string &text, int x, int y, int size) {
     TTF_Font* font = TTF_OpenFont("assets/font/MorrisRoman-Black.ttf", size);
 
     if (font == nullptr) {
@@ -101,7 +101,7 @@ void Window::drawText(const std::string &text, int x, int y, int size) {
     SDL_DestroyTexture(textTexture);
 }
 
-SDL_Texture* Window::loadTexture(const std::string &file) {
+SDL_Texture* World::loadTexture(const std::string &file) {
     SDL_Texture* newTexture = IMG_LoadTexture(renderer, file.c_str());
     if (newTexture == nullptr) {
         std::cerr << "Erreur lors du chargement de l'image " << file << " : " << IMG_GetError() << std::endl;
@@ -111,7 +111,7 @@ SDL_Texture* Window::loadTexture(const std::string &file) {
     return newTexture;
 }
 
-void Window::renderTexture(SDL_Texture* tex, int x, int y, int w, int h) {
+void World::renderTexture(SDL_Texture* tex, int x, int y, int w, int h) {
     SDL_Rect dst;
     dst.x = x;
     dst.y = y;
@@ -120,7 +120,7 @@ void Window::renderTexture(SDL_Texture* tex, int x, int y, int w, int h) {
     SDL_RenderCopy(renderer, tex, NULL, &dst);
 }
 
-std::vector<SDL_Texture*> Window::loadGifFrames(const std::string &path, int frameCount) {
+std::vector<SDL_Texture*> World::loadGifFrames(const std::string &path, int frameCount) {
     std::vector<SDL_Texture*> frames;
     for (int i = 0; i < frameCount; ++i) {
         std::string framePath = path + "/intro_" + (i < 10 ? "00" : (i < 100 ? "0" : "")) + std::to_string(i) + ".png";

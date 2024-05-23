@@ -1,4 +1,4 @@
-#include "game/graphic_game/hpp_files/Window.hpp"
+#include "game/graphic_game/hpp_files/World.hpp"
 #include "game/graphic_game/hpp_files/graphicInit.hpp"
 #include "game/gameLoop.hpp"
 #include <iostream>
@@ -15,12 +15,12 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    Window window("Intro", 1500, 720);
+    World world("Intro", 1500, 720);
     std::vector<Button*> buttons;
 
-    buttons.push_back(new Button(window.renderer, 1250, 620, 200, 50, "Start", 24));
+    buttons.push_back(new Button(world.renderer, 1250, 620, 200, 50, "Start", 24));
 
-    mainLoop(window, buttons);
+    mainLoop(world, buttons);
 
     for (Button* button : buttons) {
         delete button;

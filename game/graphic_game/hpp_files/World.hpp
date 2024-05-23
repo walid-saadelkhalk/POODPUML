@@ -1,5 +1,5 @@
-#ifndef WINDOW_HPP
-#define WINDOW_HPP
+#ifndef WORLD_HPP
+#define WORLD_HPP
 #include <vector>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -13,14 +13,14 @@ enum class State {
     Score
 };
 
-class Window {
+class World {
 private:
     State currentState;
 public:
-    SDL_Window *window;
+    SDL_Window *world;
     SDL_Renderer *renderer;
-    Window(const char* title, int width, int height);
-    ~Window();
+    World(const char* title, int width, int height);
+    ~World();
     void switchState(State newState);
     State getCurrentState();
     void drawText(const std::string &text, int x, int y, int size);
