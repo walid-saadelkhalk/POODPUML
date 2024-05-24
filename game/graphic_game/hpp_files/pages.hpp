@@ -6,5 +6,7 @@
 
 void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Texture*>& gifFrames, int currentFrame);
 void menuPage(World& world, std::vector<Button*>& buttons, bool& levelSelected);
+void settingsPage(World& world, std::vector<Button*>& buttons);
+void scorePage(World& world, std::vector<Button*>& buttons);
 
 #endif

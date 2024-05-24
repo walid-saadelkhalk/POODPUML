@@ -1,7 +1,7 @@
 #include "../hpp_files/pages.hpp"
 
 void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Texture*>& gifFrames, int currentFrame) {
-    SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255); //225.199.118
     SDL_RenderClear(world.getRenderer());
 
     if (!gifFrames.empty()) {
@@ -39,4 +39,51 @@ void menuPage(World& world, std::vector<Button*>& buttons, bool& levelSelected) 
         }
     }
     SDL_RenderPresent(world.getRenderer());
+}
+
+
+void settingsPage(World& world, std::vector<Button*>& buttons) {
+    SDL_Texture* background = world.loadTexture("assets/images/settings.png");
+    SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
+    SDL_RenderClear(world.getRenderer());
+
+    if (background) {
+        int width, height;
+        SDL_QueryTexture(background, nullptr, nullptr, &width, &height);
+        world.renderTexture(background, 0, 0, width, height);
+    }
+
+    if (!buttons.empty()) {
+        for (size_t i = 2; i < buttons.size(); ++i) {
+            buttons[i]->draw();
+        }
+    }
+    SDL_RenderPresent(world.getRenderer());
+
+    if (background) {
+        SDL_DestroyTexture(background);
+    }
+}
+
+void scorePage(World& world, std::vector<Button*>& buttons) {
+    SDL_Texture* background = world.loadTexture("assets/images/score.png");
+    SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
+    SDL_RenderClear(world.getRenderer());
+
+    if (background) {
+        int width, height;
+        SDL_QueryTexture(background, nullptr, nullptr, &width, &height);
+        world.renderTexture(background, 0, 0, width, height);
+    }
+
+    if (!buttons.empty()) {
+        for (size_t i = 2; i < buttons.size(); ++i) {
+            buttons[i]->draw();
+        }
+    }
+    SDL_RenderPresent(world.getRenderer());
+
+    if (background) {
+        SDL_DestroyTexture(background);
+    }
 }

@@ -1,7 +1,7 @@
 #include "game/graphic_game/hpp_files/World.hpp"
 #include "game/graphic_game/hpp_files/graphicInit.hpp"
 #include "game/gameLoop.hpp"
-#include "game/graphic_game/hpp_files/Button.hpp" // Assurez-vous d'inclure le fichier d'en-tête correct pour la classe Button
+#include "game/graphic_game/hpp_files/Button.hpp" 
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
     std::vector<Button*> buttons;
 
     buttons.push_back(new Button(world.getRenderer(), 1250, 620, 200, 50, "Start", 24));
+    buttons.push_back(new Button(world.getRenderer(), 50, 400, 200, 50, "X", 15));
 
     mainLoop(world, buttons);
 
