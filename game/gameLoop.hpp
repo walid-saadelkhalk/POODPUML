@@ -10,7 +10,6 @@
 // The main loop will call different functions to render the different pages of the game
 
 void mainLoop(World& world, std::vector<Button*>& buttons);
-void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Texture*>& gifFrames, int currentFrame);
-void menuPage(World& world, std::vector<Button*>& buttons, bool& levelSelected);
+
 
 #endif

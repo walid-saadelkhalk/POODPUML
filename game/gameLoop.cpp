@@ -1,4 +1,5 @@
 #include "gameLoop.hpp"
+#include "graphic_game/hpp_files/pages.hpp"
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
@@ -20,11 +21,11 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
     SDL_Event event;
     bool gameisrunning = true;
 
-    std::vector<SDL_Texture*> gifFrames = world.loadGifFrames("assets/images", 40); 
+    std::vector<SDL_Texture*> gifFrames = world.loadGifFrames("assets/images/intro", 40); 
 
     int currentFrame = 0;
     Uint32 lastFrameTime = 0;
-    const Uint32 frameInterval = 50; 
+    const Uint32 frameInterval = 45; 
 
     while (gameisrunning) {
         frameStart = SDL_GetTicks();
@@ -89,8 +90,8 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
             }
         }
 
-        SDL_SetRenderDrawColor(world.renderer, 0, 0, 0, 255);
-        SDL_RenderClear(world.renderer);
+        SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
+        SDL_RenderClear(world.getRenderer());
 
         Uint32 currentTime = SDL_GetTicks();
         if (currentTime - lastFrameTime > frameInterval && currentFrame < gifFrames.size() - 1) {
@@ -107,7 +108,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                 break;
             case State::Settings:
                 if (stateChanged) {
-                    SDL_RenderClear(world.renderer);
+                    SDL_RenderClear(world.getRenderer());
                     stateChanged = false;
                 }
                 break;
@@ -116,7 +117,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                 break;
         }
 
-        SDL_RenderPresent(world.renderer);
+        SDL_RenderPresent(world.getRenderer());
 
         frameTime = SDL_GetTicks() - frameStart;
 
@@ -128,43 +129,4 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
     std::cout << "Game loop ended!" << std::endl;
 }
 
-void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Texture*>& gifFrames, int currentFrame) {
-    SDL_SetRenderDrawColor(world.renderer, 0, 0, 0, 255);
-    SDL_RenderClear(world.renderer);
 
-    if (!gifFrames.empty()) {
-        SDL_Texture* currentTexture = gifFrames[currentFrame];
-        world.renderTexture(currentTexture, 0, 0, 1500, 720);
-    }
-
-    world.drawText("YOU", 50, 300, 100);
-    world.drawText("SHALL", 140, 400, 100);
-    world.drawText("NOT", 230, 500, 100);
-    world.drawText("PASS", 320, 600, 100);
-
-    if (!buttons.empty()) {
-        buttons[0]->draw();
-    }
-    SDL_RenderPresent(world.renderer);
-}
-
-void menuPage(World& world, std::vector<Button*>& buttons, bool& levelSelected) {
-    SDL_SetRenderDrawColor(world.renderer, 0, 0, 0, 255);
-    SDL_RenderClear(world.renderer);
-
-    world.drawText("PARK", 620, 10, 100);
-    world.drawText("AND", 850, 60, 100);
-    world.drawText("FURIOUS", 1050, 110, 100);
-    world.drawText("Choose your Level", 30, 400, 60);
-
-    if (!buttons.empty()) {
-        for (size_t i = 2; i < buttons.size(); ++i) {
-            buttons[i]->draw();
-        }
-
-        if (levelSelected) {
-            buttons[1]->draw(); 
-        }
-    }
-    SDL_RenderPresent(world.renderer);
-}
