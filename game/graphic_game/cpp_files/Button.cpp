@@ -21,7 +21,7 @@ Button::Button(SDL_Renderer *renderer, int x, int y, int w, int h, const std::st
         exit(1);
     }
 
-    SDL_Surface *surface = TTF_RenderText_Solid(font, text.c_str(), {255, 255, 255});
+    SDL_Surface *surface = TTF_RenderText_Solid(font, text.c_str(), {255, 199, 118});
     if (surface == nullptr) {
         std::cout << "Erreur lors de la création de la surface : " << TTF_GetError() << std::endl;
         exit(1);
@@ -43,13 +43,13 @@ Button::~Button() {
 
 void Button::draw() {
     SDL_RenderCopy(renderer, texture, nullptr, &rect);
-    if (clicked) {
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    } else {
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    }
+    // if (clicked) {
+    //     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+    // } else {
+    //     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    // }
 
-    SDL_RenderDrawRect(renderer, &rect);
+    // SDL_RenderDrawRect(renderer, &rect);
 }
 
 void Button::click() {
@@ -67,9 +67,9 @@ bool Button::isClickedAtPosition(int x, int y) {
     return x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h;
 }
 
-void Button::highlight() {
+// void Button::highlight() {
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); 
+//     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); 
 
-    SDL_RenderDrawRect(renderer, &rect);
-}
+//     SDL_RenderDrawRect(renderer, &rect);
+// }

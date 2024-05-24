@@ -20,23 +20,17 @@ void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Text
     SDL_RenderPresent(world.getRenderer());
 }
 
-void menuPage(World& world, std::vector<Button*>& buttons, bool& levelSelected) {
-    SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
-    SDL_RenderClear(world.getRenderer());
+void menuPage(World& world, std::vector<Button*>& buttons) {
+    SDL_Texture* bgMenuTexture = world.loadTexture("assets/images/menu_page.png");
+    world.renderTexture(bgMenuTexture, 0, 0, 1500, 720);
 
-    world.drawText("PARK", 620, 10, 100);
-    world.drawText("AND", 850, 60, 100);
-    world.drawText("FURIOUS", 1050, 110, 100);
-    world.drawText("Choose your Level", 30, 400, 60);
 
     if (!buttons.empty()) {
-        for (size_t i = 2; i < buttons.size(); ++i) {
-            buttons[i]->draw();
-        }
-
-        if (levelSelected) {
-            buttons[1]->draw(); 
-        }
+        buttons[2]->draw();
+        buttons[3]->draw();
+        buttons[4]->draw();
     }
+
+    SDL_DestroyTexture(bgMenuTexture);
     SDL_RenderPresent(world.getRenderer());
 }
