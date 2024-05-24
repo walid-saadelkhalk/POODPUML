@@ -59,7 +59,30 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                                 world.switchState(State::Score);
                             }
 
+                        } else if (world.getCurrentState() == State::Settings) {
+                            if (buttons[5]->isClickedAtPosition(x, y)) {
+                                buttons[5]->click();
+                                std::cout << "THE SHIRE" << std::endl;
+                            } else if (buttons[6]->isClickedAtPosition(x, y)) {
+                                buttons[6]->click();
+                                std::cout << "MORDOR" << std::endl;
+                            } else if (buttons[7]->isClickedAtPosition(x, y)) {
+                                buttons[7]->click();
+                                std::cout << "ON" << std::endl;
+                            } else if (buttons[8]->isClickedAtPosition(x, y)) {
+                                buttons[8]->click();
+                                std::cout << "OFF" << std::endl;
+                            } else if (buttons[1]->isClickedAtPosition(x, y)) {
+                                buttons[1]->click();
+                                world.switchState(State::Menu);
+                            }
+                        } else if (world.getCurrentState() == State::Score) {
+                            if (buttons[1]->isClickedAtPosition(x, y)) {
+                                buttons[1]->click();
+                                world.switchState(State::Menu);
+                            }
                         }
+
                     }
                     break;
 
