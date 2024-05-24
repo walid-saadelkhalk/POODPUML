@@ -9,10 +9,9 @@ void cleanUpTextures(std::vector<SDL_Texture*>& textures) {
     textures.clear();
 }
 
-// Fonction pour nettoyer les boutons du vecteur
 void cleanUpButtons(std::vector<Button*>& buttons) {
     for (Button* button : buttons) {
-        delete button; // Supposons que les boutons sont alloués dynamiquement
+        delete button; 
     }
     buttons.clear();
 }
@@ -25,7 +24,6 @@ void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Text
         SDL_Texture* currentTexture = gifFrames[currentFrame];
         world.renderTexture(currentTexture, 0, 0, 1500, 720);
     }
-
     world.drawText("YOU", 50, 300, 100);
     world.drawText("SHALL", 140, 400, 100);
     world.drawText("NOT", 230, 500, 100);
@@ -65,9 +63,11 @@ void settingsPage(World& world, std::vector<Button*>& buttons) {
     }
 
     if (!buttons.empty()) {
-        for (size_t i = 2; i < buttons.size(); ++i) {
-            buttons[i]->draw();
-        }
+        buttons[1]->draw();
+        buttons[5]->draw();
+        buttons[6]->draw();
+        buttons[7]->draw();
+        buttons[8]->draw();
     }
     SDL_RenderPresent(world.getRenderer());
 
@@ -88,9 +88,8 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
     }
 
     if (!buttons.empty()) {
-        for (size_t i = 2; i < buttons.size(); ++i) {
-            buttons[i]->draw();
-        }
+        buttons[1]->draw();
+
     }
     SDL_RenderPresent(world.getRenderer());
 
