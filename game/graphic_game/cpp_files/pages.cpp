@@ -1,5 +1,21 @@
 #include "../hpp_files/pages.hpp"
 
+void cleanUpTextures(std::vector<SDL_Texture*>& textures) {
+    for (SDL_Texture* texture : textures) {
+        if (texture) {
+            SDL_DestroyTexture(texture);
+        }
+    }
+    textures.clear();
+}
+
+void cleanUpButtons(std::vector<Button*>& buttons) {
+    for (Button* button : buttons) {
+        delete button; 
+    }
+    buttons.clear();
+}
+
 void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Texture*>& gifFrames, int currentFrame) {
     SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(world.getRenderer());
@@ -18,6 +34,8 @@ void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Text
         buttons[0]->draw();
     }
     SDL_RenderPresent(world.getRenderer());
+
+    cleanUpTextures(gifFrames);
 }
 
 void menuPage(World& world, std::vector<Button*>& buttons) {
