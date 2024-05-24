@@ -108,10 +108,6 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                 break;
             case State::Settings:
                 settingsPage(world, buttons);
-                // if (stateChanged) {
-                //     SDL_RenderClear(world.getRenderer());
-                //     stateChanged = false;
-                // }
                 break;
             case State::Score:
                 scorePage(world, buttons);
