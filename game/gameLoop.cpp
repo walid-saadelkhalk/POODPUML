@@ -90,7 +90,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
             }
         }
 
-        SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
+        // SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
         SDL_RenderClear(world.getRenderer());
 
         Uint32 currentTime = SDL_GetTicks();
@@ -104,7 +104,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                 introPage(world, buttons, gifFrames, currentFrame);
                 break;
             case State::Menu:
-                menuPage(world, buttons, levelSelected);
+                menuPage(world, buttons);
                 break;
             case State::Settings:
                 if (stateChanged) {

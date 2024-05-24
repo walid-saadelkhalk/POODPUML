@@ -44,10 +44,11 @@ SDL_Texture* World::loadTexture(const std::string &file) {
     if (newTexture == nullptr) {
         std::cerr << "Erreur lors du chargement de l'image " << file << " : " << IMG_GetError() << std::endl;
     } else {
-        std::cout << "Image chargée avec succès : " << file << std::endl;
+        // std::cout << "Image chargée avec succès : " << file << std::endl;
     }
     return newTexture;
 }
+
 
 void World::renderTexture(SDL_Texture* tex, int x, int y, int w, int h) {
     SDL_Rect dst;

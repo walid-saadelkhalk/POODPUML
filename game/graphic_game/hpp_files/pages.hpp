@@ -5,6 +5,6 @@
 #include "Button.hpp"
 
 void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Texture*>& gifFrames, int currentFrame);
-void menuPage(World& world, std::vector<Button*>& buttons, bool& levelSelected);
+void menuPage(World& world, std::vector<Button*>& buttons);
 
 #endif
