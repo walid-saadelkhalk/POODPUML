@@ -1,7 +1,7 @@
 #include "game/graphic_game/hpp_files/World.hpp"
 #include "game/graphic_game/hpp_files/graphicInit.hpp"
 #include "game/gameLoop.hpp"
-#include "game/graphic_game/hpp_files/Button.hpp" // Assurez-vous d'inclure le fichier d'en-tête correct pour la classe Button
+#include "game/graphic_game/hpp_files/Button.hpp"
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
