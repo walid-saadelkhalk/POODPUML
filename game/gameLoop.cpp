@@ -48,17 +48,17 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                                 stateChanged = true;
                             }
                         } else if (world.getCurrentState() == State::Menu) {
-                            for (size_t i = 1; i < buttons.size(); ++i) {
-                                if (buttons[i]->isClickedAtPosition(x, y)) {
-                                    buttons[i]->click();
-                                    if (i == 1) {  
-                                        world.switchState(State::Settings);
-                                        stateChanged = true;
-                                    } else {
-                                        levelSelected = true; 
-                                    }
-                                }
+                            if (buttons[2]->isClickedAtPosition(x, y)) {
+                                buttons[2]->click();
+                                world.switchState(State::Game);
+                            } else if (buttons[3]->isClickedAtPosition(x, y)) {
+                                buttons[3]->click();
+                                world.switchState(State::Settings);
+                            } else if (buttons[4]->isClickedAtPosition(x, y)) {
+                                buttons[4]->click();
+                                world.switchState(State::Score);
                             }
+
                         }
                     }
                     break;

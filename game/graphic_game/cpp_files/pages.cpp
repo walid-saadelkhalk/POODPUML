@@ -39,7 +39,6 @@ void menuPage(World& world, std::vector<Button*>& buttons) {
     SDL_Texture* bgMenuTexture = world.loadTexture("assets/images/menu_page.png");
     world.renderTexture(bgMenuTexture, 0, 0, 1500, 720);
 
-
     if (!buttons.empty()) {
         buttons[2]->draw();
         buttons[3]->draw();
