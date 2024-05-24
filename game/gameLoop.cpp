@@ -107,10 +107,14 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                 menuPage(world, buttons);
                 break;
             case State::Settings:
-                if (stateChanged) {
-                    SDL_RenderClear(world.getRenderer());
-                    stateChanged = false;
-                }
+                settingsPage(world, buttons);
+                // if (stateChanged) {
+                //     SDL_RenderClear(world.getRenderer());
+                //     stateChanged = false;
+                // }
+                break;
+            case State::Score:
+                scorePage(world, buttons);
                 break;
             default:
                 std::cerr << "État invalide !" << std::endl;

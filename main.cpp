@@ -1,7 +1,7 @@
 #include "game/graphic_game/hpp_files/World.hpp"
 #include "game/graphic_game/hpp_files/graphicInit.hpp"
 #include "game/gameLoop.hpp"
-#include "game/graphic_game/hpp_files/Button.hpp"
+#include "game/graphic_game/hpp_files/Button.hpp" 
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
     buttons.push_back(new Button(world.getRenderer(), 50, 250, 400, 150, "Play", 25));
     buttons.push_back(new Button(world.getRenderer(), 50, 400, 400, 150, "Option", 25));
     buttons.push_back(new Button(world.getRenderer(), 50, 550, 400, 150, "Score", 25));
-
 
     mainLoop(world, buttons);
 
