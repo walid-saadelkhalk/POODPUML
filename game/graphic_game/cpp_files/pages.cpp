@@ -103,17 +103,18 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
     });
     
     int y_offset = 100;
-    int count = 0;
+    int count = 1;
     
     // Display only the top 10 scores
     for(const auto& joueur : j) {
         if (joueur["nom"] == "Sam Gamgee") {
-            world.drawText("Death : " + std::to_string(static_cast<int>(joueur["death"])), 700, y_offset, 40);
-            world.drawText("Wave : " + std::to_string(static_cast<int>(joueur["wave"])), 950, y_offset, 40);
-            world.drawText("Time : " + std::to_string(static_cast<int>(joueur["time"])), 1200, y_offset, 40);
-            y_offset += 50;
+            world.drawText(count == 1 ? "1st" : std::to_string(count), 620, y_offset, 40);
+            world.drawText("Death : " + std::to_string(static_cast<int>(joueur["death"])), 730, y_offset, 40);
+            world.drawText("Wave : " + std::to_string(static_cast<int>(joueur["wave"])), 980, y_offset, 40);
+            world.drawText("Time : " + std::to_string(static_cast<int>(joueur["time"])), 1230, y_offset, 40);
+            y_offset += 55;
             count++;
-            if (count >= 10) {
+            if (count >= 11) {
                 break;
             }
         }

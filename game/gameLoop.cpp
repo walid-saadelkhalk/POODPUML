@@ -97,6 +97,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                                 json(4, 0, 0);
                                 json(4, 2, 0);
                                 json(5, 3, 0);
+                                json(5, 4, 0);
                             }
                         }
 
