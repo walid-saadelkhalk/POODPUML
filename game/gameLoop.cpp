@@ -1,5 +1,6 @@
 #include "gameLoop.hpp"
 #include "graphic_game/hpp_files/pages.hpp"
+#include "logic_game/hpp_files/Grid.hpp"
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
@@ -25,7 +26,27 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
 
     int currentFrame = 0;
     Uint32 lastFrameTime = 0;
-    const Uint32 frameInterval = 45; 
+    const Uint32 frameInterval = 45;
+
+    // Load the matrix from the file
+    std::vector<std::vector<int>> matrix = Grid::readMatrixFromFile("matrice.txt");
+    if (matrix.empty()) {
+        std::cerr << "Erreur: Impossible de lire la matrice depuis le fichier." << std::endl;
+        return;
+    }
+    
+    Grid grid(matrix[0].size(), matrix.size(), matrix);
+    grid.displayMatrix();
+
+    std::vector<SDL_Texture*> textures;
+    for (int i = 0; i <= 6; ++i) {
+        std::string path = "assets/images/" + std::to_string(i) + ".png";
+        SDL_Texture* texture = world.loadTexture(path);
+        if (texture) {
+            textures.push_back(texture);
+        }
+    }
+    //End of loading textures
 
     while (gameisrunning) {
         frameStart = SDL_GetTicks();
@@ -134,6 +155,10 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                 break;
             case State::Score:
                 scorePage(world, buttons);
+                break;
+            case State::Game:
+                std::cout << "Game state active. Displaying grid:" << std::endl;
+                grid.renderGrid(world.getRenderer(), textures);
                 break;
             default:
                 std::cerr << "État invalide !" << std::endl;
