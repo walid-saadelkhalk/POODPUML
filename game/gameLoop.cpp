@@ -36,7 +36,6 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
     }
     
     Grid grid(matrix[0].size(), matrix.size(), matrix);
-    grid.displayMatrix();
 
     std::vector<SDL_Texture*> textures;
     for (int i = 0; i <= 6; ++i) {
@@ -102,6 +101,12 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                                 buttons[1]->click();
                                 world.switchState(State::Menu);
                             }
+                        } else if (world.getCurrentState() == State::Game) {
+                            if (buttons[1]->isClickedAtPosition(x, y)) {
+                                buttons[1]->click();
+                                std::cout << "X" << std::endl;
+                                world.switchState(State::Menu);
+                            }
                         }
 
                     }
@@ -143,27 +148,29 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
             lastFrameTime = currentTime;
         }
 
-        switch (world.getCurrentState()) {
-            case State::Intro:
-                introPage(world, buttons, gifFrames, currentFrame);
-                break;
-            case State::Menu:
-                menuPage(world, buttons);
-                break;
-            case State::Settings:
-                settingsPage(world, buttons);
-                break;
-            case State::Score:
-                scorePage(world, buttons);
-                break;
-            case State::Game:
-                std::cout << "Game state active. Displaying grid:" << std::endl;
-                grid.renderGrid(world.getRenderer(), textures);
-                break;
-            default:
-                std::cerr << "État invalide !" << std::endl;
-                break;
-        }
+switch (world.getCurrentState()) {
+    case State::Intro:
+        introPage(world, buttons, gifFrames, currentFrame);
+        break;
+    case State::Menu:
+        menuPage(world, buttons);
+        break;
+    case State::Settings:
+        settingsPage(world, buttons);
+        break;
+    case State::Score:
+        scorePage(world, buttons);
+        break;
+    case State::Game:
+        // Rendu de la grille
+        // Rendu de la page de jeu (boutons)
+        gamePage(world, buttons);
+        grid.renderGrid(world.getRenderer(), textures);
+        break;
+    default:
+        std::cerr << "État invalide !" << std::endl;
+        break;
+}
 
         SDL_RenderPresent(world.getRenderer());
 

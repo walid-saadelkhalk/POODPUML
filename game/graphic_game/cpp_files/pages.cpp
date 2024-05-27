@@ -96,3 +96,30 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
         SDL_DestroyTexture(background);
     }
 }
+
+void gamePage(World& world, std::vector<Button*>& buttons) {
+    SDL_Rect viewport;
+    viewport.x = 1000;
+    viewport.y = 0;
+    viewport.w = 500;
+    viewport.h = 720;
+    SDL_RenderSetViewport(world.getRenderer(), &viewport);
+    SDL_Texture* square = world.loadTexture("assets/images/1.png");
+    SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
+    SDL_RenderClear(world.getRenderer());
+
+    world.drawText("SHOP", 10, 10, 80);
+    if (square) {
+        world.renderTexture(square, 0, 100, 500, 100);
+    }
+
+    if (!buttons.empty()) {
+        buttons[9]->draw();
+
+    }
+
+    if (square) {
+        SDL_DestroyTexture(square);
+    }
+    SDL_RenderSetViewport(world.getRenderer(), nullptr);
+}

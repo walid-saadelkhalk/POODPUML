@@ -63,13 +63,30 @@ void Grid::displayMatrix() const {
 }
 
 void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures) {
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
+    const int cellWidth = 20;
+    const int cellHeight = 20;
+    const int maxWidth = 1000;
+    const int maxHeight = 720;
+    const int maxColumns = maxWidth / cellWidth;
+    const int maxRows = maxHeight / cellHeight;
+
+    SDL_Rect gridViewport;
+    gridViewport.x = 0;
+    gridViewport.y = 0;
+    gridViewport.w = maxWidth;
+    gridViewport.h = maxHeight;
+    SDL_RenderSetViewport(renderer, &gridViewport);
+
+    for (int i = 0; i < height && i < maxRows; ++i) {
+        for (int j = 0; j < width && j < maxColumns; ++j) {
             int typeCell = cells[i][j].typeCell;
             if (typeCell >= 1 && typeCell <= textures.size()) {
-                SDL_Rect dstRect = { j * 20, i * 20, 20, 20 };
+                SDL_Rect dstRect = { j * cellWidth, i * cellHeight, cellWidth, cellHeight };
                 SDL_RenderCopy(renderer, textures[typeCell - 1], nullptr, &dstRect);
             }
         }
     }
+    SDL_RenderSetViewport(renderer, nullptr);
 }
+
+
