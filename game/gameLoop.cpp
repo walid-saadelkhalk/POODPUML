@@ -81,6 +81,11 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                                 buttons[1]->click();
                                 world.switchState(State::Menu);
                             }
+                        } else if (world.getCurrentState() == State::Game) {
+                            if (buttons[1]->isClickedAtPosition(x, y)) {
+                                buttons[1]->click();
+                                world.switchState(State::Menu);
+                            }
                         }
 
                     }
@@ -134,6 +139,9 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                 break;
             case State::Score:
                 scorePage(world, buttons);
+                break;
+            case State::Game:
+                gamePage(world, buttons);
                 break;
             default:
                 std::cerr << "État invalide !" << std::endl;

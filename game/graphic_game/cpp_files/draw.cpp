@@ -9,7 +9,7 @@ void World::drawText(const std::string &text, int x, int y, int size) {
         return;
     }
 
-    SDL_Color textColor = {255, 255, 255}; 
+    SDL_Color textColor = {255, 199, 118}; 
 
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
 

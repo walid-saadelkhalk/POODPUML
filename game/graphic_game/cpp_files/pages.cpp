@@ -96,3 +96,14 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
         SDL_DestroyTexture(background);
     }
 }
+
+
+void gamePage(World& world, std::vector<Button*>& buttons) {
+    SDL_SetRenderDrawColor(world.getRenderer(), 15, 16, 36, 255);
+    SDL_RenderClear(world.getRenderer());
+
+    if (!buttons.empty()) {
+        buttons[1]->draw();
+    }
+    SDL_RenderPresent(world.getRenderer());
+}
