@@ -1,6 +1,6 @@
-#include "gameLoop.hpp"
+#include "./logic_game/hpp_files/gameLoop.hpp"
 #include "graphic_game/hpp_files/pages.hpp"
-#include "data.hpp"
+#include "./logic_game/hpp_files/data.hpp"
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>

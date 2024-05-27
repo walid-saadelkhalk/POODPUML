@@ -1,6 +1,6 @@
 #include "game/graphic_game/hpp_files/World.hpp"
 #include "game/graphic_game/hpp_files/graphicInit.hpp"
-#include "game/gameLoop.hpp"
+#include "game/logic_game/hpp_files/gameLoop.hpp"
 #include "game/graphic_game/hpp_files/Button.hpp" 
 #include <iostream>
 #include <vector>
