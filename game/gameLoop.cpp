@@ -1,5 +1,6 @@
 #include "gameLoop.hpp"
 #include "graphic_game/hpp_files/pages.hpp"
+#include "data.hpp"
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
@@ -85,6 +86,17 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                             if (buttons[1]->isClickedAtPosition(x, y)) {
                                 buttons[1]->click();
                                 world.switchState(State::Menu);
+                                json(0, 0, 0);
+                                json(0, 2, 0);
+                                json(1, 0, 0);
+                                json(1, 2, 0);
+                                json(2, 0, 0);
+                                json(2, 2, 0);
+                                json(3, 0, 0);
+                                json(3, 2, 0);
+                                json(4, 0, 0);
+                                json(4, 2, 0);
+                                json(5, 3, 0);
                             }
                         }
 
