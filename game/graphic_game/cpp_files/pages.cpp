@@ -1,4 +1,6 @@
 #include "../hpp_files/pages.hpp"
+#include "nlohmann/json.hpp"
+#include <fstream>
 
 void cleanUpTextures(std::vector<SDL_Texture*>& textures) {
     for (SDL_Texture* texture : textures) {
@@ -90,6 +92,34 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
         buttons[1]->draw();
 
     }
+
+    std::ifstream i("data.json");
+    nlohmann::json j;
+    i >> j;
+    
+    // Sort the array in descending order based on the score
+    std::sort(j.begin(), j.end(), [](const nlohmann::json& a, const nlohmann::json& b) {
+        return a["wave"].get<int>() > b["wave"].get<int>();
+    });
+    
+    int y_offset = 100;
+    int count = 1;
+    
+    // Display only the top 10 scores
+    for(const auto& joueur : j) {
+        if (joueur["nom"] == "Sam Gamgeez") {
+            world.drawText(count == 1 ? "1st" : std::to_string(count), 620, y_offset, 40);
+            world.drawText("Death : " + std::to_string(static_cast<int>(joueur["death"])), 730, y_offset, 40);
+            world.drawText("Wave : " + std::to_string(static_cast<int>(joueur["wave"])), 980, y_offset, 40);
+            world.drawText("Time : " + std::to_string(static_cast<int>(joueur["time"])), 1230, y_offset, 40);
+            y_offset += 55;
+            count++;
+            if (count >= 11) {
+                break;
+            }
+        }
+    }
+
     SDL_RenderPresent(world.getRenderer());
 
     if (background) {
@@ -123,7 +153,4 @@ void gamePage(World& world, std::vector<Button*>& buttons) {
     }
     SDL_RenderSetViewport(world.getRenderer(), nullptr);
 }
-
-
-
 

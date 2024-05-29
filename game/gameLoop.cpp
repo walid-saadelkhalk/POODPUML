@@ -1,6 +1,7 @@
-#include "gameLoop.hpp"
+#include "./gameLoop.hpp"
 #include "graphic_game/hpp_files/pages.hpp"
-#include "logic_game/hpp_files/Grid.hpp"
+#include "./logic_game/hpp_files/data.hpp"
+#include "./logic_game/hpp_files/Grid.hpp"
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
@@ -9,8 +10,10 @@
 // It will handle the events and render the game based on the current state
 // The main loop will call different functions to render the different pages of the game
 
-void mainLoop(World& world, std::vector<Button*>& buttons) {
+void mainLoop(World& world, std::vector<Button*>& buttons, Player& player) {
     std::cout << "Game loop started!" << std::endl;
+
+
 
     bool stateChanged = true;
     bool levelSelected = false; 
@@ -26,7 +29,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
 
     int currentFrame = 0;
     Uint32 lastFrameTime = 0;
-    const Uint32 frameInterval = 45;
+    const Uint32 frameInterval = 45; 
 
     // Load the matrix from the file
     std::vector<std::vector<int>> matrix = Grid::readMatrixFromFile("matrice.txt");
@@ -46,7 +49,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
         }
     }
     //End of loading textures
-
+    
     while (gameisrunning) {
         frameStart = SDL_GetTicks();
 
@@ -105,12 +108,8 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                             if (buttons[1]->isClickedAtPosition(x, y)) {
                                 buttons[1]->click();
                                 world.switchState(State::Menu);
-                            }
-                        } else if (world.getCurrentState() == State::Game) {
-                            if (buttons[1]->isClickedAtPosition(x, y)) {
-                                buttons[1]->click();
-                                std::cout << "X" << std::endl;
-                                world.switchState(State::Menu);
+                                //create the first objectjson in the file
+                                // json(player, 0, 0, 0);
                             }
                         }
 
@@ -153,29 +152,27 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
             lastFrameTime = currentTime;
         }
 
-switch (world.getCurrentState()) {
-    case State::Intro:
-        introPage(world, buttons, gifFrames, currentFrame);
-        break;
-    case State::Menu:
-        menuPage(world, buttons);
-        break;
-    case State::Settings:
-        settingsPage(world, buttons);
-        break;
-    case State::Score:
-        scorePage(world, buttons);
-        break;
-    case State::Game:
-        // Rendu de la grille
-        // Rendu de la page de jeu (boutons)
-        gamePage(world, buttons);
-        grid.renderGrid(world.getRenderer(), textures);
-        break;
-    default:
-        std::cerr << "État invalide !" << std::endl;
-        break;
-}
+        switch (world.getCurrentState()) {
+            case State::Intro:
+                introPage(world, buttons, gifFrames, currentFrame);
+                break;
+            case State::Menu:
+                menuPage(world, buttons);
+                break;
+            case State::Settings:
+                settingsPage(world, buttons);
+                break;
+            case State::Score:
+                scorePage(world, buttons);
+                break;
+            case State::Game:
+                gamePage(world, buttons);
+                grid.renderGrid(world.getRenderer(), textures);
+                break;
+            default:
+                std::cerr << "État invalide !" << std::endl;
+                break;
+        }
 
         SDL_RenderPresent(world.getRenderer());
 

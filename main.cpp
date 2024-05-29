@@ -2,6 +2,7 @@
 #include "game/graphic_game/hpp_files/graphicInit.hpp"
 #include "game/gameLoop.hpp"
 #include "game/graphic_game/hpp_files/Button.hpp" 
+#include "./logic_game/hpp_files/player.hpp"
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
@@ -18,6 +19,8 @@ int main(int argc, char *argv[]) {
 
     World world("Intro", 1500, 720);
     std::vector<Button*> buttons;
+    Player player("Sam Gamgeez");
+
 
     buttons.push_back(new Button(world.getRenderer(), 1250, 620, 200, 50, "Start", 24));
     buttons.push_back(new Button(world.getRenderer(), 1400, 10, 50, 50, "X", 25));
@@ -30,7 +33,7 @@ int main(int argc, char *argv[]) {
     buttons.push_back(new Button(world.getRenderer(), 1050, 500, 100, 100, "OFF", 20));
     buttons.push_back(new Button(world.getRenderer(), 400, 10, 50, 50, "X", 25));
     
-    mainLoop(world, buttons);
+    mainLoop(world, buttons, player);
 
     for (Button* button : buttons) {
         delete button;
