@@ -28,7 +28,8 @@ int main(int argc, char *argv[]) {
     buttons.push_back(new Button(world.getRenderer(), 900, 250, 400, 150, "MORDOR", 40));
     buttons.push_back(new Button(world.getRenderer(), 350, 500, 100, 100, "ON", 20));
     buttons.push_back(new Button(world.getRenderer(), 1050, 500, 100, 100, "OFF", 20));
-
+    buttons.push_back(new Button(world.getRenderer(), 400, 10, 50, 50, "X", 25));
+    
     mainLoop(world, buttons);
 
     for (Button* button : buttons) {
