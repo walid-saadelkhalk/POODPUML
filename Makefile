@@ -17,6 +17,7 @@ SRC_FILES := main.cpp \
             $(GRAPHIC_DIR)/draw.cpp \
             $(LOGIC_DIR)/gameLoop.cpp \
             $(LOGIC_DIR)/data.cpp \
+            $(LOGIC_DIR)/player.cpp \
 
 # Object files
 OBJ_FILES := $(SRC_FILES:.cpp=.o)

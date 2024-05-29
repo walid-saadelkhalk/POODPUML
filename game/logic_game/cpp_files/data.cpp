@@ -1,8 +1,11 @@
 #include "nlohmann/json.hpp"
+#include "./logic_game/hpp_files/player.hpp"
 #include <fstream>
 #include <iostream>
 
-int json(int nb_death, int nb_wave, int time) {
+
+
+void json(const Player& player, int nb_death, int nb_wave, int time) {
     // Read the existing JSON file
     std::ifstream i("data.json");
     nlohmann::json j;
@@ -19,7 +22,7 @@ int json(int nb_death, int nb_wave, int time) {
 
     // Add scores
     nlohmann::json joueur;
-    joueur["nom"] = "Sam Gamgee";
+    joueur["nom"] = player.getName();
     joueur["death"] = nb_death;
     joueur["wave"] = nb_wave;
     joueur["time"] = time;
@@ -27,9 +30,16 @@ int json(int nb_death, int nb_wave, int time) {
 
     // Write the updated JSON object to the file
     std::ofstream o("data.json");
-    o << j << std::endl;
+    o << j.dump(4) << std::endl;
 
     std::cout << joueur["nom"] << " a terminé la partie avec " << joueur["death"] << " morts et " << joueur["wave"] << " vagues. En " << joueur["time"] << " secondes." << std::endl;
 
-    return 0;
+    // return 0;
 }
+
+// nlohmann::json playerToJson(Player& player) {
+//     nlohmann::json j;
+//     j["name"] = player.getName(); // Assuming Player has a getName() method
+//     // Add other Player attributes to the JSON object as needed
+//     return j;
+// }

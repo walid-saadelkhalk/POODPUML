@@ -107,7 +107,7 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
     
     // Display only the top 10 scores
     for(const auto& joueur : j) {
-        if (joueur["nom"] == "Sam Gamgee") {
+        if (joueur["nom"] == "Sam Gamgeez") {
             world.drawText(count == 1 ? "1st" : std::to_string(count), 620, y_offset, 40);
             world.drawText("Death : " + std::to_string(static_cast<int>(joueur["death"])), 730, y_offset, 40);
             world.drawText("Wave : " + std::to_string(static_cast<int>(joueur["wave"])), 980, y_offset, 40);

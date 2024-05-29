@@ -9,8 +9,10 @@
 // It will handle the events and render the game based on the current state
 // The main loop will call different functions to render the different pages of the game
 
-void mainLoop(World& world, std::vector<Button*>& buttons) {
+void mainLoop(World& world, std::vector<Button*>& buttons, Player& player) {
     std::cout << "Game loop started!" << std::endl;
+
+
 
     bool stateChanged = true;
     bool levelSelected = false; 
@@ -86,18 +88,8 @@ void mainLoop(World& world, std::vector<Button*>& buttons) {
                             if (buttons[1]->isClickedAtPosition(x, y)) {
                                 buttons[1]->click();
                                 world.switchState(State::Menu);
-                                json(0, 0, 0);
-                                json(0, 2, 0);
-                                json(1, 0, 0);
-                                json(1, 2, 0);
-                                json(2, 0, 0);
-                                json(2, 2, 0);
-                                json(3, 0, 0);
-                                json(3, 2, 0);
-                                json(4, 0, 0);
-                                json(4, 2, 0);
-                                json(5, 3, 0);
-                                json(5, 4, 0);
+                                //create the first objectjson in the file
+                                // json(player, 0, 0, 0);
                             }
                         }
 
