@@ -18,6 +18,7 @@ SRC_FILES := main.cpp \
             $(LOGIC_DIR)/Grid.cpp \
             $(LOGIC_DIR)/Cell.cpp \
             $(SRC_DIR)/gameLoop.cpp  \
+            $(SRC_DIR)/game.cpp \
             $(LOGIC_DIR)/data.cpp \
             $(LOGIC_DIR)/player.cpp \
 
