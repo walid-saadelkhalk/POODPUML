@@ -1,4 +1,4 @@
-#include "./logic_game/hpp_files/gameLoop.hpp"
+#include "./gameLoop.hpp"
 #include "graphic_game/hpp_files/pages.hpp"
 #include "./logic_game/hpp_files/data.hpp"
 #include "./logic_game/hpp_files/Grid.hpp"
