@@ -26,10 +26,10 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
 
     int currentFrame = 0;
     Uint32 lastFrameTime = 0;
-    const Uint32 frameInterval = 45; 
+    const Uint32 frameInterval = 50; 
 
     Uint32 lastMoveTime = 0;
-    const Uint32 moveInterval = 500;  // Intervalle de 500 ms entre chaque mouvement de l'ennemi
+    const Uint32 moveInterval = 150;  // Intervalle de 500 ms entre chaque mouvement de l'ennemi
 
     while (gameisrunning) {
         frameStart = SDL_GetTicks();
