@@ -3,6 +3,7 @@
 
 #include "World.hpp"
 #include "Button.hpp"
+#include "./logic_game/hpp_files/timer.hpp"
 
 void cleanUpTextures(std::vector<SDL_Texture*>& textures);
 void cleanUpButtons(std::vector<SDL_Texture*>& textures);

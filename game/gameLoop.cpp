@@ -1,6 +1,7 @@
 #include "./gameLoop.hpp"
 #include "./game.hpp"
 #include "graphic_game/hpp_files/pages.hpp"
+#include "logic_game/hpp_files/timer.hpp"
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
@@ -15,7 +16,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
     bool stateChanged = true;
     bool levelSelected = false; 
     const int FPS = 60;
-    const int frameDelay = 2000 / FPS;
+    const int frameDelay = 1000 / FPS;
 
     Uint32 frameStart;
     int frameTime;
@@ -28,10 +29,14 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
     Uint32 lastFrameTime = 0;
     const Uint32 frameInterval = 45; 
 
+    Uint32 startTime = SDL_GetTicks();
+    Uint32 currentTime = 0;
+    Uint32 elapsedTime = 0;
+    bool resetTimer = true;
+
 
     
     while (gameisrunning) {
-        frameStart = SDL_GetTicks();
 
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -54,6 +59,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                             if (buttons[2]->isClickedAtPosition(x, y)) {
                                 buttons[2]->click();
                                 world.switchState(State::Game);
+                                resetTimer = true;
                             } else if (buttons[3]->isClickedAtPosition(x, y)) {
                                 buttons[3]->click();
                                 world.switchState(State::Settings);
@@ -87,7 +93,8 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                         } else if (world.getCurrentState() == State::Game) {
                             if (buttons[1]->isClickedAtPosition(x, y)) {
                                 buttons[1]->click();
-                                world.switchState(State::Menu);  
+                                world.switchState(State::Menu);
+                                elapsedTime = (SDL_GetTicks() - startTime) / 1000;   
                             } else if (buttons[11]->isClickedAtPosition(x, y)) {
                                 buttons[11]->click();
                                 endGame(player, grid);
@@ -110,6 +117,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                                 break;
                             case State::Settings:
                                 newState = State::Game;
+                                resetTimer = true;
                                 break;
                             case State::Game:
                                 newState = State::Score;
@@ -123,6 +131,15 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                     }
                     break;
             }
+        }
+
+        currentTime = SDL_GetTicks();
+        if (world.getCurrentState() == State::Game) {
+            if (resetTimer) {
+                startTime = SDL_GetTicks();
+                resetTimer = false;
+            }
+            elapsedTime = (currentTime - startTime) / 1000; // Temps écoulé en secondes
         }
 
         // SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
@@ -140,6 +157,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 break;
             case State::Menu:
                 menuPage(world, buttons);
+                elapsedTime = 0;
                 break;
             case State::Settings:
                 settingsPage(world, buttons);
@@ -148,9 +166,10 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 scorePage(world, buttons);
                 break;
             case State::Game:
+                frameStart = SDL_GetTicks();
                 gamePage(world, buttons);
                 renderMatrix(world, grid);
-                // endGame(player, grid);
+                renderTimer(world, elapsedTime);
                 break;
             default:
                 std::cerr << "État invalide !" << std::endl;

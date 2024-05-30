@@ -21,6 +21,7 @@ SRC_FILES := main.cpp \
             $(SRC_DIR)/game.cpp \
             $(LOGIC_DIR)/data.cpp \
             $(LOGIC_DIR)/player.cpp \
+            $(LOGIC_DIR)/timer.cpp \
 
 # Object files
 OBJ_FILES := $(SRC_FILES:.cpp=.o)

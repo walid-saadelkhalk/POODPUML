@@ -1,6 +1,8 @@
 #include "../hpp_files/pages.hpp"
 #include "nlohmann/json.hpp"
 #include <fstream>
+#include <iostream>
+
 
 void cleanUpTextures(std::vector<SDL_Texture*>& textures) {
     for (SDL_Texture* texture : textures) {
@@ -147,7 +149,7 @@ void gamePage(World& world, std::vector<Button*>& buttons) {
         buttons[9]->draw();
         buttons[10]->draw();
     }
-
+ 
     if (square) {
         SDL_DestroyTexture(square);
     }
