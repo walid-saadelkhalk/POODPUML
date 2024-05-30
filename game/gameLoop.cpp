@@ -9,13 +9,13 @@
 // It will handle the events and render the game based on the current state
 // The main loop will call different functions to render the different pages of the game
 
-void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid& grid) {
+void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid& grid, Enemy& enemy) {
     std::cout << "Game loop started!" << std::endl;
 
     bool stateChanged = true;
     bool levelSelected = false; 
     const int FPS = 60;
-    const int frameDelay = 2000 / FPS;
+    const int frameDelay = 1000 / FPS;
 
     Uint32 frameStart;
     int frameTime;
@@ -28,8 +28,9 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
     Uint32 lastFrameTime = 0;
     const Uint32 frameInterval = 45; 
 
+    Uint32 lastMoveTime = 0;
+    const Uint32 moveInterval = 500;  // Intervalle de 500 ms entre chaque mouvement de l'ennemi
 
-    
     while (gameisrunning) {
         frameStart = SDL_GetTicks();
 
@@ -92,7 +93,6 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                                 // json(player, 0, 0, 0);
                             }
                         }
-
                     }
                     break;
 
@@ -123,13 +123,18 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
             }
         }
 
-        // SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
         SDL_RenderClear(world.getRenderer());
 
         Uint32 currentTime = SDL_GetTicks();
         if (currentTime - lastFrameTime > frameInterval && currentFrame < gifFrames.size() - 1) {
             currentFrame++;
             lastFrameTime = currentTime;
+        }
+
+        // Déplacer l'ennemi à intervalles réguliers
+        if (currentTime - lastMoveTime > moveInterval) {
+            enemy.move();
+            lastMoveTime = currentTime;
         }
 
         switch (world.getCurrentState()) {
@@ -147,7 +152,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 break;
             case State::Game:
                 gamePage(world, buttons);
-                renderMatrix(world, grid);
+                renderMatrix(world, grid, enemy);
                 break;
             default:
                 std::cerr << "État invalide !" << std::endl;
@@ -165,5 +170,3 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
 
     std::cout << "Game loop ended!" << std::endl;
 }
-
-

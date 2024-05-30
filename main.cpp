@@ -4,15 +4,12 @@
 #include "game/graphic_game/hpp_files/Button.hpp" 
 #include "./logic_game/hpp_files/player.hpp"
 #include "./logic_game/hpp_files/Grid.hpp"
+#include "./logic_game/hpp_files/Enemy.hpp"
 #include "game/game.hpp"
 
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
-
-// The main function of the game that initializes the graphics and creates the window
-// It also creates the buttons and the main loop of the game
-// The main loop will handle the events and render the game
 
 int main(int argc, char *argv[]) {
     if (!initGraphic()) {
@@ -20,13 +17,14 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-
     World world("Intro", 1500, 720);
     std::vector<Button*> buttons;
     Player player("Sam Gamgeez");
     std::vector<std::vector<int>> matrix = loadMatrix(world);
     Grid grid(matrix[0].size(), matrix.size(), matrix);
 
+    Enemy enemy(0, 140, 100.0f, 20); 
+    enemy.setPath(grid.cells);
 
     buttons.push_back(new Button(world.getRenderer(), 1250, 620, 200, 50, "Start", 24));
     buttons.push_back(new Button(world.getRenderer(), 1400, 10, 50, 50, "X", 25));
@@ -39,7 +37,7 @@ int main(int argc, char *argv[]) {
     buttons.push_back(new Button(world.getRenderer(), 1050, 500, 100, 100, "OFF", 20));
     buttons.push_back(new Button(world.getRenderer(), 400, 10, 50, 50, "X", 25));
     
-    mainLoop(world, buttons, player, grid);
+    mainLoop(world, buttons, player, grid, enemy);
 
     for (Button* button : buttons) {
         delete button;

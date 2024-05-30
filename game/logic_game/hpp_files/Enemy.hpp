@@ -17,7 +17,8 @@ public:
 
     void move();
     void someVirtualMethod() override;
-    void setPath(const std::vector<std::vector<Cell*>>& grid);
+    void setPath(const std::vector<std::vector<Cell>>& grid);
+
 };
 
 #endif

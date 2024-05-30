@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <SDL2/SDL_image.h>
 
 Grid::Grid(int width, int height, const std::vector<std::vector<int>>& matrix)
     : width(width), height(height) {
@@ -15,7 +16,7 @@ void Grid::initializeGrid(const std::vector<std::vector<int>>& matrix) {
         std::vector<Cell> row;
         for (int j = 0; j < width; ++j) {
             int typeCell = matrix[i][j];
-            row.emplace_back(typeCell, 1, 1, false);
+            row.emplace_back(typeCell, i, j, false);
         }
         cells.push_back(row);
     }
@@ -62,7 +63,7 @@ void Grid::displayMatrix() const {
     }
 }
 
-void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures) {
+void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Enemy& enemy, SDL_Texture* enemyTexture) {
     const int cellWidth = 20;
     const int cellHeight = 20;
     const int maxWidth = 1000;
@@ -86,7 +87,10 @@ void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& t
             }
         }
     }
+
+    // Render enemy
+    SDL_Rect enemyRect = { enemy.posX * cellWidth, enemy.posY * cellHeight, cellWidth, cellHeight };
+    SDL_RenderCopy(renderer, enemyTexture, nullptr, &enemyRect);
+
     SDL_RenderSetViewport(renderer, nullptr);
 }
-
-

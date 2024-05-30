@@ -6,7 +6,7 @@
 
 std::vector<std::vector<int>> loadMatrix(World& world);
 
-void renderMatrix(World& world, Grid& grid);
+void renderMatrix(World& world, Grid& grid, Enemy& enemy);
 
 
 #endif // GAME.HPP
