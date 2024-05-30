@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 
     World world("Intro", 1500, 720);
     std::vector<Button*> buttons;
-    Player player("Sam Gamgeez");
+    Player player("Sam Gamgeez", 12, 5);
     std::vector<std::vector<int>> matrix = loadMatrix(world);
     Grid grid(matrix[0].size(), matrix.size(), matrix);
 
@@ -38,13 +38,18 @@ int main(int argc, char *argv[]) {
     buttons.push_back(new Button(world.getRenderer(), 350, 500, 100, 100, "ON", 20));
     buttons.push_back(new Button(world.getRenderer(), 1050, 500, 100, 100, "OFF", 20));
     buttons.push_back(new Button(world.getRenderer(), 400, 10, 50, 50, "X", 25));
+    buttons.push_back(new Button(world.getRenderer(), 350, 100, 50, 50, "LOSE", 25));
+    buttons.push_back(new Button(world.getRenderer(), 1350, 100, 50, 50, "LOSE2", 25));
     
     mainLoop(world, buttons, player, grid);
 
     for (Button* button : buttons) {
         delete button;
     }
+
+    player.~Player();
     world.~World();
+    grid.~Grid();
     closeGraphic();
 
     return EXIT_SUCCESS;

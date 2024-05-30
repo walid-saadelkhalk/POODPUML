@@ -19,6 +19,13 @@ public:
     static std::vector<std::vector<int>> readMatrixFromFile(const std::string& filename);
     void displayMatrix() const;
     void renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures);
+
+    int getWidth() const;
+    int getHeight() const;
+
+    Cell* getCellAt(int row, int col);
+
+    // std::vector<Cell*> Grid::exitCell();
 };
 
 #endif // GRID_HPP

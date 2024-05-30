@@ -145,7 +145,7 @@ void gamePage(World& world, std::vector<Button*>& buttons) {
 
     if (!buttons.empty()) {
         buttons[9]->draw();
-
+        buttons[10]->draw();
     }
 
     if (square) {

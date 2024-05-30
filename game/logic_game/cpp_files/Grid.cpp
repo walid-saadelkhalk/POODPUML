@@ -89,4 +89,28 @@ void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& t
     SDL_RenderSetViewport(renderer, nullptr);
 }
 
+int Grid::getWidth() const {
+    return width;
+}
+
+int Grid::getHeight() const {
+    return height;
+}
+
+Cell* Grid::getCellAt(int row, int col) {
+    return &cells[row][col];
+}
+
+// std::vector<Cell*> Grid::exitCell() {
+//     std::vector<Cell*> cellsMarkedOne;
+//     for (int i = 0; i < getHeight(); ++i) {
+//         for (int j = 0; j < getWidth(); ++j) {
+//             if (cells[i][j].typeCell == 1) {
+//                 cellsMarkedOne.push_back(&cells[i][j]);
+//             }
+//         }
+//     }
+//     return cellsMarkedOne;
+// }
+
 
