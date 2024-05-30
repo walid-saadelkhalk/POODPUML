@@ -97,7 +97,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                                 elapsedTime = (SDL_GetTicks() - startTime) / 1000;   
                             } else if (buttons[11]->isClickedAtPosition(x, y)) {
                                 buttons[11]->click();
-                                endGame(player, grid);
+                                endGame(player, grid, elapsedTime);
                                 std::cout << "LOSE" << std::endl;
                             }
                         }
