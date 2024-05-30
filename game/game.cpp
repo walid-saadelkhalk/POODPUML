@@ -5,6 +5,7 @@
 #include "./logic_game/hpp_files/Enemy.hpp"
 #include <iostream>
 #include <vector>
+#include <utility>
 
 std::vector<std::vector<int>> loadMatrix(World& world) {
     // Load the matrix from the file
@@ -39,4 +40,29 @@ void renderMatrix(World& world, Grid& grid, Enemy& enemy) {
         SDL_DestroyTexture(texture);
     }
     SDL_DestroyTexture(enemyTexture);
+
+    for (SDL_Texture* texture : textures) {
+        SDL_DestroyTexture(texture);
+    }
 }
+
+
+//player pour le moment à remplacer par enemy quand il sera fait !
+
+void endGame(Player& player, Grid& grid, int gameTime) {
+    std::pair<int, int> playerPosition = player.getPosition();
+    Cell* playerCell = grid.getCellAt(playerPosition.first, playerPosition.second);
+
+    std::cout << "Player position: (" << playerPosition.first << ", " << playerPosition.second << ")" << std::endl;
+
+    if (playerCell->typeCell == 1) {
+        json(player, 0, 10, gameTime);
+        std::cout << "You win !" << std::endl;
+    } else {
+        json(player, 0, 0, gameTime);
+        std::cout << "You lose !" << std::endl;
+    }
+
+    std::cout << "Game time: " << gameTime << " seconds" << std::endl;
+}
+

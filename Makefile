@@ -23,7 +23,8 @@ SRC_FILES := main.cpp \
             $(LOGIC_DIR)/player.cpp \
             $(LOGIC_DIR)/Enemy.cpp \
             $(LOGIC_DIR)/Tower.cpp \
-            $(LOGIC_DIR)/Entities.cpp 
+            $(LOGIC_DIR)/Entities.cpp \
+            $(LOGIC_DIR)/timer.cpp \
 
 # Object files
 OBJ_FILES := $(SRC_FILES:.cpp=.o)

@@ -5,6 +5,7 @@
 #include "graphic_game/hpp_files/Button.hpp"
 #include "./logic_game/hpp_files/Player.hpp"
 #include "./logic_game/hpp_files/Grid.hpp"
+
 #include <vector>
 
 // The main loop of the game
