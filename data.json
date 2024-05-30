@@ -46,5 +46,11 @@
         "nom": "Sam Gamgeez",
         "time": 2,
         "wave": 0
+    },
+    {
+        "death": 0,
+        "nom": "Sam Gamgeez",
+        "time": 3,
+        "wave": 0
     }
 ]
