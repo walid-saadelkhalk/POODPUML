@@ -176,6 +176,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 frameStart = SDL_GetTicks();
                 gamePage(world, buttons);
                 renderMatrix(world, grid, enemy);
+                enemy.setPath(grid.cells);
                 renderTimer(world, elapsedTime);
                 break;
             default:
