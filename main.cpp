@@ -23,8 +23,9 @@ int main(int argc, char *argv[]) {
     std::vector<std::vector<int>> matrix = loadMatrix(world);
     Grid grid(matrix[0].size(), matrix.size(), matrix);
 
-    Enemy enemy(0, 140, 100.0f, 20); 
-    enemy.setPath(grid.cells);
+    // Initialiser l'ennemi à la position de départ
+    Enemy enemy(0, 7, 100.0f, 20); // Initialiser avec les coordonnées de départ (0, 7)
+    // enemy.setPath(grid.cells);
 
     buttons.push_back(new Button(world.getRenderer(), 1250, 620, 200, 50, "Start", 24));
     buttons.push_back(new Button(world.getRenderer(), 1400, 10, 50, 50, "X", 25));

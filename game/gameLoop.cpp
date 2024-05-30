@@ -153,6 +153,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
             case State::Game:
                 gamePage(world, buttons);
                 renderMatrix(world, grid, enemy);
+                enemy.setPath(grid.cells);
                 break;
             default:
                 std::cerr << "État invalide !" << std::endl;
