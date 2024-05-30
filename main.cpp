@@ -44,7 +44,9 @@ int main(int argc, char *argv[]) {
     for (Button* button : buttons) {
         delete button;
     }
+    player.~Player();
     world.~World();
+    grid.~Grid();
     closeGraphic();
 
     return EXIT_SUCCESS;

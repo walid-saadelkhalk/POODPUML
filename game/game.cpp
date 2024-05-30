@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 
+//
 std::vector<std::vector<int>> loadMatrix(World& world){
 
     // Load the matrix from the file
@@ -28,6 +29,9 @@ void renderMatrix(World& world, Grid& grid) {
         }
     }
     grid.renderGrid(world.getRenderer(), textures);
+    for (SDL_Texture* texture : textures) {
+        SDL_DestroyTexture(texture);
+    }
 }
 
 
