@@ -6,6 +6,7 @@
 #include <SDL2/SDL.h>
 #include "Cell.hpp"
 #include "Enemy.hpp"
+#include "Wave.hpp"
 
 class Grid {
 public:
@@ -19,7 +20,7 @@ public:
     void initializeGrid(const std::vector<std::vector<int>>& matrix);
     static std::vector<std::vector<int>> readMatrixFromFile(const std::string& filename);
     void displayMatrix() const;
-    void renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Enemy& enemy, SDL_Texture* enemyTexture);
+    void renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Wave& wave, SDL_Texture* enemyTexture);
 
     int getWidth() const;
     int getHeight() const;

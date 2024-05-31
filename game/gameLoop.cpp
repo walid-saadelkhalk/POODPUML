@@ -2,6 +2,7 @@
 #include "./game.hpp"
 #include "graphic_game/hpp_files/pages.hpp"
 #include "logic_game/hpp_files/timer.hpp"
+#include "logic_game/hpp_files/Wave.hpp"
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
@@ -10,9 +11,10 @@
 // It will handle the events and render the game based on the current state
 // The main loop will call different functions to render the different pages of the game
 
-void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid& grid, Enemy& enemy) {
+void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid& grid) {
     std::cout << "Game loop started!" << std::endl;
 
+    Wave wave(10, grid.cells);  // Initialisation de la vague avec 10 ennemis
     bool stateChanged = true;
     bool levelSelected = false; 
     const int FPS = 60;
@@ -29,14 +31,10 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
     Uint32 lastFrameTime = 0;
     const Uint32 frameInterval = 45; 
 
-    Uint32 lastMoveTime = 0;
-    const Uint32 moveInterval = 500;  // Intervalle de 500 ms entre chaque mouvement de l'ennemi    Uint32 startTime = SDL_GetTicks();
     Uint32 startTime = 0;
     Uint32 currentTime = 0;
     Uint32 elapsedTime = 0;
     bool resetTimer = true;
-
-
 
     while (gameisrunning) {
 
@@ -146,16 +144,15 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
         // SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
         SDL_RenderClear(world.getRenderer());
 
-        Uint32 currentTime = SDL_GetTicks();
+        currentTime = SDL_GetTicks();
         if (currentTime - lastFrameTime > frameInterval && currentFrame < gifFrames.size() - 1) {
             currentFrame++;
             lastFrameTime = currentTime;
         }
 
-        // Déplacer l'ennemi à intervalles réguliers
-        if (currentTime - lastMoveTime > moveInterval) {
-            enemy.move();
-            lastMoveTime = currentTime;
+        // Mettre à jour la vague d'ennemis
+        if (world.getCurrentState() == State::Game) {
+            wave.update(currentTime);
         }
 
         switch (world.getCurrentState()) {
@@ -175,8 +172,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
             case State::Game:
                 frameStart = SDL_GetTicks();
                 gamePage(world, buttons);
-                renderMatrix(world, grid, enemy);
-                enemy.setPath(grid.cells);
+                renderMatrix(world, grid, wave);
                 renderTimer(world, elapsedTime);
                 break;
             default:

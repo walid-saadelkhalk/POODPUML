@@ -63,7 +63,7 @@ void Grid::displayMatrix() const {
     }
 }
 
-void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Enemy& enemy, SDL_Texture* enemyTexture) {
+void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Wave& wave, SDL_Texture* enemyTexture) {
     const int cellWidth = 20;
     const int cellHeight = 20;
     const int maxWidth = 1000;
@@ -88,9 +88,11 @@ void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& t
         }
     }
 
-    // Render enemy
-    SDL_Rect enemyRect = { enemy.posX * cellWidth, enemy.posY * cellHeight, cellWidth, cellHeight };
-    SDL_RenderCopy(renderer, enemyTexture, nullptr, &enemyRect);
+    // Render all enemies in the wave
+    for (const auto& enemy : wave.getEnemies()) {
+        SDL_Rect enemyRect = { enemy->posX * cellWidth, enemy->posY * cellHeight, cellWidth, cellHeight };
+        SDL_RenderCopy(renderer, enemyTexture, nullptr, &enemyRect);
+    }
 
     SDL_RenderSetViewport(renderer, nullptr);
 }
@@ -106,17 +108,3 @@ int Grid::getHeight() const {
 Cell* Grid::getCellAt(int row, int col) {
     return &cells[row][col];
 }
-
-// std::vector<Cell*> Grid::exitCell() {
-//     std::vector<Cell*> cellsMarkedOne;
-//     for (int i = 0; i < getHeight(); ++i) {
-//         for (int j = 0; j < getWidth(); ++j) {
-//             if (cells[i][j].typeCell == 1) {
-//                 cellsMarkedOne.push_back(&cells[i][j]);
-//             }
-//         }
-//     }
-//     return cellsMarkedOne;
-// }
-
-

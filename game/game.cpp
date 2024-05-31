@@ -3,6 +3,7 @@
 #include "./logic_game/hpp_files/Grid.hpp"
 #include "./logic_game/hpp_files/Player.hpp"
 #include "./logic_game/hpp_files/Enemy.hpp"
+#include "./logic_game/hpp_files/Wave.hpp"
 #include <iostream>
 #include <vector>
 #include <utility>
@@ -19,7 +20,7 @@ std::vector<std::vector<int>> loadMatrix(World& world) {
     return matrix;
 }
 
-void renderMatrix(World& world, Grid& grid, Enemy& enemy) {
+void renderMatrix(World& world, Grid& grid, Wave& wave) {
     std::vector<SDL_Texture*> textures;
     for (int i = 0; i <= 6; ++i) {
         std::string path = "assets/images/" + std::to_string(i) + ".png";
@@ -33,18 +34,15 @@ void renderMatrix(World& world, Grid& grid, Enemy& enemy) {
     if (!enemyTexture) {
         std::cerr << "Erreur lors du chargement de l'image de l'ennemi" << std::endl;
     }
-    
-    grid.renderGrid(world.getRenderer(), textures, enemy, enemyTexture);
+
+    grid.renderGrid(world.getRenderer(), textures, wave, enemyTexture);
 
     for (SDL_Texture* texture : textures) {
         SDL_DestroyTexture(texture);
     }
     SDL_DestroyTexture(enemyTexture);
-
-    for (SDL_Texture* texture : textures) {
-        SDL_DestroyTexture(texture);
-    }
 }
+
 
 
 //player pour le moment à remplacer par enemy quand il sera fait !

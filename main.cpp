@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     buttons.push_back(new Button(world.getRenderer(), 350, 100, 50, 50, "LOSE", 25));
     buttons.push_back(new Button(world.getRenderer(), 1350, 100, 50, 50, "LOSE2", 25));
     
-    mainLoop(world, buttons, player, grid, enemy);
+    mainLoop(world, buttons, player, grid);
 
     for (Button* button : buttons) {
         delete button;

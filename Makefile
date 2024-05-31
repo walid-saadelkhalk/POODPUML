@@ -25,6 +25,7 @@ SRC_FILES := main.cpp \
             $(LOGIC_DIR)/Tower.cpp \
             $(LOGIC_DIR)/Entities.cpp \
             $(LOGIC_DIR)/timer.cpp \
+            $(LOGIC_DIR)/Wave.cpp \
 
 # Object files
 OBJ_FILES := $(SRC_FILES:.cpp=.o)
