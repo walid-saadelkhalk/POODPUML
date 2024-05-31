@@ -10,7 +10,8 @@ class Wave {
 public:
     Wave(int numEnemies, const std::vector<std::vector<Cell>>& grid);
     void update(Uint32 currentTime);
-    const std::vector<std::unique_ptr<Enemy>>& getEnemies() const; 
+    const std::vector<std::unique_ptr<Enemy>>& getEnemies() const;
+    void increaseEnemies(int additionalEnemies); 
 
 private:
     int numEnemies;
@@ -22,4 +23,4 @@ private:
     void spawnEnemy();
 };
 
-#endif 
+#endif

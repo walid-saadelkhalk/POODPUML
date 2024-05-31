@@ -58,3 +58,7 @@ void Enemy::setPath(const std::vector<std::vector<Cell>>& grid) {
         }
     }
 }
+
+bool Enemy::hasReachedGoal() const {
+    return currentStep >= path.size();
+}

@@ -18,7 +18,7 @@ public:
     void move();
     void someVirtualMethod() override;
     void setPath(const std::vector<std::vector<Cell>>& grid);
-
+    bool hasReachedGoal() const;
 };
 
 #endif

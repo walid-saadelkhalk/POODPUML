@@ -14,7 +14,9 @@
 void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid& grid) {
     std::cout << "Game loop started!" << std::endl;
 
-    Wave wave(10, grid.cells);
+    int waveNumber = 1;
+    int enemiesPerWave = 10;
+    Wave wave(enemiesPerWave, grid.cells);
     bool stateChanged = true;
     bool levelSelected = false; 
     const int FPS = 60;
@@ -138,7 +140,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 startTime = SDL_GetTicks();
                 resetTimer = false;
             }
-            elapsedTime = (currentTime - startTime) / 1000; // Temps écoulé en secondes
+            elapsedTime = (currentTime - startTime) / 1000;
         }
 
         // SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
@@ -153,6 +155,12 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
         // Mettre à jour la vague d'ennemis
         if (world.getCurrentState() == State::Game) {
             wave.update(currentTime);
+            if (wave.getEnemies().empty() && elapsedTime > 0) {
+                waveNumber++;
+                enemiesPerWave += 5;
+                wave = Wave(enemiesPerWave, grid.cells); 
+                resetTimer = true;
+            }
         }
 
         switch (world.getCurrentState()) {
