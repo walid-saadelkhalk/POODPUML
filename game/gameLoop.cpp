@@ -180,7 +180,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 break;
             case State::Game:
                 frameStart = SDL_GetTicks();
-                gamePage(world, buttons);
+                gamePage(world, buttons, waveNumber);
                 renderMatrix(world, grid, wave);
                 renderTimer(world, elapsedTime);
                 break;

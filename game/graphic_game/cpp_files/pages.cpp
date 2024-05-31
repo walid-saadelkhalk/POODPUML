@@ -129,7 +129,7 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
     }
 }
 
-void gamePage(World& world, std::vector<Button*>& buttons) {
+void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber) {
     SDL_Rect viewport;
     viewport.x = 1000;
     viewport.y = 0;
@@ -141,6 +141,7 @@ void gamePage(World& world, std::vector<Button*>& buttons) {
     SDL_RenderClear(world.getRenderer());
 
     world.drawText("SHOP", 10, 10, 80);
+    world.drawText("Wave: " + std::to_string(waveNumber), 10, 500, 40);
     if (square) {
         world.renderTexture(square, 0, 100, 500, 100);
     }
