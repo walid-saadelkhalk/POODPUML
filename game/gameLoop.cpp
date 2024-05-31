@@ -14,11 +14,11 @@
 void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid& grid) {
     std::cout << "Game loop started!" << std::endl;
 
-    Wave wave(10, grid.cells);  // Initialisation de la vague avec 10 ennemis
+    Wave wave(10, grid.cells);
     bool stateChanged = true;
     bool levelSelected = false; 
     const int FPS = 60;
-    const int frameDelay = 1000 / FPS;
+    const int frameDelay = 5000 / FPS;
 
     Uint32 frameStart;
     int frameTime;
