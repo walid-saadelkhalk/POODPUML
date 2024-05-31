@@ -5,6 +5,7 @@
 #include "logic_game/hpp_files/Wave.hpp"
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <SDL2/SDL.h>
 
 // The main loop of the game

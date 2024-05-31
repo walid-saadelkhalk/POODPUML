@@ -1,11 +1,12 @@
 #include "../hpp_files/Wave.hpp"
-#include <algorithm>
+#include <algorithm> // Ajoutez cette ligne pour std::remove_if
 
 Wave::Wave(int numEnemies, const std::vector<std::vector<Cell>>& grid)
     : numEnemies(numEnemies), grid(grid), lastSpawnTime(0), spawnedEnemies(0) {
 }
 
 Wave::~Wave() {
+    // Destructeur, si des ressources dynamiques sont allouées, libérez-les ici
 }
 
 void Wave::update(Uint32 currentTime) {
