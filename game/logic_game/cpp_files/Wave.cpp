@@ -4,6 +4,9 @@ Wave::Wave(int numEnemies, const std::vector<std::vector<Cell>>& grid)
     : numEnemies(numEnemies), grid(grid), lastSpawnTime(0), spawnedEnemies(0) {
 }
 
+Wave::~Wave() {
+}
+
 void Wave::update(Uint32 currentTime) {
     if (spawnedEnemies < numEnemies && currentTime - lastSpawnTime >= 300) {
         spawnEnemy();

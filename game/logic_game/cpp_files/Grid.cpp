@@ -87,7 +87,7 @@ void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& t
             }
         }
     }
-
+    
     // Render all enemies in the wave
     for (const auto& enemy : wave.getEnemies()) {
         SDL_Rect enemyRect = { enemy->posX * cellWidth, enemy->posY * cellHeight, cellWidth, cellHeight };

@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
     player.~Player();
     world.~World();
     grid.~Grid();
+    enemy.~Enemy();
     closeGraphic();
 
     return EXIT_SUCCESS;
