@@ -1,8 +1,9 @@
 #include "../hpp_files/Wave.hpp"
-#include <algorithm> // Ajoutez cette ligne pour std::remove_if
+#include <algorithm>
+#include <iostream>
 
 Wave::Wave(int numEnemies, const std::vector<std::vector<Cell>>& grid)
-    : numEnemies(numEnemies), grid(grid), lastSpawnTime(0), spawnedEnemies(0) {
+    : numEnemies(numEnemies), grid(grid), lastSpawnTime(0), spawnedEnemies(0), enemiesAtExit(0) {
 }
 
 Wave::~Wave() {
@@ -20,12 +21,20 @@ void Wave::update(Uint32 currentTime) {
         enemy->move();
     }
 
-    // Supprimer les ennemis qui ont atteint leur objectif
+    // Supprimer les ennemis qui ont atteint leur objectif et vérifier la défaite
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
-        [](const std::unique_ptr<Enemy>& enemy) {
-            return enemy->hasReachedGoal();
+        [this](const std::unique_ptr<Enemy>& enemy) {
+            if (enemy->hasReachedGoal()) {
+                enemiesAtExit++;
+                if (enemiesAtExit >= 3) {
+                    gameOver();
+                }
+                return true;
+            }
+            return false;
         }), enemies.end());
 }
+
 
 void Wave::spawnEnemy() {
     auto enemy = std::make_unique<Enemy>(0, 0, 100.0f, 50);
@@ -40,4 +49,9 @@ const std::vector<std::unique_ptr<Enemy>>& Wave::getEnemies() const {
 
 void Wave::increaseEnemies(int additionalEnemies) {
     numEnemies += additionalEnemies;
+}
+
+void Wave::gameOver() {
+    std::cout << "Game Over! You lost." << std::endl;
+    exit(0);
 }

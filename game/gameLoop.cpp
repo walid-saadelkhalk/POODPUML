@@ -183,6 +183,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 gamePage(world, buttons, waveNumber);
                 renderMatrix(world, grid, wave);
                 renderTimer(world, elapsedTime);
+                wave.update(currentTime);
                 break;
             default:
                 std::cerr << "État invalide !" << std::endl;

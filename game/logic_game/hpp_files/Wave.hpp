@@ -24,14 +24,20 @@ public:
     const std::vector<std::unique_ptr<Enemy>>& getEnemies() const;
     void increaseEnemies(int additionalEnemies);
 
+
+
 private:
     int numEnemies;
     std::vector<std::unique_ptr<Enemy>> enemies;
     std::vector<std::vector<Cell>> grid;
     Uint32 lastSpawnTime;
     size_t spawnedEnemies;
+    int enemiesAtExit;
 
     void spawnEnemy();
+
+
+    void gameOver(); 
 };
 
 #endif
