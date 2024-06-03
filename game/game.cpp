@@ -47,20 +47,20 @@ void renderMatrix(World& world, Grid& grid, Wave& wave) {
 
 //player pour le moment à remplacer par enemy quand il sera fait !
 
-void endGame(Player& player, Grid& grid, int gameTime) {
-    std::pair<int, int> playerPosition = player.getPosition();
-    Cell* playerCell = grid.getCellAt(playerPosition.first, playerPosition.second);
+// void endGame(Player& player, Grid& grid, Wave& wave, int gameTime, int nbWave) {
+//         json(player, 0, nbWave, gameTime);
+//         std::cout << "You win !" << std::endl;
 
-    std::cout << "Player position: (" << playerPosition.first << ", " << playerPosition.second << ")" << std::endl;
+//     std::cout << "Game time: " << gameTime << " seconds" << std::endl;
+// }
 
-    if (playerCell->typeCell == 1) {
-        json(player, 0, 10, gameTime);
-        std::cout << "You win !" << std::endl;
+void endGame(Player& player, const Grid& grid, int gameTime, bool won, int nb_wave) {
+    json(player, 0, nb_wave, gameTime);
+    if (won) {
+        std::cout << "You win!" << std::endl;
     } else {
-        json(player, 0, 0, gameTime);
-        std::cout << "You lose !" << std::endl;
+        std::cout << "Game Over! You lost." << std::endl;
     }
-
     std::cout << "Game time: " << gameTime << " seconds" << std::endl;
 }
 

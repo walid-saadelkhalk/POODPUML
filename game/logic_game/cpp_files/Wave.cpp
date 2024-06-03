@@ -10,29 +10,31 @@ Wave::~Wave() {
     // Destructeur, si des ressources dynamiques sont allouées, libérez-les ici
 }
 
-void Wave::update(Uint32 currentTime) {
+bool Wave::update(Uint32 currentTime, int& enemiesAtExit) {
     if (spawnedEnemies < numEnemies && currentTime - lastSpawnTime >= 300) {
         spawnEnemy();
         lastSpawnTime = currentTime;
     }
 
-    // Mettre à jour et vérifier les ennemis
     for (auto& enemy : enemies) {
         enemy->move();
     }
 
-    // Supprimer les ennemis qui ont atteint leur objectif et vérifier la défaite
+
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
-        [this](const std::unique_ptr<Enemy>& enemy) {
+        [this, &enemiesAtExit](const std::unique_ptr<Enemy>& enemy) {
             if (enemy->hasReachedGoal()) {
                 enemiesAtExit++;
-                if (enemiesAtExit >= 3) {
-                    gameOver();
-                }
                 return true;
             }
             return false;
         }), enemies.end());
+
+    if (enemiesAtExit >= 3) {
+        return true;
+    }
+
+    return false;
 }
 
 
@@ -53,5 +55,9 @@ void Wave::increaseEnemies(int additionalEnemies) {
 
 void Wave::gameOver() {
     std::cout << "Game Over! You lost." << std::endl;
-    exit(0);
+    // exit(0);
+}
+
+int Wave::getEnemiesAtExit() const {
+    return enemiesAtExit;
 }

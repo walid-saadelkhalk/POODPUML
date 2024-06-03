@@ -16,7 +16,9 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
     std::cout << "Game loop started!" << std::endl;
 
     int waveNumber = 1;
-    int enemiesPerWave = 10;
+    int enemiesPerWave = 1;
+    int enemiesKilled = 0;
+    int enemiesAtExit = 0;
     Wave wave(enemiesPerWave, grid.cells);
     bool stateChanged = true;
     bool levelSelected = false; 
@@ -100,7 +102,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                                 elapsedTime = (SDL_GetTicks() - startTime) / 1000;   
                             } else if (buttons[11]->isClickedAtPosition(x, y)) {
                                 buttons[11]->click();
-                                endGame(player, grid, elapsedTime);
+                                // endGame(player, grid, elapsedTime);
                                 std::cout << "LOSE" << std::endl;
                             }
                         }
@@ -155,10 +157,10 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
 
         // Mettre à jour la vague d'ennemis
         if (world.getCurrentState() == State::Game) {
-            wave.update(currentTime);
+            wave.update(currentTime, enemiesAtExit);
             if (wave.getEnemies().empty() && elapsedTime > 0) {
                 waveNumber++;
-                enemiesPerWave += 5;
+                enemiesPerWave += 0;
                 wave = Wave(enemiesPerWave, grid.cells); 
                 resetTimer = true;
             }
@@ -183,7 +185,12 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 gamePage(world, buttons, waveNumber);
                 renderMatrix(world, grid, wave);
                 renderTimer(world, elapsedTime);
-                wave.update(currentTime);
+                if (wave.update(currentTime, enemiesAtExit)) {
+                    int gameTime = elapsedTime;
+                    endGame(player, grid, gameTime, false, waveNumber);
+                    world.switchState(State::Menu);
+
+                }
                 break;
             default:
                 std::cerr << "État invalide !" << std::endl;

@@ -5,24 +5,23 @@
 #include <vector>
 #include <memory>
 #include <SDL2/SDL.h>
-#include <algorithm> // Ajoutez cette ligne pour std::remove_if
+#include <algorithm>
 
 class Wave {
 public:
     Wave(int numEnemies, const std::vector<std::vector<Cell>>& grid);
     ~Wave();
     
-    // Interdire la copie
     Wave(const Wave&) = delete;
     Wave& operator=(const Wave&) = delete;
     
-    // Autoriser le déplacement
     Wave(Wave&&) noexcept = default;
     Wave& operator=(Wave&&) noexcept = default;
     
-    void update(Uint32 currentTime);
+    bool update(Uint32 currentTime, int& enemiesAtExit);
     const std::vector<std::unique_ptr<Enemy>>& getEnemies() const;
     void increaseEnemies(int additionalEnemies);
+    int getEnemiesAtExit() const ;
 
 
 
@@ -36,8 +35,8 @@ private:
 
     void spawnEnemy();
 
-
     void gameOver(); 
+
 };
 
 #endif

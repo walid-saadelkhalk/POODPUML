@@ -11,7 +11,7 @@ std::vector<std::vector<int>> loadMatrix(World& world);
 
 void renderMatrix(World& world, Grid& grid, Wave& wa);
 
-void endGame(Player& player, Grid& grid, int time);
+void endGame(Player& player, const Grid& grid, int gameTime, bool won, int nb_wave);
 
 
 #endif // GAME.HPP

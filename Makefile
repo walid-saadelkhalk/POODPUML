@@ -17,8 +17,6 @@ SRC_FILES := main.cpp \
             $(GRAPHIC_DIR)/draw.cpp \
             $(LOGIC_DIR)/Grid.cpp \
             $(LOGIC_DIR)/Cell.cpp \
-            $(SRC_DIR)/gameLoop.cpp  \
-            $(SRC_DIR)/game.cpp \
             $(LOGIC_DIR)/data.cpp \
             $(LOGIC_DIR)/player.cpp \
             $(LOGIC_DIR)/Enemy.cpp \
@@ -26,6 +24,8 @@ SRC_FILES := main.cpp \
             $(LOGIC_DIR)/Entities.cpp \
             $(LOGIC_DIR)/timer.cpp \
             $(LOGIC_DIR)/Wave.cpp \
+            $(SRC_DIR)/gameLoop.cpp  \
+            $(SRC_DIR)/game.cpp \
 
 # Object files
 OBJ_FILES := $(SRC_FILES:.cpp=.o)
