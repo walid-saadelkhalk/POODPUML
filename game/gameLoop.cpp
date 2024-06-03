@@ -20,7 +20,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
     Wave wave(enemiesPerWave, grid.cells);
     bool stateChanged = true;
     bool levelSelected = false; 
-    const int FPS = 60;
+    const int FPS = 20;
     const int frameDelay = 5000 / FPS;
 
     Uint32 frameStart;

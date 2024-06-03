@@ -64,8 +64,8 @@ void Grid::displayMatrix() const {
 }
 
 void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Wave& wave, SDL_Texture* enemyTexture) {
-    const int cellWidth = 20;
-    const int cellHeight = 20;
+    const int cellWidth = 40;
+    const int cellHeight = 40;
     const int maxWidth = 1000;
     const int maxHeight = 720;
     const int maxColumns = maxWidth / cellWidth;
