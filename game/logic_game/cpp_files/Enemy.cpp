@@ -13,7 +13,7 @@ void Enemy::move() {
         posX = path[currentStep]->heightCell;
         posY = path[currentStep]->widthCell;
         currentStep++;
-        std::cout << "Enemy moved to: " << posX << ", " << posY << std::endl;
+        // std::cout << "Enemy moved to: " << posX << ", " << posY << std::endl;
     }
 }
 

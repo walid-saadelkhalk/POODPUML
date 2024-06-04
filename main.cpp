@@ -19,9 +19,9 @@ int main(int argc, char *argv[]) {
 
     World world("Intro", 1500, 720);
     std::vector<Button*> buttons;
-    Player player("Sam Gamgeez", 12, 5);
     std::vector<std::vector<int>> matrix = loadMatrix(world);
     Grid grid(matrix[0].size(), matrix.size(), matrix);
+    Player player("Sam Gamgeez", 12, 5, 3, grid.cells);
 
     // Initialiser l'ennemi à la position de départ
     Enemy enemy(0, 7, 100.0f, 20); // Initialiser avec les coordonnées de départ (0, 7)

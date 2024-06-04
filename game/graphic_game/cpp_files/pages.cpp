@@ -136,14 +136,15 @@ void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber) {
     viewport.w = 500;
     viewport.h = 720;
     SDL_RenderSetViewport(world.getRenderer(), &viewport);
-    SDL_Texture* square = world.loadTexture("assets/images/1.png");
+    SDL_Texture* square = world.loadTexture("assets/images/Mordor/Tower.jpg");
     SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
+    
     SDL_RenderClear(world.getRenderer());
 
     world.drawText("SHOP", 10, 10, 80);
     world.drawText("Wave: " + std::to_string(waveNumber), 10, 500, 40);
     if (square) {
-        world.renderTexture(square, 0, 100, 500, 100);
+        world.renderTexture(square, 0, 100, 40, 40);
     }
 
     if (!buttons.empty()) {

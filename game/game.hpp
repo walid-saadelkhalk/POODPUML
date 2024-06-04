@@ -9,7 +9,9 @@
 
 std::vector<std::vector<int>> loadMatrix(World& world);
 
-void renderMatrix(World& world, Grid& grid, Wave& wa);
+void renderMatrix(World& world, Grid& grid, Wave& wa, Player& player);
+
+
 
 void endGame(Player& player, Grid& grid, int time);
 

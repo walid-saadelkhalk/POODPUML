@@ -94,14 +94,21 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                                 world.switchState(State::Menu);
                             }
                         } else if (world.getCurrentState() == State::Game) {
+                            
                             if (buttons[1]->isClickedAtPosition(x, y)) {
                                 buttons[1]->click();
                                 world.switchState(State::Menu);
                                 elapsedTime = (SDL_GetTicks() - startTime) / 1000;   
-                            } else if (buttons[11]->isClickedAtPosition(x, y)) {
-                                buttons[11]->click();
-                                endGame(player, grid, elapsedTime);
-                                std::cout << "LOSE" << std::endl;
+                            } else {
+                                int cellWidth = 40;
+                                int cellHeight = 40;
+                                int xCell = x / cellWidth;
+                                int yCell = y / cellHeight;
+                                if (grid.isCellEmpty(xCell, yCell)) {
+                                    std::cout << "vide case" << std::endl;
+                                    // player.addTower(xCell, yCell);
+                                    // grid.setCellTexture(xCell, yCell, player.getTowers().back()->texture);
+                                }
                             }
                         }
                     }
@@ -181,7 +188,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
             case State::Game:
                 frameStart = SDL_GetTicks();
                 gamePage(world, buttons, waveNumber);
-                renderMatrix(world, grid, wave);
+                renderMatrix(world, grid, wave, player);
                 renderTimer(world, elapsedTime);
                 break;
             default:
@@ -200,3 +207,4 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
 
     std::cout << "Game loop ended!" << std::endl;
 }
+
