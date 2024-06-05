@@ -19,7 +19,7 @@ std::string Player::getName() const {
 }
 
 void Player::addTower(int x, int y, SDL_Renderer* renderer) {
-    towers.push_back(std::make_unique<Tower>(x, y, 10.0f, 100.0f, 0, 10.0, false, 1));
+    towers.push_back(std::make_unique<Tower>(x, y, 10.0f, 100.0f, 0, 10.0, false, 1, 10));
     std::cout << "Tower added at position (" << x << ", " << y << ")" << std::endl;
 }
 

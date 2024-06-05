@@ -107,6 +107,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                                 int xCell = x / cellWidth;
                                 int yCell = y / cellHeight;
                                 if (grid.isCellEmpty(xCell, yCell)) {
+                                    player.addTower(xCell, yCell, world.getRenderer());
                                     // SDL_Texture* towerTexture = world.loadTexture("assets/images/Mordor/Tower.jpg");
                                     // if (towerTexture == nullptr) {
                                     //     std::cerr << "Erreur lors du chargement de l'image de la tour" << std::endl;

@@ -14,10 +14,11 @@ public:
     double damage;
     bool selected;
     int shotRate;
+    int range;
     std::list<Enemy*> targetPool;
     SDL_Texture* texture;
 
-    Tower(int x, int y, float attackPower, float lifeBar, int evolveStatus, double damage, bool selected, int shotRate);
+    Tower(int x, int y, float attackPower, float lifeBar, int evolveStatus, double damage, bool selected, int shotRate, int range);
     ~Tower() override;
 
     void upgrade();
