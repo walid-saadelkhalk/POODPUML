@@ -9,6 +9,8 @@
 #include "Wave.hpp"
 #include "Player.hpp"
 
+class Player;
+
 class Grid {
 public:
     int width;

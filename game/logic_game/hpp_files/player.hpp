@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 #include <string>
 #include "Tower.hpp"
+#include "Grid.hpp"
 #include <vector>
 #include <memory>
 
@@ -21,7 +22,7 @@ public:
 
     std::pair<int, int> getPosition() const;
 
-    void addTower(int x, int y, SDL_Renderer* renderer);
+    void addTower(int x, int y, SDL_Renderer* renderer, Grid& grid);
 
     void incrementTowers();
 
@@ -30,6 +31,8 @@ public:
     void setPositionTower(int x, int y);
 
     const std::vector<std::unique_ptr<Tower>>& getTowers() const;
+
+    std::vector<SDL_Texture*> getTowerTextures(SDL_Renderer* renderer) const;
 };
 
 #endif // PLAYER_HPP

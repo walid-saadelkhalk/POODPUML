@@ -129,27 +129,30 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
     }
 }
 
-void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber) {
+void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber, Player& player) {  // Ajout de Player en paramètre
     SDL_Rect viewport;
     viewport.x = 1000;
     viewport.y = 0;
     viewport.w = 500;
     viewport.h = 720;
     SDL_RenderSetViewport(world.getRenderer(), &viewport);
-    SDL_Texture* square = world.loadTexture("assets/images/Mordor/Tower.jpg");
     SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
     
     SDL_RenderClear(world.getRenderer());
 
     world.drawText("SHOP", 10, 10, 80);
     world.drawText("Wave: " + std::to_string(waveNumber), 40, 650, 40);
-    if (square) {
-        world.renderTexture(square, 0, 100, 40, 40);
+    
+    auto towerTextures = player.getTowerTextures(world.getRenderer());
+    int yPosition = 100;
+    for (auto texture : towerTextures) {
+        if (texture) {
+            world.renderTexture(texture, 10, yPosition, 40, 40);
+            yPosition += 50;  
+            SDL_DestroyTexture(texture);  
+        }
     }
- 
-    if (square) {
-        SDL_DestroyTexture(square);
-    }
+
     SDL_RenderSetViewport(world.getRenderer(), nullptr);
 }
 
