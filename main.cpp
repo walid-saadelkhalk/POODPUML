@@ -1,5 +1,6 @@
 #include "game/graphic_game/hpp_files/World.hpp"
 #include "game/graphic_game/hpp_files/graphicInit.hpp"
+#include "game/graphic_game/hpp_files/Sound.hpp"
 #include "game/gameLoop.hpp"
 #include "game/graphic_game/hpp_files/Button.hpp" 
 #include "./logic_game/hpp_files/Player.hpp"
@@ -16,7 +17,7 @@ int main(int argc, char *argv[]) {
         std::cout << "Échec de l'initialisation des graphiques. Sortie." << std::endl;
         return 1;
     }
-
+    Sound::getInstance().playMusic("assets/song/gameSong.mp3");
     World world("Intro", 1500, 720);
     std::vector<Button*> buttons;
     std::vector<std::vector<int>> matrix = loadMatrix(world);
@@ -49,7 +50,10 @@ int main(int argc, char *argv[]) {
     world.~World();
     grid.~Grid();
     enemy.~Enemy();
+    // sound.~Sound();
     closeGraphic();
+
+    Sound::getInstance().stopMusic();
 
     return EXIT_SUCCESS;
 }

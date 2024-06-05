@@ -2,6 +2,7 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 #include <iostream>
+#include "../hpp_files/Sound.hpp"
 
 
 void cleanUpTextures(std::vector<SDL_Texture*>& textures) {
@@ -72,10 +73,32 @@ void settingsPage(World& world, std::vector<Button*>& buttons) {
         buttons[7]->draw();
         buttons[8]->draw();
     }
+
     SDL_RenderPresent(world.getRenderer());
 
     if (background) {
         SDL_DestroyTexture(background);
+    }
+
+    // Gérer les événements de clic pour les boutons
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
+            int x = event.button.x;
+            int y = event.button.y;
+
+            if (buttons[7]->isClickedAtPosition(x, y)) {
+                // Bouton ON
+                buttons[7]->click();
+                Sound::getInstance().playMusic("assets/song/gameSong.mp3");
+                std::cout << "ON" << std::endl;
+            } else if (buttons[8]->isClickedAtPosition(x, y)) {
+                // Bouton OFF
+                buttons[8]->click();
+                Sound::getInstance().stopMusic();
+                std::cout << "OFF" << std::endl;
+            }
+        }
     }
 }
 

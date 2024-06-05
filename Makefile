@@ -1,7 +1,7 @@
 CXX := g++
 CXXFLAGS := -I src/include -I /usr/include/SDL2 -I game
 LDFLAGS := -L src/lib
-LIBS := -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image
+LIBS := -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer 
 
 # Directories
 SRC_DIR := game
@@ -26,6 +26,7 @@ SRC_FILES := main.cpp \
             $(GRAPHIC_DIR)/Button.cpp \
             $(GRAPHIC_DIR)/pages.cpp \
             $(GRAPHIC_DIR)/draw.cpp \
+            $(GRAPHIC_DIR)/Sound.cpp \
 
 # Object files
 OBJ_FILES := $(SRC_FILES:.cpp=.o)
