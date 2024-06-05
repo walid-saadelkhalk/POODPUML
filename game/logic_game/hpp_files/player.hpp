@@ -7,6 +7,8 @@
 #include <memory>
 #include <SDL2/SDL.h>  // Ajouté pour SDL_Texture
 
+class Grid;  
+
 class Player {
 private:
     std::string name;

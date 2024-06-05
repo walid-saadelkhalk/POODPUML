@@ -10,15 +10,8 @@ LOGIC_DIR := $(SRC_DIR)/logic_game/cpp_files
 
 # Source files
 SRC_FILES := main.cpp \
-            $(GRAPHIC_DIR)/World.cpp \
-            $(GRAPHIC_DIR)/graphicInit.cpp \
-            $(GRAPHIC_DIR)/Button.cpp \
-            $(GRAPHIC_DIR)/pages.cpp \
-            $(GRAPHIC_DIR)/draw.cpp \
             $(LOGIC_DIR)/Grid.cpp \
             $(LOGIC_DIR)/Cell.cpp \
-            $(SRC_DIR)/gameLoop.cpp  \
-            $(SRC_DIR)/game.cpp \
             $(LOGIC_DIR)/data.cpp \
             $(LOGIC_DIR)/Player.cpp \
             $(LOGIC_DIR)/Enemy.cpp \
@@ -26,6 +19,13 @@ SRC_FILES := main.cpp \
             $(LOGIC_DIR)/Entities.cpp \
             $(LOGIC_DIR)/timer.cpp \
             $(LOGIC_DIR)/Wave.cpp \
+            $(SRC_DIR)/gameLoop.cpp  \
+            $(SRC_DIR)/game.cpp \
+            $(GRAPHIC_DIR)/World.cpp \
+            $(GRAPHIC_DIR)/graphicInit.cpp \
+            $(GRAPHIC_DIR)/Button.cpp \
+            $(GRAPHIC_DIR)/pages.cpp \
+            $(GRAPHIC_DIR)/draw.cpp \
 
 # Object files
 OBJ_FILES := $(SRC_FILES:.cpp=.o)
