@@ -140,23 +140,25 @@ void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber, Playe
     SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(world.getRenderer());
 
-    world.drawText("SHOP", 10, 10, 80);
-    world.drawText("Wave: " + std::to_string(waveNumber), 40, 650, 40);
-    
+    world.drawText("DATA", 10, 10, 80);
+    world.drawText("Wave: " + std::to_string(waveNumber), 40, 150, 40);
+    world.drawText("Towers available: " + std::to_string(player.getNumTowers()), 40, 350, 40);    
+    world.drawText("EKIA: compteur a mettre ici", 40, 450, 40);
     if (!buttons.empty()) {
         buttons[9]->draw();
     }
 
-    const auto& towerTextures = player.getTowerTextures();
-    int yPosition = 100;
-    for (auto texture : towerTextures) {
-        if (texture) {
-            world.renderTexture(texture, 10, yPosition, 40, 40);
-            yPosition += 50;  
-        } else {
-            std::cerr << "Texture is null, cannot render." << std::endl;
-        }
-    }
+
+    // const auto& towerTextures = player.getTowerTextures();
+    // int yPosition = 100;
+    // for (auto texture : towerTextures) {
+    //     if (texture) {
+    //         world.renderTexture(texture, 10, yPosition, 40, 40);
+    //         yPosition += 50;  
+    //     } else {
+    //         std::cerr << "Texture is null, cannot render." << std::endl;
+    //     }
+    // }
 
     SDL_RenderSetViewport(world.getRenderer(), nullptr);
 }

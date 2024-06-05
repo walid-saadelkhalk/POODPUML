@@ -23,7 +23,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
     bool stateChanged = true;
     bool levelSelected = false; 
     const int FPS = 20;
-    const int frameDelay = 5000 / FPS;
+    const int frameDelay = 50 / FPS;
 
     Uint32 frameStart;
     int frameTime;

@@ -61,6 +61,10 @@ void Player::setPositionTower(int x, int y) {
     towers.back()->setPosition(x, y);
 }
 
+int Player::getNumTowers() const {
+    return numTowers;
+}
+
 const std::vector<std::unique_ptr<Tower>>& Player::getTowers() const {
     return towers;
 }

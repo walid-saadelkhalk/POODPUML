@@ -17,7 +17,7 @@ void renderTimer(World& world, Uint32 elapsedTime) {
     SDL_Surface* surface = TTF_RenderText_Solid(font, timeText.c_str(), color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(world.getRenderer(), surface);
 
-    SDL_Rect dstRect = {1250, 650, surface->w, surface->h};
+    SDL_Rect dstRect = {1040, 250, surface->w, surface->h};
 
     SDL_RenderCopy(world.getRenderer(), texture, NULL, &dstRect);
 
