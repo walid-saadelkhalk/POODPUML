@@ -143,6 +143,10 @@ void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber, Playe
     world.drawText("SHOP", 10, 10, 80);
     world.drawText("Wave: " + std::to_string(waveNumber), 40, 650, 40);
     
+    if (!buttons.empty()) {
+        buttons[9]->draw();
+    }
+
     const auto& towerTextures = player.getTowerTextures();
     int yPosition = 100;
     for (auto texture : towerTextures) {

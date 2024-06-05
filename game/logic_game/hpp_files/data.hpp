@@ -1,7 +1,7 @@
 #ifndef DATA_HPP
 #define DATA_HPP
 
-#include "player.hpp"
+#include "Player.hpp"
 
 void json(const Player& player, int nb_death, int nb_wave, int time);
 
