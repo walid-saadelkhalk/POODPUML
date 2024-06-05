@@ -23,6 +23,8 @@ public:
 
     void addTower(int x, int y, SDL_Renderer* renderer);
 
+    void printTowers() const;
+
     void getPosition(int& x, int& y) const;
 
     void setPositionTower(int x, int y);

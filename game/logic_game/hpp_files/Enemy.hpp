@@ -5,7 +5,7 @@
 #include <vector>
 #include "Cell.hpp"
 
-class Enemy : public Entities {
+class Enemy : public Entities{
 public:
     float lifeBar;
     int height;
@@ -19,6 +19,7 @@ public:
     void someVirtualMethod() override;
     void setPath(const std::vector<std::vector<Cell>>& grid);
     bool hasReachedGoal() const;
+    float getLifeBar() const;
 };
 
 #endif

@@ -108,6 +108,15 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                                 int yCell = y / cellHeight;
                                 if (grid.isCellEmpty(xCell, yCell)) {
                                     player.addTower(xCell, yCell, world.getRenderer());
+                                    // const auto& towers = player.getTowers();
+                                    // for (const auto& towerPtr : towers) {
+                                    //     towerPtr->draw(world.getRenderer());
+                                    // }
+                                    // player.addTower(xCell, yCell, world.getRenderer());
+                                    // for (const auto& tower : player.getTowers()) {
+                                    //     tower->draw(world.getRenderer());
+                                    // }
+
                                     // SDL_Texture* towerTexture = world.loadTexture("assets/images/Mordor/Tower.jpg");
                                     // if (towerTexture == nullptr) {
                                     //     std::cerr << "Erreur lors du chargement de l'image de la tour" << std::endl;
@@ -179,7 +188,12 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 wave = Wave(enemiesPerWave, grid.cells); 
                 resetTimer = true;
             }
+            for (auto& tower : player.getTowers()) {
+            tower->update(wave);
+    }
         }
+
+        
 
         switch (world.getCurrentState()) {
             case State::Intro:

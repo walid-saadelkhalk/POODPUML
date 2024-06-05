@@ -2,11 +2,13 @@
 #define TOWER_HPP
 
 #include "Entities.hpp"
+#include "Observer.hpp"
 #include <list>
 #include "Enemy.hpp"
+#include "Wave.hpp"
 #include <SDL2/SDL.h>
 
-class Tower : public Entities {
+class Tower : public Entities, public Observer {
 public:
     float attackPower;
     float lifeBar;
@@ -15,7 +17,6 @@ public:
     bool selected;
     int shotRate;
     int range;
-    std::list<Enemy*> targetPool;
     SDL_Texture* texture;
 
     Tower(int x, int y, float attackPower, float lifeBar, int evolveStatus, double damage, bool selected, int shotRate, int range);
@@ -25,7 +26,9 @@ public:
     void someVirtualMethod() override;
     void draw(SDL_Renderer* renderer);
     void setPosition(int x, int y);
-
+    void update(Wave& wave) override;
+    void attack(Enemy& enemy);
+    
 
 };
 
