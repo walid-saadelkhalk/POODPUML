@@ -18,9 +18,21 @@ std::string Player::getName() const {
     return name;
 }
 
+
 void Player::addTower(int x, int y, SDL_Renderer* renderer) {
-    towers.push_back(std::make_unique<Tower>(x, y, 10.0f, 100.0f, 0, 10.0, false, 1, 10));
-    std::cout << "Tower added at position (" << x << ", " << y << ")" << std::endl;
+    if (numTowers > 0) {
+        towers.push_back(std::make_unique<Tower>(x, y, 10.0f, 100.0f, 0, 10.0, false, 1, 10));
+        --numTowers;  // Décrémenter le nombre de tours disponibles
+        std::cout << "Tower added at position (" << x << ", " << y << ")" << std::endl;
+    } else {
+        std::cout << "No more towers available to add." << std::endl;
+    }
+}
+
+void Player::incrementTowers() {
+    ++numTowers;
+    std::cout << "One tower added. Total towers available: " << numTowers << std::endl;
+    std::cout<< numTowers<<std::endl;
 }
 
 void Player::getPosition(int& x, int& y) const {

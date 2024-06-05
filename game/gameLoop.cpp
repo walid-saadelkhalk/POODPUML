@@ -19,6 +19,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
     int waveNumber = 1;
     int enemiesPerWave = 10;
     Wave wave(enemiesPerWave, grid.cells);
+
     bool stateChanged = true;
     bool levelSelected = false; 
     const int FPS = 20;
@@ -177,6 +178,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 waveNumber++;
                 enemiesPerWave += 5;
                 wave = Wave(enemiesPerWave, grid.cells); 
+                player.incrementTowers();
                 resetTimer = true;
             }
         }

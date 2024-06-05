@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
     std::vector<std::vector<int>> matrix = loadMatrix(world);
     Grid grid(matrix[0].size(), matrix.size(), matrix);
     Player player("Sam Gamgeez", 12, 5, 3, grid.cells);
+    
 
     // Initialiser l'ennemi à la position de départ
     Enemy enemy(0, 7, 100.0f, 20); // Initialiser avec les coordonnées de départ (0, 7)
@@ -37,9 +38,7 @@ int main(int argc, char *argv[]) {
     buttons.push_back(new Button(world.getRenderer(), 350, 500, 100, 100, "ON", 20));
     buttons.push_back(new Button(world.getRenderer(), 1050, 500, 100, 100, "OFF", 20));
     buttons.push_back(new Button(world.getRenderer(), 400, 10, 50, 50, "X", 25));
-    buttons.push_back(new Button(world.getRenderer(), 350, 100, 50, 50, "LOSE", 25));
-    buttons.push_back(new Button(world.getRenderer(), 1350, 100, 50, 50, "LOSE2", 25));
-    
+
     mainLoop(world, buttons, player, grid);
 
     for (Button* button : buttons) {
