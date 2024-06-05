@@ -130,7 +130,7 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
 }
 
 void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber) {
-    SDL_Rect viewport;
+    SDL_Rect viewport;  
     viewport.x = 1000;
     viewport.y = 0;
     viewport.w = 500;

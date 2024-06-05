@@ -33,6 +33,7 @@ public:
 private:
     std::vector<Observer*> towers;
     int numEnemies;
+    int deadEnemies;
     std::vector<std::unique_ptr<Enemy>> enemies;
     std::vector<std::vector<Cell>> grid;
     Uint32 lastSpawnTime;

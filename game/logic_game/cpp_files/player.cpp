@@ -1,6 +1,7 @@
 #include "./logic_game/hpp_files/player.hpp"
 #include <iostream>
 #include <SDL2/SDL_image.h>
+#include <random>
 
 Player::Player(std::string name, int x, int y, int numTowers, const std::vector<std::vector<Cell>>& grid) : name(name), x(x), y(y), numTowers(numTowers),grid(grid) {
     std::cout << "Welcome " << name << " !" << std::endl;
@@ -19,7 +20,7 @@ std::string Player::getName() const {
 }
 
 void Player::addTower(int x, int y, SDL_Renderer* renderer) {
-    towers.push_back(std::make_unique<Tower>(x, y, 10.0f, 100.0f, 0, 10.0, false, 1, 10));
+    towers.push_back(std::make_unique<Tower>(x, y, 10.0f, 100.0f, 0, 10.0, false, 1, 2));
     std::cout << "Tower added at position (" << x << ", " << y << ")" << std::endl;
     printTowers();
     

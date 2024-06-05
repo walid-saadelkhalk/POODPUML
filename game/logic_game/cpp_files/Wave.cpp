@@ -42,13 +42,17 @@ void Wave::update(Uint32 currentTime) {
 
     // Supprimer les ennemis qui ont atteint leur objectif
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
-        [](const std::unique_ptr<Enemy>& enemy) {
-            return enemy->hasReachedGoal() || enemy->getLifeBar() <= 0;
+        [this](const std::unique_ptr<Enemy>& enemy) {
+            bool shouldRemove = enemy->hasReachedGoal() || enemy->getLifeBar() <= 0;
+            if (shouldRemove && enemy->getLifeBar() <= 0) {
+                ++deadEnemies; 
+            }
+            return shouldRemove;
         }), enemies.end());
 }
 
 void Wave::spawnEnemy() {
-    auto enemy = std::make_unique<Enemy>(0, 0, 30.0f, 50);
+    auto enemy = std::make_unique<Enemy>(0, 0, 90.0f, 50);
     enemy->setPath(grid);
     enemies.push_back(std::move(enemy));
     spawnedEnemies++;
