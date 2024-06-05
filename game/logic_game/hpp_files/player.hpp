@@ -5,6 +5,7 @@
 #include "Grid.hpp"
 #include <vector>
 #include <memory>
+#include <SDL2/SDL.h>  // Ajouté pour SDL_Texture
 
 class Player {
 private:
@@ -12,10 +13,11 @@ private:
     int x, y;
     const std::vector<std::vector<Cell>>& grid;
     std::vector<std::unique_ptr<Tower>> towers;
+    std::vector<SDL_Texture*> towerTextures;  // Ajouté pour stocker les textures
     int numTowers;
 
 public:
-    Player(const std::string name, int x, int y, int numTowers,const std::vector<std::vector<Cell>>& grid);
+    Player(const std::string& name, int x, int y, int numTowers, const std::vector<std::vector<Cell>>& grid, SDL_Renderer* renderer);  // Correction
     ~Player();
 
     std::string getName() const;
@@ -30,9 +32,11 @@ public:
 
     void setPositionTower(int x, int y);
 
+    int getNumTowers() const;
+
     const std::vector<std::unique_ptr<Tower>>& getTowers() const;
 
-    std::vector<SDL_Texture*> getTowerTextures(SDL_Renderer* renderer) const;
+    const std::vector<SDL_Texture*>& getTowerTextures() const;  // Nouvelle méthode
 };
 
 #endif // PLAYER_HPP

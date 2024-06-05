@@ -20,7 +20,7 @@ SRC_FILES := main.cpp \
             $(SRC_DIR)/gameLoop.cpp  \
             $(SRC_DIR)/game.cpp \
             $(LOGIC_DIR)/data.cpp \
-            $(LOGIC_DIR)/player.cpp \
+            $(LOGIC_DIR)/Player.cpp \
             $(LOGIC_DIR)/Enemy.cpp \
             $(LOGIC_DIR)/Tower.cpp \
             $(LOGIC_DIR)/Entities.cpp \

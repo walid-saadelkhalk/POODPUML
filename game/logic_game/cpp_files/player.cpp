@@ -1,13 +1,26 @@
-#include "./logic_game/hpp_files/player.hpp"
+#include "./logic_game/hpp_files/Player.hpp"
 #include <iostream>
 #include <SDL2/SDL_image.h>
 
-Player::Player(std::string name, int x, int y, int numTowers, const std::vector<std::vector<Cell>>& grid)
+Player::Player(const std::string& name, int x, int y, int numTowers, const std::vector<std::vector<Cell>>& grid, SDL_Renderer* renderer)  // Correction
     : name(name), x(x), y(y), numTowers(numTowers), grid(grid) {
     std::cout << "Welcome " << name << " !" << std::endl;
+    
+    // Charger les textures des tours dès le début
+    for (int i = 0; i < numTowers; ++i) {
+        SDL_Texture* texture = IMG_LoadTexture(renderer, "assets/images/Mordor/Tower.jpg");
+        if (texture) {
+            towerTextures.push_back(texture);
+        } else {
+            std::cerr << "Failed to load texture: " << IMG_GetError() << std::endl;
+        }
+    }
 }
 
 Player::~Player() {
+    for (auto texture : towerTextures) {
+        SDL_DestroyTexture(texture);
+    }
     std::cout << "Goodbye " << name << " !" << std::endl;
 }
 
@@ -52,13 +65,6 @@ const std::vector<std::unique_ptr<Tower>>& Player::getTowers() const {
     return towers;
 }
 
-std::vector<SDL_Texture*> Player::getTowerTextures(SDL_Renderer* renderer) const {
-    std::vector<SDL_Texture*> textures;
-    for (const auto& tower : towers) {
-        SDL_Texture* texture = IMG_LoadTexture(renderer, "assets/images/Mordor/Tower.jpg");
-        if (texture) {
-            textures.push_back(texture);
-        }
-    }
-    return textures;
+const std::vector<SDL_Texture*>& Player::getTowerTextures() const {
+    return towerTextures;
 }

@@ -2,7 +2,7 @@
 #include "game/graphic_game/hpp_files/graphicInit.hpp"
 #include "game/gameLoop.hpp"
 #include "game/graphic_game/hpp_files/Button.hpp" 
-#include "./logic_game/hpp_files/player.hpp"
+#include "./logic_game/hpp_files/Player.hpp"
 #include "./logic_game/hpp_files/Grid.hpp"
 #include "./logic_game/hpp_files/Enemy.hpp"
 #include "game/game.hpp"
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     std::vector<Button*> buttons;
     std::vector<std::vector<int>> matrix = loadMatrix(world);
     Grid grid(matrix[0].size(), matrix.size(), matrix);
-    Player player("Sam Gamgeez", 12, 5, 3, grid.cells);
+    Player player("Sam Gamgeez", 12, 5, 3, grid.cells, world.getRenderer());
     
 
     // Initialiser l'ennemi à la position de départ
