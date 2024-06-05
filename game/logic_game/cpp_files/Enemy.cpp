@@ -43,7 +43,7 @@ void Enemy::setPath(const std::vector<std::vector<Cell>>& grid) {
         q.pop();
         path.push_back(current);
 
-        if (current->widthCell * 20 >= 1000) {  // Arrêter lorsque x >= 1000
+        if (current->widthCell * 20 >= 1000) {  
             break;
         }
 

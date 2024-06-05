@@ -113,21 +113,24 @@ int Grid::getHeight() const {
 }
 
 bool Grid::isCellEmpty(int x, int y) {
-    std::cout << "case libre" << std::endl;
+    if (cells[y][x].typeCell == 1) {
+        std::cout << "Cellule non occupée" << std::endl;
     return cells[y][x].occupied == false;
+    }
+    return false;
 }
 
 bool Grid::setCellTexture(int x, int y, SDL_Texture* towerTexture) {
-    // if (cells[y][x].occupied == false) {
-    //     cells[y][x].occupied = true;
-    //     return true;
-    // }
-    // return false;
+    if (cells[y][x].occupied == false) {
+        cells[y][x].occupied = true;
+        return true;
+    }
     SDL_Texture *texture = towerTexture;
     if (texture == nullptr) {
         std::cerr << "Erreur lors de la lecture de la texture." << std::endl;
         return false;
     }
+    return false;
 }
 
 Cell* Grid::getCellAt(int row, int col) {

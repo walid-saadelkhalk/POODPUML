@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 // The main loop of the game
 // It will handle the events and render the game based on the current state
@@ -102,10 +103,18 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                             } else {
                                 int cellWidth = 40;
                                 int cellHeight = 40;
+
                                 int xCell = x / cellWidth;
                                 int yCell = y / cellHeight;
                                 if (grid.isCellEmpty(xCell, yCell)) {
-                                    std::cout << "vide case" << std::endl;
+                                    // SDL_Texture* towerTexture = world.loadTexture("assets/images/Mordor/Tower.jpg");
+                                    // if (towerTexture == nullptr) {
+                                    //     std::cerr << "Erreur lors du chargement de l'image de la tour" << std::endl;
+                                    // } else {
+                                    //     std::cout << "tour chargée" << std::endl;
+                                    //     grid.renderGrid(world.getRenderer(), textures, wave, player, enemyTexture, towerTexture);
+                                    // }
+
                                     // player.addTower(xCell, yCell);
                                     // grid.setCellTexture(xCell, yCell, player.getTowers().back()->texture);
                                 }
