@@ -25,6 +25,7 @@ public:
     void increaseEnemies(int additionalEnemies);
     int getEnemiesAtExit() const ;
 
+    void reset(int numEnemies, const std::vector<std::vector<Cell>>& grid);
 
 
     void attach(Observer* observer);

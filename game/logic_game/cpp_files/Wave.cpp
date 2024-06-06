@@ -40,7 +40,6 @@ bool Wave::update(Uint32 currentTime, int& enemiesAtExit) {
         enemy->move();
     }
 
-
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [this, &enemiesAtExit](const std::unique_ptr<Enemy>& enemy) {
             bool shouldRemove = enemy->hasReachedGoal() || enemy->getLifeBar() <= 0;
@@ -54,9 +53,9 @@ bool Wave::update(Uint32 currentTime, int& enemiesAtExit) {
             return shouldRemove;
         }), enemies.end());
 
-        if (enemiesAtExit >= 3) {
-            return true;
-        }
+    if (enemiesAtExit >= 3) {
+        return true;
+    }
 
     return false;
 }
@@ -84,4 +83,13 @@ void Wave::gameOver() {
 
 int Wave::getEnemiesAtExit() const {
     return enemiesAtExit;
+}
+
+void Wave::reset(int numEnemies, const std::vector<std::vector<Cell>>& grid) {
+    this->numEnemies = numEnemies;
+    this->grid = grid;
+    this->lastSpawnTime = 0;
+    this->spawnedEnemies = 0;
+    this->enemiesAtExit = 0;
+    this->enemies.clear();
 }

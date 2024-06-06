@@ -34,7 +34,7 @@ public:
 
     Cell* getCellAt(int row, int col);
 
-    // std::vector<Cell*> Grid::exitCell();
+    void reset(const std::vector<std::vector<int>>& matrix);
 };
 
 #endif // GRID_HPP

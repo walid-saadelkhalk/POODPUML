@@ -24,7 +24,8 @@ int main(int argc, char *argv[]) {
     std::vector<Button*> buttons;
     std::vector<std::vector<int>> matrix = loadMatrix(world);
     Grid grid(matrix[0].size(), matrix.size(), matrix);
-    Player player("Sam Gamgeez", 12, 5, 3, grid.cells, world.getRenderer());
+    std::unique_ptr<Player> player = std::make_unique<Player>("Sam Gamgeez", 12, 5, 3, grid.cells, world.getRenderer());
+
     
 
     // Initialiser l'ennemi à la position de départ
@@ -48,7 +49,7 @@ int main(int argc, char *argv[]) {
         delete button;
     }
 
-    player.~Player();
+    // player.~Player();
     world.~World();
     grid.~Grid();
     enemy.~Enemy();

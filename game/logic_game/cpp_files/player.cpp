@@ -73,3 +73,18 @@ const std::vector<std::unique_ptr<Tower>>& Player::getTowers() const {
 const std::vector<SDL_Texture*>& Player::getTowerTextures() const {
     return towerTextures;
 }
+
+void Player::clearTowers() {
+    std::cout << "Clearing towers..." << std::endl;
+    for (auto& tower : towers) {
+        if (tower->texture) {
+            SDL_DestroyTexture(tower->texture);
+            tower->texture = nullptr;
+        }
+    }
+    towers.clear();
+    numTowers = 0;
+    std::cout << "Towers cleared." << std::endl;
+}
+
+

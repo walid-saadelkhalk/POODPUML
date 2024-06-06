@@ -136,3 +136,13 @@ bool Grid::setCellTexture(int x, int y, SDL_Texture* towerTexture) {
 Cell* Grid::getCellAt(int row, int col) {
     return &cells[row][col];
 }
+
+void Grid::reset(const std::vector<std::vector<int>>& matrix) {
+    std::cout << "Resetting grid..." << std::endl;
+    this->width = matrix[0].size();
+    this->height = matrix.size();
+    this->cells.clear();
+    initializeGrid(matrix);
+    std::cout << "Grid reset complete." << std::endl;
+}
+
