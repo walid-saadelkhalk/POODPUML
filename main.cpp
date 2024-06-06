@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     // enemy.setPath(grid.cells);
 
     buttons.push_back(new Button(world.getRenderer(), 1250, 620, 200, 50, "Start", 24));
-    buttons.push_back(new Button(world.getRenderer(), 1400, 10, 50, 50, "X", 25));
+    buttons.push_back(new Button(world.getRenderer(), 1410, 10, 50, 50, "X", 25));
     buttons.push_back(new Button(world.getRenderer(), 50, 250, 400, 150, "Play", 25));
     buttons.push_back(new Button(world.getRenderer(), 50, 400, 400, 150, "Option", 25));
     buttons.push_back(new Button(world.getRenderer(), 50, 550, 400, 150, "Score", 25));
