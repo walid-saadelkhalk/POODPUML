@@ -19,6 +19,7 @@ SRC_FILES := main.cpp \
             $(LOGIC_DIR)/Entities.cpp \
             $(LOGIC_DIR)/timer.cpp \
             $(LOGIC_DIR)/Wave.cpp \
+            $(LOGIC_DIR)/InputBox.cpp \
             $(SRC_DIR)/gameLoop.cpp  \
             $(SRC_DIR)/game.cpp \
             $(GRAPHIC_DIR)/World.cpp \

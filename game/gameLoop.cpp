@@ -3,15 +3,13 @@
 #include "graphic_game/hpp_files/pages.hpp"
 #include "logic_game/hpp_files/timer.hpp"
 #include "logic_game/hpp_files/Wave.hpp"
+#include "logic_game/hpp_files/InputBox.hpp"
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
-// The main loop of the game
-// It will handle the events and render the game based on the current state
-// The main loop will call different functions to render the different pages of the game
 
 void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Player>& player, Grid& grid) {
     std::cout << "Game loop started!" << std::endl;
@@ -43,8 +41,9 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
     Uint32 elapsedTime = 0;
     bool resetTimer = true;
 
-    while (gameisrunning) {
+    InputBox inputBox(400, 300, 200, 50, world.getRenderer());
 
+    while (gameisrunning) {
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_QUIT:
@@ -59,15 +58,17 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
                         if (world.getCurrentState() == State::Intro) {
                             if (buttons[0]->isClickedAtPosition(x, y)) {
                                 buttons[0]->click();
-                                world.switchState(State::Menu);
+                                world.switchState(State::EnterName);
                                 stateChanged = true;
                             }
+                        } else if (world.getCurrentState() == State::EnterName) {
+                            // Ne rien faire, l'entrée est gérée par le clavier
                         } else if (world.getCurrentState() == State::Menu) {
                             if (buttons[2]->isClickedAtPosition(x, y)) {
                                 buttons[2]->click();
                                 world.switchState(State::Game);
                                 resetTimer = true;
-                                startTime = SDL_GetTicks();  // Reset the timer when starting the game
+                                startTime = SDL_GetTicks();
                                 std::cout << "Starting game..." << std::endl;
                             } else if (buttons[3]->isClickedAtPosition(x, y)) {
                                 buttons[3]->click();
@@ -119,29 +120,49 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
                     break;
 
                 case SDL_KEYDOWN:
-                    if (event.key.keysym.sym == SDLK_RETURN) {
-                        State newState;
-                        switch (world.getCurrentState()) {
-                            case State::Intro:
-                                newState = State::Menu;
-                                break;
-                            case State::Menu:
-                                newState = State::Settings;
-                                break;
-                            case State::Settings:
-                                newState = State::Game;
-                                resetTimer = true;
-                                startTime = SDL_GetTicks();  // Reset the timer when starting the game
-                                break;
-                            case State::Game:
-                                newState = State::Score;
-                                break;
-                            default:
-                                newState = State::Intro;
-                                break;
+                    if (world.getCurrentState() == State::EnterName) {
+                        if (event.key.keysym.sym == SDLK_RETURN) {
+                            player->setName(inputBox.getText());
+                            world.switchState(State::Menu);
+                            stateChanged = true;
                         }
-                        world.switchState(newState);
-                        stateChanged = true;
+                    } else {
+                        if (event.key.keysym.sym == SDLK_RETURN) {
+                            State newState;
+                            switch (world.getCurrentState()) {
+                                case State::Intro:
+                                    newState = State::EnterName;
+                                    break;
+                                case State::Menu:
+                                    newState = State::Settings;
+                                    break;
+                                case State::Settings:
+                                    newState = State::Game;
+                                    resetTimer = true;
+                                    startTime = SDL_GetTicks();
+                                    break;
+                                case State::Game:
+                                    newState = State::Score;
+                                    break;
+                                default:
+                                    newState = State::Intro;
+                                    break;
+                            }
+                            world.switchState(newState);
+                            stateChanged = true;
+                        }
+                    }
+                    break;
+
+                case SDL_TEXTINPUT:
+                    if (world.getCurrentState() == State::EnterName) {
+                        inputBox.handleEvent(&event);
+                    }
+                    break;
+
+                case SDL_KEYUP:
+                    if (world.getCurrentState() == State::EnterName && event.key.keysym.sym == SDLK_BACKSPACE) {
+                        inputBox.handleEvent(&event);
                     }
                     break;
             }
@@ -182,6 +203,10 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
         switch (world.getCurrentState()) {
             case State::Intro:
                 introPage(world, buttons, gifFrames, currentFrame);
+                break;
+            case State::EnterName:
+                world.drawText("Enter your name:", 400, 250, 24);
+                inputBox.render();
                 break;
             case State::Menu:
                 menuPage(world, buttons);
@@ -227,9 +252,3 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
 
     std::cout << "Game loop ended!" << std::endl;
 }
-
-
-
-
-
-

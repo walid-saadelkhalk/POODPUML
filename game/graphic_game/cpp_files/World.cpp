@@ -55,6 +55,9 @@ void World::switchState(State newState) {
         case State::Score:
             SDL_SetWindowTitle(world, "Score");
             break;
+        case State::EnterName:
+            SDL_SetWindowTitle(world, "EnterName");
+            break;
         default:
             std::cerr << "État invalide !" << std::endl;
             break;

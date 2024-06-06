@@ -87,4 +87,7 @@ void Player::clearTowers() {
     std::cout << "Towers cleared." << std::endl;
 }
 
+void Player::setName(const std::string& name) {
+    this->name = name;
+}
 

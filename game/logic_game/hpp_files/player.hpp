@@ -38,6 +38,8 @@ public:
 
     void clearTowers();
 
+    void setName(const std::string& name);
+
     int getNumTowers() const;
 
     const std::vector<std::unique_ptr<Tower>>& getTowers() const;

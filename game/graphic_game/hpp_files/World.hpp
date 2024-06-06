@@ -12,7 +12,8 @@ enum class State {
     Menu,
     Settings,
     Game, 
-    Score
+    Score, 
+    EnterName
 };
 
 class World {
