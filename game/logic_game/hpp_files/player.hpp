@@ -30,7 +30,7 @@ public:
 
     void incrementTowers();
 
-    void printTowers() const;
+    // void printTowers() const;
 
     void getPosition(int& x, int& y) const;
 
