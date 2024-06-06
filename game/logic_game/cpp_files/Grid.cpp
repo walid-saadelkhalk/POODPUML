@@ -1,4 +1,5 @@
 #include "../hpp_files/Grid.hpp"
+#include "../hpp_files/PLayer.hpp"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -63,7 +64,7 @@ void Grid::displayMatrix() const {
     }
 }
 
-void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Wave& wave, SDL_Texture* enemyTexture) {
+void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Wave& wave, Player& player,SDL_Texture* enemyTexture, SDL_Texture* towerTexture) {
     const int cellWidth = 40;
     const int cellHeight = 40;
     const int maxWidth = 1000;
@@ -94,6 +95,12 @@ void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& t
         SDL_RenderCopy(renderer, enemyTexture, nullptr, &enemyRect);
     }
 
+    // Render all towers
+    for (const auto& tower : player.getTowers()) {
+        SDL_Rect towerRect = { tower->posX * cellWidth, tower->posY * cellHeight, cellWidth, cellHeight };
+        SDL_RenderCopy(renderer, towerTexture, nullptr, &towerRect);
+    }
+
     SDL_RenderSetViewport(renderer, nullptr);
 }
 
@@ -103,6 +110,27 @@ int Grid::getWidth() const {
 
 int Grid::getHeight() const {
     return height;
+}
+
+bool Grid::isCellEmpty(int x, int y) {
+    if (cells[y][x].typeCell == 1) {
+        std::cout << "Cellule non occupée" << std::endl;
+    return cells[y][x].occupied == false;
+    }
+    return false;
+}
+
+bool Grid::setCellTexture(int x, int y, SDL_Texture* towerTexture) {
+    if (cells[y][x].occupied == false) {
+        cells[y][x].occupied = true;
+        return true;
+    }
+    SDL_Texture *texture = towerTexture;
+    if (texture == nullptr) {
+        std::cerr << "Erreur lors de la lecture de la texture." << std::endl;
+        return false;
+    }
+    return false;
 }
 
 Cell* Grid::getCellAt(int row, int col) {

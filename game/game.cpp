@@ -4,6 +4,7 @@
 #include "./logic_game/hpp_files/Player.hpp"
 #include "./logic_game/hpp_files/Enemy.hpp"
 #include "./logic_game/hpp_files/Wave.hpp"
+#include "./logic_game/hpp_files/Tower.hpp"
 #include <iostream>
 #include <vector>
 #include <utility>
@@ -20,7 +21,7 @@ std::vector<std::vector<int>> loadMatrix(World& world) {
     return matrix;
 }
 
-void renderMatrix(World& world, Grid& grid, Wave& wave) {
+void renderMatrix(World& world, Grid& grid, Wave& wave, Player& player) {
     std::vector<SDL_Texture*> textures;
     for (int i = 0; i <= 6; ++i) {
         std::string path = "assets/images/" + std::to_string(i) + ".png";
@@ -35,17 +36,22 @@ void renderMatrix(World& world, Grid& grid, Wave& wave) {
         std::cerr << "Erreur lors du chargement de l'image de l'ennemi" << std::endl;
     }
 
-    grid.renderGrid(world.getRenderer(), textures, wave, enemyTexture);
+    SDL_Texture* towerTexture = world.loadTexture("assets/images/Mordor/Tower.jpg");
+    if (!towerTexture) {
+        std::cerr << "Erreur lors du chargement de l'image de la tour" << std::endl;
+    }
+
+    grid.renderGrid(world.getRenderer(), textures, wave, player,enemyTexture, towerTexture);
+
+
 
     for (SDL_Texture* texture : textures) {
         SDL_DestroyTexture(texture);
     }
     SDL_DestroyTexture(enemyTexture);
+    SDL_DestroyTexture(towerTexture);
 }
 
-
-
-//player pour le moment à remplacer par enemy quand il sera fait !
 
 // void endGame(Player& player, Grid& grid, Wave& wave, int gameTime, int nbWave) {
 //         json(player, 0, nbWave, gameTime);
@@ -63,4 +69,3 @@ void endGame(Player& player, const Grid& grid, int gameTime, bool won, int nb_wa
     }
     std::cout << "Game time: " << gameTime << " seconds" << std::endl;
 }
-

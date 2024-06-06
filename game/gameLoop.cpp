@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 // The main loop of the game
 // It will handle the events and render the game based on the current state
@@ -16,7 +17,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
     std::cout << "Game loop started!" << std::endl;
 
     int waveNumber = 1;
-    int enemiesPerWave = 1;
+    int enemiesPerWave = 10;
     int enemiesKilled = 0;
     int enemiesAtExit = 0;
     Wave wave(enemiesPerWave, grid.cells);
@@ -96,14 +97,39 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                                 world.switchState(State::Menu);
                             }
                         } else if (world.getCurrentState() == State::Game) {
+                            
                             if (buttons[1]->isClickedAtPosition(x, y)) {
                                 buttons[1]->click();
                                 world.switchState(State::Menu);
                                 elapsedTime = (SDL_GetTicks() - startTime) / 1000;   
-                            } else if (buttons[11]->isClickedAtPosition(x, y)) {
-                                buttons[11]->click();
-                                // endGame(player, grid, elapsedTime);
-                                std::cout << "LOSE" << std::endl;
+                            } else {
+                                int cellWidth = 40;
+                                int cellHeight = 40;
+
+                                int xCell = x / cellWidth;
+                                int yCell = y / cellHeight;
+                                if (grid.isCellEmpty(xCell, yCell)) {
+                                    player.addTower(xCell, yCell, world.getRenderer());
+                                    // const auto& towers = player.getTowers();
+                                    // for (const auto& towerPtr : towers) {
+                                    //     towerPtr->draw(world.getRenderer());
+                                    // }
+                                    // player.addTower(xCell, yCell, world.getRenderer());
+                                    // for (const auto& tower : player.getTowers()) {
+                                    //     tower->draw(world.getRenderer());
+                                    // }
+
+                                    // SDL_Texture* towerTexture = world.loadTexture("assets/images/Mordor/Tower.jpg");
+                                    // if (towerTexture == nullptr) {
+                                    //     std::cerr << "Erreur lors du chargement de l'image de la tour" << std::endl;
+                                    // } else {
+                                    //     std::cout << "tour chargée" << std::endl;
+                                    //     grid.renderGrid(world.getRenderer(), textures, wave, player, enemyTexture, towerTexture);
+                                    // }
+
+                                    // player.addTower(xCell, yCell);
+                                    // grid.setCellTexture(xCell, yCell, player.getTowers().back()->texture);
+                                }
                             }
                         }
                     }
@@ -164,7 +190,12 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 wave = Wave(enemiesPerWave, grid.cells); 
                 resetTimer = true;
             }
+            for (auto& tower : player.getTowers()) {
+            tower->update(wave);
+    }
         }
+
+        
 
         switch (world.getCurrentState()) {
             case State::Intro:
@@ -183,7 +214,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
             case State::Game:
                 frameStart = SDL_GetTicks();
                 gamePage(world, buttons, waveNumber);
-                renderMatrix(world, grid, wave);
+                renderMatrix(world, grid, wave, player);
                 renderTimer(world, elapsedTime);
                 if (wave.update(currentTime, enemiesAtExit)) {
                     int gameTime = elapsedTime;
@@ -208,3 +239,4 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
 
     std::cout << "Game loop ended!" << std::endl;
 }
+

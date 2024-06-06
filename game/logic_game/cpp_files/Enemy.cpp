@@ -8,6 +8,8 @@ Enemy::Enemy(int x, int y, float lifeBar, int height)
     posY = y;
 }
 
+
+
 void Enemy::move() {
     if (currentStep < path.size()) {
         posX = path[currentStep]->heightCell;
@@ -26,10 +28,9 @@ void Enemy::setPath(const std::vector<std::vector<Cell>>& grid) {
     std::queue<Cell*> q;
     std::vector<std::vector<bool>> visited(rows, std::vector<bool>(cols, false));
 
-    // Trouver la première cellule de type 2 en x = 0
     for (int i = 0; i < rows; ++i) {
         if (grid[i][0].typeCell == 2) {
-            q.push(const_cast<Cell*>(&grid[i][0]));  // Utiliser const_cast pour enlever la constness
+            q.push(const_cast<Cell*>(&grid[i][0]));
             visited[i][0] = true;
             break;
         }
@@ -43,7 +44,7 @@ void Enemy::setPath(const std::vector<std::vector<Cell>>& grid) {
         q.pop();
         path.push_back(current);
 
-        if (current->widthCell * 20 >= 1000) {  // Arrêter lorsque x >= 1000
+        if (current->widthCell * 20 >= 1000) {  
             break;
         }
 
@@ -52,7 +53,7 @@ void Enemy::setPath(const std::vector<std::vector<Cell>>& grid) {
             int newY = current->heightCell + dirY[d];
 
             if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && !visited[newX][newY] && grid[newX][newY].typeCell == 2) {
-                q.push(const_cast<Cell*>(&grid[newX][newY]));  // Utiliser const_cast pour enlever la constness
+                q.push(const_cast<Cell*>(&grid[newX][newY])); 
                 visited[newX][newY] = true;
             }
         }
@@ -62,3 +63,8 @@ void Enemy::setPath(const std::vector<std::vector<Cell>>& grid) {
 bool Enemy::hasReachedGoal() const {
     return currentStep >= path.size();
 }
+
+float Enemy::getLifeBar() const {
+    return lifeBar;
+}   
+

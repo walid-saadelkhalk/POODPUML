@@ -1,6 +1,9 @@
 #include "../hpp_files/Wave.hpp"
-#include <algorithm>
+#include "../hpp_files/Subject.hpp"
+#include "../hpp_files/Observer.hpp"
+#include <algorithm> 
 #include <iostream>
+#include <stdio.h>
 
 Wave::Wave(int numEnemies, const std::vector<std::vector<Cell>>& grid)
     : numEnemies(numEnemies), grid(grid), lastSpawnTime(0), spawnedEnemies(0), enemiesAtExit(0) {
@@ -9,6 +12,23 @@ Wave::Wave(int numEnemies, const std::vector<std::vector<Cell>>& grid)
 Wave::~Wave() {
     // Destructeur, si des ressources dynamiques sont allouées, libérez-les ici
 }
+
+void Wave::attach(Observer* observer){
+    towers.push_back(observer);
+}
+
+void Wave::detach(Observer* observer){
+    towers.erase(std::remove(towers.begin(), towers.end(), observer), towers.end());
+}
+
+void Wave::notify(){
+    std::cout << "Enemy notify" << std::endl;
+    for (Observer* tower : towers) {
+
+        tower->update(*this);
+    }
+}
+
 
 bool Wave::update(Uint32 currentTime, int& enemiesAtExit) {
     if (spawnedEnemies < numEnemies && currentTime - lastSpawnTime >= 300) {
@@ -23,23 +43,27 @@ bool Wave::update(Uint32 currentTime, int& enemiesAtExit) {
 
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [this, &enemiesAtExit](const std::unique_ptr<Enemy>& enemy) {
+            bool shouldRemove = enemy->hasReachedGoal() || enemy->getLifeBar() <= 0;
             if (enemy->hasReachedGoal()) {
                 enemiesAtExit++;
                 return true;
             }
-            return false;
+            if (shouldRemove && enemy->getLifeBar() <= 0) {
+                ++deadEnemies; 
+            }
+            return shouldRemove;
         }), enemies.end());
 
-    if (enemiesAtExit >= 3) {
-        return true;
-    }
+        if (enemiesAtExit >= 3) {
+            return true;
+        }
 
     return false;
 }
 
 
 void Wave::spawnEnemy() {
-    auto enemy = std::make_unique<Enemy>(0, 0, 100.0f, 50);
+    auto enemy = std::make_unique<Enemy>(0, 0, 90.0f, 50);
     enemy->setPath(grid);
     enemies.push_back(std::move(enemy));
     spawnedEnemies++;
