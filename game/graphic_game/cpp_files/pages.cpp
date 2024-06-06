@@ -3,7 +3,11 @@
 #include <fstream>
 #include <iostream>
 #include "../hpp_files/Sound.hpp"
+#include <string>
 
+#include <string>
+
+extern std::string menuBackgroundPath;
 
 void cleanUpTextures(std::vector<SDL_Texture*>& textures) {
     for (SDL_Texture* texture : textures) {
@@ -41,7 +45,7 @@ void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Text
 }
 
 void menuPage(World& world, std::vector<Button*>& buttons) {
-    SDL_Texture* bgMenuTexture = world.loadTexture("assets/images/menu_page.png");
+    SDL_Texture* bgMenuTexture = world.loadTexture(menuBackgroundPath.c_str());
     world.renderTexture(bgMenuTexture, 0, 0, 1500, 720);
 
     if (!buttons.empty()) {
@@ -53,7 +57,6 @@ void menuPage(World& world, std::vector<Button*>& buttons) {
     SDL_DestroyTexture(bgMenuTexture);
     SDL_RenderPresent(world.getRenderer());
 }
-
 
 void settingsPage(World& world, std::vector<Button*>& buttons) {
     SDL_Texture* background = world.loadTexture("assets/images/settings.png");
@@ -80,23 +83,33 @@ void settingsPage(World& world, std::vector<Button*>& buttons) {
         SDL_DestroyTexture(background);
     }
 
-    // Gérer les événements de clic pour les boutons
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
             int x = event.button.x;
             int y = event.button.y;
 
-            if (buttons[7]->isClickedAtPosition(x, y)) {
-                // Bouton ON
+            if (buttons[5]->isClickedAtPosition(x, y)) {
+                buttons[5]->click();
+                menuBackgroundPath = "assets/images/menu_page2.png";
+                std::cout << "THE SHIRE" << std::endl;
+                world.switchState(State::Menu);
+            } else if (buttons[6]->isClickedAtPosition(x, y)) {
+                buttons[6]->click();
+                menuBackgroundPath = "assets/images/menu_page.png";
+                std::cout << "MORDOR" << std::endl;
+                world.switchState(State::Menu);
+            } else if (buttons[7]->isClickedAtPosition(x, y)) {
                 buttons[7]->click();
                 Sound::getInstance().playMusic("assets/song/gameSong.mp3");
                 std::cout << "ON" << std::endl;
             } else if (buttons[8]->isClickedAtPosition(x, y)) {
-                // Bouton OFF
                 buttons[8]->click();
                 Sound::getInstance().stopMusic();
                 std::cout << "OFF" << std::endl;
+            } else if (buttons[1]->isClickedAtPosition(x, y)) {
+                buttons[1]->click();
+                world.switchState(State::Menu);
             }
         }
     }

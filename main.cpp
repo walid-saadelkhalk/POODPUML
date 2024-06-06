@@ -7,10 +7,12 @@
 #include "./logic_game/hpp_files/Grid.hpp"
 #include "./logic_game/hpp_files/Enemy.hpp"
 #include "game/game.hpp"
-
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL.h>
+#include <string>
+
+std::string menuBackgroundPath = "assets/images/menu_page.png";
 
 int main(int argc, char *argv[]) {
     if (!initGraphic()) {
