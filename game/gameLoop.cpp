@@ -218,7 +218,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
                 settingsPage(world, buttons);
                 break;
             case State::Score:
-                scorePage(world, buttons);
+                scorePage(world, buttons, player);
                 break;
             case State::Game:
                 frameStart = SDL_GetTicks();

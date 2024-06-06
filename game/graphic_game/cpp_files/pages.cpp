@@ -117,10 +117,12 @@ void settingsPage(World& world, std::vector<Button*>& buttons) {
     }
 }
 
-void scorePage(World& world, std::vector<Button*>& buttons) {
+void scorePage(World& world, std::vector<Button*>& buttons, std::unique_ptr<Player>& player) {
     SDL_Texture* background = world.loadTexture("assets/images/score.png");
     SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(world.getRenderer());
+
+    std::string playerName = player->getName();
 
     if (background) {
         int width, height;
@@ -130,7 +132,6 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
 
     if (!buttons.empty()) {
         buttons[1]->draw();
-
     }
 
     std::ifstream i("data.json");
@@ -146,12 +147,13 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
     int count = 1;
     
     // Display only the top 10 scores
-    for(const auto& joueur : j) {
-        if (joueur["nom"] == "Sam Gamgeez") {
-            world.drawText(count == 1 ? "1st" : std::to_string(count), 620, y_offset, 40);
-            world.drawText("Death : " + std::to_string(static_cast<int>(joueur["death"])), 730, y_offset, 40);
-            world.drawText("Wave : " + std::to_string(static_cast<int>(joueur["wave"])), 980, y_offset, 40);
-            world.drawText("Time : " + std::to_string(static_cast<int>(joueur["time"])), 1230, y_offset, 40);
+    for (const auto& joueur : j) {
+        if (joueur.contains("nom")) {
+            world.drawText(count == 1 ? "1st" : std::to_string(count), 620, y_offset, 30);
+            world.drawText("Player : " + joueur["nom"].get<std::string>(), 700, y_offset, 30);
+            world.drawText("Death : " + std::to_string(joueur["death"].get<int>()), 950, y_offset, 30);
+            world.drawText("Wave : " + std::to_string(joueur["wave"].get<int>()), 1100, y_offset, 30);
+            world.drawText("Time : " + std::to_string(joueur["time"].get<int>()), 1250, y_offset, 30);
             y_offset += 55;
             count++;
             if (count >= 11) {
@@ -166,6 +168,7 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
         SDL_DestroyTexture(background);
     }
 }
+
 
 void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber, std::unique_ptr<Player>& player, Player& players) {  
     SDL_Rect viewport;
