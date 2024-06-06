@@ -103,10 +103,12 @@ void settingsPage(World& world, std::vector<Button*>& buttons) {
                 buttons[7]->click();
                 Sound::getInstance().playMusic("assets/song/gameSong.mp3");
                 std::cout << "ON" << std::endl;
+                world.switchState(State::Menu);
             } else if (buttons[8]->isClickedAtPosition(x, y)) {
                 buttons[8]->click();
                 Sound::getInstance().stopMusic();
                 std::cout << "OFF" << std::endl;
+                world.switchState(State::Menu);
             } else if (buttons[1]->isClickedAtPosition(x, y)) {
                 buttons[1]->click();
                 world.switchState(State::Menu);
