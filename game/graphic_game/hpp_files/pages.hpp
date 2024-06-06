@@ -12,6 +12,6 @@ void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Text
 void menuPage(World& world, std::vector<Button*>& buttons);
 void settingsPage(World& world, std::vector<Button*>& buttons);
 void scorePage(World& world, std::vector<Button*>& buttons);
-void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber, Player& player);
+void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber,std::unique_ptr<Player>& player, Player& players);
 
 #endif

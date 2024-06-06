@@ -70,15 +70,20 @@ void endGame(Player& player, const Grid& grid, int gameTime, bool won, int nb_wa
     std::cout << "Game time: " << gameTime << " seconds" << std::endl;
 }
 
-#include <iostream> // Pour le débogage
-
 void resetGame(World& world, std::unique_ptr<Player>& player, Grid& grid, Wave& wave) {
     std::cout << "Resetting game..." << std::endl; // Debug log
+
+    // Sauvegarder le nom du joueur actuel
+    std::string playerName = player->getName();
+
     player->clearTowers();  // Supprimez les tours avant de réinitialiser le joueur
     std::vector<std::vector<int>> matrix = loadMatrix(world);
     grid.reset(matrix);
-    player = std::make_unique<Player>("Sam Gamgeez", 12, 5, 3, grid.cells, world.getRenderer());
+
+    // Utiliser le nom sauvegardé pour initialiser le nouveau joueur
+    player = std::make_unique<Player>(playerName, 12, 5, 3, grid.cells, world.getRenderer());
     wave.reset(10, grid.cells);
+
     std::cout << "Game reset complete." << std::endl; // Debug log
 }
 

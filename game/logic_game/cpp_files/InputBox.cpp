@@ -6,7 +6,7 @@
 
 InputBox::InputBox(int x, int y, int w, int h, SDL_Renderer* renderer) 
     : box{x, y, w, h}, textColor{255, 255, 255}, inputText(""), textTexture(nullptr), renderer(renderer) {
-    font = TTF_OpenFont("assets/font/MorrisRoman-Black.ttf", 24);
+    font = TTF_OpenFont("assets/font/MorrisRoman-Black.ttf", 80);
     if (!font) {
         std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
     }
@@ -37,7 +37,7 @@ void InputBox::render() {
         int texW = 0;
         int texH = 0;
         SDL_QueryTexture(textTexture, NULL, NULL, &texW, &texH);
-        SDL_Rect dstRect = {box.x + 5, box.y + 5, texW, texH};
+        SDL_Rect dstRect = {box.x + 150, box.y + 250, texW, texH};
         SDL_RenderCopy(renderer, textTexture, NULL, &dstRect);
     }
 }

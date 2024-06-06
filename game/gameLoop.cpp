@@ -23,7 +23,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
     bool stateChanged = true;
     bool levelSelected = false;
     const int FPS = 20;
-    const int frameDelay = 1000 / FPS;
+    const int frameDelay = 5000 / FPS;
 
     Uint32 frameStart;
     int frameTime;
@@ -205,7 +205,9 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
                 introPage(world, buttons, gifFrames, currentFrame);
                 break;
             case State::EnterName:
-                world.drawText("Enter your name:", 400, 250, 24);
+                world.drawText("ENTER YOUR NAME", 370, 150, 80);
+                world.drawText("&", 700, 300, 80);
+                world.drawText("PRESS ENTER:", 440, 450, 80);
                 inputBox.render();
                 break;
             case State::Menu:
@@ -220,7 +222,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
                 break;
             case State::Game:
                 frameStart = SDL_GetTicks();
-                gamePage(world, buttons, waveNumber, *player);
+                gamePage(world, buttons, waveNumber, player, *player);
                 renderMatrix(world, grid, wave, *player);
                 renderTimer(world, elapsedTime);
                 if (wave.update(currentTime, enemiesAtExit)) {
