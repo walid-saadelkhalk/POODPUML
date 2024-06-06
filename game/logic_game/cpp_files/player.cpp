@@ -5,7 +5,7 @@
 
 Player::Player(const std::string& name, int x, int y, int numTowers, const std::vector<std::vector<Cell>>& grid, SDL_Renderer* renderer)  // Correction
     : name(name), x(x), y(y), numTowers(numTowers), grid(grid) {
-    std::cout << "Welcome " << name << " !" << std::endl;
+    std::cout << "Welcome !" << std::endl;
     
     // Charger les textures des tours dès le début
     for (int i = 0; i < numTowers; ++i) {
