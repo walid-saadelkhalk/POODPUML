@@ -37,8 +37,8 @@ void Player::addTower(int x, int y, SDL_Renderer* renderer, Grid& grid) {
     if (numTowers > 0) {
         if (grid.isCellEmpty(x, y)) {
             towers.push_back(std::make_unique<Tower>(x, y, 10.0f, 100.0f, 0, 10.0, false, 1, 2));
-            grid.setCellTexture(x, y, nullptr); // Marque la cellule comme occupée
-            --numTowers;  // Décrémenter le nombre de tours disponibles
+            grid.setCellTexture(x, y, nullptr); 
+            --numTowers;  
             std::cout << "Tower added at position (" << x << ", " << y << ")" << std::endl;
         } else {
             std::cout << "Cell is already occupied." << std::endl;

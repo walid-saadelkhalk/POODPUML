@@ -7,6 +7,8 @@
 #include "Enemy.hpp"
 #include "Wave.hpp"
 #include <SDL2/SDL.h>
+#include <vector>
+#include <memory>
 
 class Tower : public Entities, public Observer {
 public:
@@ -28,8 +30,13 @@ public:
     void setPosition(int x, int y);
     void update(Wave& wave) override;
     void attack(Enemy& enemy);
-    
+    void shoot(Enemy* target);
+    void renderLaser(SDL_Renderer* renderer);
 
+private:
+    Uint32 lastShotTime;
+    Enemy* currentTarget;
+    
 };
 
 #endif

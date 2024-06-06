@@ -43,7 +43,9 @@ void renderMatrix(World& world, Grid& grid, Wave& wave, Player& player) {
 
     grid.renderGrid(world.getRenderer(), textures, wave, player,enemyTexture, towerTexture);
 
-
+    // for (auto& tower : player.getTowers()) {
+    //     tower->renderLaser(world.getRenderer());
+    // }
 
     for (SDL_Texture* texture : textures) {
         SDL_DestroyTexture(texture);

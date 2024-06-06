@@ -25,7 +25,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
     bool stateChanged = true;
     bool levelSelected = false; 
     const int FPS = 20;
-    const int frameDelay = 5000 / FPS;
+    const int frameDelay = 6000 / FPS;
 
     Uint32 frameStart;
     int frameTime;
@@ -183,10 +183,14 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 player.incrementTowers();
                 resetTimer = true;
             }
-            for (auto& tower : player.getTowers()) {
+
+            for (auto& tower : player.getTowers()) {  
             tower->update(wave);
-    }
+            }
+
         }
+
+
 
         
 
@@ -209,16 +213,22 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 gamePage(world, buttons, waveNumber, player);
                 renderMatrix(world, grid, wave, player);
                 renderTimer(world, elapsedTime);
+                for (auto& tower : player.getTowers()) {
+                tower->renderLaser(world.getRenderer()); 
+                 }
                 if (wave.update(currentTime, enemiesAtExit)) {
                     int gameTime = elapsedTime;
                     endGame(player, grid, gameTime, false, waveNumber);
                     world.switchState(State::Menu);
-
                 }
                 break;
             default:
                 std::cerr << "État invalide !" << std::endl;
                 break;
+        }
+
+        if (world.getCurrentState() == State::Game) {
+
         }
 
         SDL_RenderPresent(world.getRenderer());

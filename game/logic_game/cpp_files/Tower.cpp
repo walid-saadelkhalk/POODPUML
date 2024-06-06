@@ -2,10 +2,14 @@
 #include "../hpp_files/Observer.hpp"
 #include <SDL2/SDL_image.h>
 #include <iostream>
+#include <cmath>
+#include <cstdlib> 
+#include <ctime> 
+
 
 
 Tower::Tower(int x, int y, float attackPower, float lifeBar, int evolveStatus, double damage, bool selected, int shotRate, int range)
-    : Entities(x, y), attackPower(attackPower), lifeBar(lifeBar), evolveStatus(evolveStatus), damage(damage), selected(selected), shotRate(shotRate), range(range) {
+    : Entities(x, y), attackPower(attackPower), lifeBar(lifeBar), evolveStatus(evolveStatus), damage(damage), selected(selected), shotRate(shotRate), range(range), lastShotTime(0), currentTarget(nullptr) {
 
 }
 
@@ -49,25 +53,22 @@ void Tower::setPosition(int x, int y) {
     posY = y;
 }
 
-    // texture = IMG_LoadTexture(renderer, "assets/images/Mordor/Tower.jpg");
-    // if (!texture) {
-    //     std::cerr << "Failed to load tower texture: " << IMG_GetError() << std::endl;
-    // } else {
-    //     std::cout << "Tower texture loaded successfully!" << std::endl;
-    // }
-
 
 void Tower::update(Wave& wave) {
-    std::cout << "on a vu quelque chose" << std::endl;
-    for (auto& enemy : wave.getEnemies()) {
-        // Check if enemy is within range of tower
-        int dx = enemy->posX - posX;
-        int dy = enemy->posY - posY;
-        int distanceSquared = dx * dx + dy * dy;
-        if (distanceSquared <= range * range) {
-            // Enemy is in range, so attack enemy
-            std::cout << "Tower attacked enemy at position (" << enemy->posX << ", " << enemy->posY << ")" << std::endl;
-            attack(*enemy);
+    currentTarget = nullptr;
+    Uint32 currentTime = SDL_GetTicks();
+    if (currentTime - lastShotTime >= shotRate) {
+        for (const auto& enemy : wave.getEnemies()) {
+            int dx = enemy->posX - posX;
+            int dy = enemy->posY - posY;
+            int distanceSquared = dx * dx + dy * dy;
+            if (distanceSquared <= range * range) {
+                currentTarget = enemy.get();
+                shoot(currentTarget);
+                // std::cout << "Tower attacked enemy  (" << currentTarget->posX << ", " << currentTarget->posY << ")" << std::endl;
+                lastShotTime = currentTime;
+                break; // Une tour tire sur un seul ennemi à la fois
+            }
         }
     }
 }
@@ -77,3 +78,74 @@ void Tower::attack(Enemy& enemy) {
     std::cout << enemy.lifeBar << std::endl;
     // std::cout << "Tower attacked enemy  (" << enemy.posX << ", " << enemy.posY << ")" << std::endl;
 }
+
+
+void Tower::shoot(Enemy* target) {
+    currentTarget = target;
+    attack(*currentTarget);
+    // Logic to create and manage projectiles can be added here if necessary
+}
+
+ 
+
+void Tower::renderLaser(SDL_Renderer* renderer) {
+    if (currentTarget && currentTarget->lifeBar > 0) {
+        int towerCenterX = posX * 40 + 20;
+        int towerCenterY = posY * 40 + 20;
+        int enemyCenterX = currentTarget->posX * 40 + 20;
+        int enemyCenterY = currentTarget->posY * 40 + 20;
+
+        std::cout << "Drawing laser from (" << towerCenterX << ", " << towerCenterY << ") to ("
+                  << enemyCenterX << ", " << enemyCenterY << ")" << std::endl;
+
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+
+        // Initialiser le générateur de nombres aléatoires
+        srand(time(nullptr));
+
+        // Calculer la direction du laser
+        float dx = enemyCenterX - towerCenterX;
+        float dy = enemyCenterY - towerCenterY;
+        float distance = sqrt(dx * dx + dy * dy);
+        float stepX = dx / distance;
+        float stepY = dy / distance;
+
+        // Dessiner chaque segment du laser avec plusieurs points
+        int pointSize = 10; // Ajustez la taille du point selon vos préférences
+        float stepSize = 6; // Ajustez la taille de l'intervalle entre les points selon vos préférences
+        float randomness = 3.0f; // Ajustez l'amplitude de la variation aléatoire
+        float speedFactor = 1.0f; // Ajustez le facteur de vitesse pour rendre le laser plus rapide
+
+        for (float i = 0; i < distance; i += stepSize * speedFactor) {
+            int startX = towerCenterX + stepX * i;
+            int startY = towerCenterY + stepY * i;
+            int endX = towerCenterX + stepX * (i + stepSize * speedFactor);
+            int endY = towerCenterY + stepY * (i + stepSize * speedFactor);
+
+            // Dessiner plusieurs points le long du segment avec une variation aléatoire
+            for (int j = 0; j < pointSize; ++j) {
+                int x = startX + (endX - startX) * j / pointSize + (rand() % (int)(2 * randomness) - randomness);
+                int y = startY + (endY - startY) * j / pointSize + (rand() % (int)(2 * randomness) - randomness);
+                SDL_RenderDrawPoint(renderer, x, y);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// void Tower::update() {
+//     // Implémentation de la méthode de l'interface Observer
+//     // Appelée lorsque la vague notifie les observateurs
+//     Wave& wave = getWave(); // Méthode pour obtenir la vague actuelle
+//     update(wave);
+// }
+
