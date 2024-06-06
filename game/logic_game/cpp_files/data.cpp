@@ -1,5 +1,5 @@
 #include "nlohmann/json.hpp"
-#include "./logic_game/hpp_files/player.hpp"
+#include "./logic_game/hpp_files/Player.hpp"
 #include <fstream>
 #include <iostream>
 

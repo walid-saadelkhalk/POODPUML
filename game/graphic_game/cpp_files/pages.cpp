@@ -2,7 +2,12 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 #include <iostream>
+#include "../hpp_files/Sound.hpp"
+#include <string>
 
+#include <string>
+
+extern std::string menuBackgroundPath;
 
 void cleanUpTextures(std::vector<SDL_Texture*>& textures) {
     for (SDL_Texture* texture : textures) {
@@ -40,7 +45,7 @@ void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Text
 }
 
 void menuPage(World& world, std::vector<Button*>& buttons) {
-    SDL_Texture* bgMenuTexture = world.loadTexture("assets/images/menu_page.png");
+    SDL_Texture* bgMenuTexture = world.loadTexture(menuBackgroundPath.c_str());
     world.renderTexture(bgMenuTexture, 0, 0, 1500, 720);
 
     if (!buttons.empty()) {
@@ -52,7 +57,6 @@ void menuPage(World& world, std::vector<Button*>& buttons) {
     SDL_DestroyTexture(bgMenuTexture);
     SDL_RenderPresent(world.getRenderer());
 }
-
 
 void settingsPage(World& world, std::vector<Button*>& buttons) {
     SDL_Texture* background = world.loadTexture("assets/images/settings.png");
@@ -72,10 +76,44 @@ void settingsPage(World& world, std::vector<Button*>& buttons) {
         buttons[7]->draw();
         buttons[8]->draw();
     }
+
     SDL_RenderPresent(world.getRenderer());
 
     if (background) {
         SDL_DestroyTexture(background);
+    }
+
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
+            int x = event.button.x;
+            int y = event.button.y;
+
+            if (buttons[5]->isClickedAtPosition(x, y)) {
+                buttons[5]->click();
+                menuBackgroundPath = "assets/images/menu_page2.png";
+                std::cout << "THE SHIRE" << std::endl;
+                world.switchState(State::Menu);
+            } else if (buttons[6]->isClickedAtPosition(x, y)) {
+                buttons[6]->click();
+                menuBackgroundPath = "assets/images/menu_page.png";
+                std::cout << "MORDOR" << std::endl;
+                world.switchState(State::Menu);
+            } else if (buttons[7]->isClickedAtPosition(x, y)) {
+                buttons[7]->click();
+                Sound::getInstance().playMusic("assets/song/gameSong.mp3");
+                std::cout << "ON" << std::endl;
+                world.switchState(State::Menu);
+            } else if (buttons[8]->isClickedAtPosition(x, y)) {
+                buttons[8]->click();
+                Sound::getInstance().stopMusic();
+                std::cout << "OFF" << std::endl;
+                world.switchState(State::Menu);
+            } else if (buttons[1]->isClickedAtPosition(x, y)) {
+                buttons[1]->click();
+                world.switchState(State::Menu);
+            }
+        }
     }
 }
 
@@ -129,32 +167,26 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
     }
 }
 
-void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber) {
-    SDL_Rect viewport;  
+void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber, Player& player) {  
+    SDL_Rect viewport;
     viewport.x = 1000;
     viewport.y = 0;
     viewport.w = 500;
     viewport.h = 720;
     SDL_RenderSetViewport(world.getRenderer(), &viewport);
-    SDL_Texture* square = world.loadTexture("assets/images/Mordor/Tower.jpg");
+
     SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
-    
     SDL_RenderClear(world.getRenderer());
 
-    world.drawText("SHOP", 10, 10, 80);
-    world.drawText("Wave: " + std::to_string(waveNumber), 10, 500, 40);
-    if (square) {
-        world.renderTexture(square, 0, 100, 40, 40);
-    }
-
+    world.drawText("DATA", 10, 10, 80);
+    world.drawText("Wave: " + std::to_string(waveNumber), 40, 150, 40);
+    world.drawText("EKIA: compteur a mettre ici", 40, 350, 40);
+    world.drawText("Towers level: mettre logique", 40, 450, 40);    
+    world.drawText("Towers available: " + std::to_string(player.getNumTowers()), 40, 550, 40);
     if (!buttons.empty()) {
         buttons[9]->draw();
-        buttons[10]->draw();
     }
- 
-    if (square) {
-        SDL_DestroyTexture(square);
-    }
+
     SDL_RenderSetViewport(world.getRenderer(), nullptr);
 }
 
