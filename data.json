@@ -4,5 +4,11 @@
         "nom": "walid",
         "time": 2,
         "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "caramel",
+        "time": 12,
+        "wave": 1
     }
 ]
