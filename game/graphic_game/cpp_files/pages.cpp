@@ -7,6 +7,11 @@
 
 #include <string>
 
+//This file contains the different pages of the game
+//The intro page, the menu page, the settings page, the score page and the game page
+//Each page is displayed with the world, the buttons and the player
+//The pages are displayed with the different buttons and the different textures
+
 extern std::string menuBackgroundPath;
 
 void cleanUpTextures(std::vector<SDL_Texture*>& textures) {

@@ -2,20 +2,21 @@
 #include <iostream>
 #include <queue>
 
+// This file is a class that creates an enemy
+// The enemy can be created with a position, a life bar, a height and a current step
+// The enemy can move and set a path
+
 Enemy::Enemy(int x, int y, float lifeBar, int height)
     : Entities(x, y), lifeBar(lifeBar), height(height), currentStep(0) {
     posX = x;
     posY = y;
 }
 
-
-
 void Enemy::move() {
     if (currentStep < path.size()) {
         posX = path[currentStep]->heightCell;
         posY = path[currentStep]->widthCell;
         currentStep++;
-        // std::cout << "Enemy moved to: " << posX << ", " << posY << std::endl;
     }
 }
 

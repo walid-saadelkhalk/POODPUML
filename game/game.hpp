@@ -6,6 +6,10 @@
 #include "logic_game/hpp_files/Player.hpp"
 #include "logic_game/hpp_files/Wave.hpp"
 
+// This file contains the different functions used in the game
+// The functions are used to load the matrix, render the matrix, end the game and reset the game
+// The functions are used to load the matrix from a file, render the matrix with the player, the grid and the wave
+// The file is used to play the controller role between the graphic and the logic part of the game
 
 std::vector<std::vector<int>> loadMatrix(World& world);
 

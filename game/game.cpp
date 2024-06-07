@@ -9,6 +9,11 @@
 #include <vector>
 #include <utility>
 
+// This file contains the different functions used in the game
+// The functions are used to load the matrix, render the matrix, end the game and reset the game
+// The functions are used to load the matrix from a file, render the matrix with the player, the grid and the wave
+// The file is used to play the controller role between the graphic and the logic part of the game
+
 std::vector<std::vector<int>> loadMatrix(World& world) {
     // Load the matrix from the file
     std::vector<std::vector<int>> matrix = Grid::readMatrixFromFile("matrice.txt");
@@ -53,13 +58,6 @@ void renderMatrix(World& world, Grid& grid, Wave& wave, Player& player) {
 }
 
 
-// void endGame(Player& player, Grid& grid, Wave& wave, int gameTime, int nbWave) {
-//         json(player, 0, nbWave, gameTime);
-//         std::cout << "You win !" << std::endl;
-
-//     std::cout << "Game time: " << gameTime << " seconds" << std::endl;
-// }
-
 void endGame(Player& player, const Grid& grid, int gameTime, bool won, int nb_wave) {
     json(player, 0, nb_wave, gameTime);
     if (won) {
@@ -71,20 +69,18 @@ void endGame(Player& player, const Grid& grid, int gameTime, bool won, int nb_wa
 }
 
 void resetGame(World& world, std::unique_ptr<Player>& player, Grid& grid, Wave& wave) {
-    std::cout << "Resetting game..." << std::endl; // Debug log
+    std::cout << "Resetting game..." << std::endl; 
 
-    // Sauvegarder le nom du joueur actuel
     std::string playerName = player->getName();
 
-    player->clearTowers();  // Supprimez les tours avant de réinitialiser le joueur
+    player->clearTowers();  
     std::vector<std::vector<int>> matrix = loadMatrix(world);
     grid.reset(matrix);
 
-    // Utiliser le nom sauvegardé pour initialiser le nouveau joueur
     player = std::make_unique<Player>(playerName, 12, 5, 3, grid.cells, world.getRenderer());
     wave.reset(10, grid.cells);
 
-    std::cout << "Game reset complete." << std::endl; // Debug log
+    std::cout << "Game reset complete." << std::endl;
 }
 
 

@@ -2,20 +2,20 @@
 #include <iostream>
 
 
-// Initialisation de l'instance unique
+// Initialize the instance to nullptr
 Sound& Sound::getInstance() {
     static Sound instance;
     return instance;
 }
 
-// Constructeur privé
+// Private constructor to prevent direct instantiation
 Sound::Sound() : music(nullptr) {
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         std::cerr << "Erreur lors de l'initialisation de SDL_mixer: " << Mix_GetError() << std::endl;
     }
 }
 
-// Destructeur pour nettoyer les ressources
+// Destructor to clean up resources
 Sound::~Sound() {
     if (music != nullptr) {
         Mix_FreeMusic(music);
@@ -23,7 +23,7 @@ Sound::~Sound() {
     Mix_CloseAudio();
 }
 
-// Méthode pour jouer une musique
+// Method to play music
 void Sound::playMusic(const std::string& filePath) {
     if (music != nullptr) {
         Mix_FreeMusic(music);
@@ -36,7 +36,7 @@ void Sound::playMusic(const std::string& filePath) {
     }
 }
 
-// Méthode pour arrêter la musique
+// Method to stop music
 void Sound::stopMusic() {
     Mix_HaltMusic();
     if (music != nullptr) {

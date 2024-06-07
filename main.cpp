@@ -12,6 +12,11 @@
 #include <SDL2/SDL.h>
 #include <string>
 
+//this file is the main file of the game
+//it will create the world, the player, the grid and the enemy
+//it will also create the buttons and the main loop of the game
+//it will also load the matrix of the game
+
 std::string menuBackgroundPath = "assets/images/menu_page.png";
 
 int main(int argc, char *argv[]) {
@@ -27,10 +32,7 @@ int main(int argc, char *argv[]) {
     std::unique_ptr<Player> player = std::make_unique<Player>("Sam Gamgeez", 12, 5, 3, grid.cells, world.getRenderer());
 
     
-
-    // Initialiser l'ennemi à la position de départ
-    Enemy enemy(0, 7, 100.0f, 20); // Initialiser avec les coordonnées de départ (0, 7)
-    // enemy.setPath(grid.cells);
+    Enemy enemy(0, 7, 100.0f, 20);
 
     buttons.push_back(new Button(world.getRenderer(), 1250, 620, 200, 50, "Start", 24));
     buttons.push_back(new Button(world.getRenderer(), 1410, 10, 50, 50, "X", 25));

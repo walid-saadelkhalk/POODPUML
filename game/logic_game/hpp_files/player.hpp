@@ -7,6 +7,10 @@
 #include <memory>
 #include <SDL2/SDL.h>  
 
+// Class to create a player with a name, a position, a number of towers and a grid
+// The player can add a tower, increment the number of towers, get the position, set the position of a tower, clear the towers, set the name, get the number of towers, get the towers and get the tower textures
+// The player can be created with a name, a position, a number of towers and a grid
+
 class Grid;  
 
 class Player {

@@ -1,6 +1,11 @@
 #include "../hpp_files/World.hpp"
 #include <iostream>
 
+// This file is a class that creates a window and a renderer
+// The window is created with a title, a width and a height
+// The renderer is created with the window
+// The state of the game is set to intro
+
 World::World(const char* title, int width, int height) {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cerr << "Erreur lors de l'initialisation de SDL : " << SDL_GetError() << std::endl;

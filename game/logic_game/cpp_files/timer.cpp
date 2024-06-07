@@ -1,6 +1,10 @@
 #include "./logic_game/hpp_files/timer.hpp"
 #include <iostream>
 
+//This file is a function that displays the timer
+//The timer is displayed with the world and the elapsed time
+//The timer is displayed with the font, the color, the text, the surface, the texture and the destination rectangle
+
 void renderTimer(World& world, Uint32 elapsedTime) {
     if (TTF_WasInit() == 0) {
         TTF_Init();

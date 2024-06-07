@@ -6,28 +6,28 @@
 
 class Sound {
 public:
-    // Méthode statique pour obtenir l'instance unique de Sound
+    // Static method to get the unique instance of the class
     static Sound& getInstance();
 
-    // Méthode pour jouer une musique
+    // Method to play music
     void playMusic(const std::string& filePath);
 
-    // Méthode pour arrêter la musique
+    // Method to stop music
     void stopMusic();
 
 private:
-    // Constructeur privé pour empêcher l'instanciation directe
+    // Private constructor to prevent direct instantiation
     Sound();
 
-    // Déclaration mais non définition pour empêcher la copie et l'affectation
+    // Undefine copy constructor and assignment operator
     Sound(const Sound&) = delete;
     Sound& operator=(const Sound&) = delete;
 
-    // Destructeur pour nettoyer les ressources
+    // Destructor to clean up resources
     ~Sound();
 
-    // Pointeur vers la musique en cours
+    // Pointer to the music
     Mix_Music* music;
 };
 
-#endif // SOUND_HPP
+#endif

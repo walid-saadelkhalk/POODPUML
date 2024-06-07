@@ -4,6 +4,10 @@
 #include <vector>
 #include <algorithm>
 
+// Forward declaration
+// Wave class
+// This class is used to update the observer
+
 
 class Wave;
 

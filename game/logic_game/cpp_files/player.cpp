@@ -3,11 +3,15 @@
 #include <SDL2/SDL_image.h>
 #include <random>
 
+// This file is a class that creates a player
+// The player can be created with a name, a position, a number of towers, a grid and a renderer
+// The player can be displayed with the name, the position, the number of towers, the grid and the renderer
+// The player can add a tower, increment the number of towers, get the position, get the number of towers, get the towers, get the tower textures, clear the towers, set the name and set the position of the tower
+
 Player::Player(const std::string& name, int x, int y, int numTowers, const std::vector<std::vector<Cell>>& grid, SDL_Renderer* renderer)  // Correction
     : name(name), x(x), y(y), numTowers(numTowers), grid(grid) {
     std::cout << "Welcome !" << std::endl;
     
-    // Charger les textures des tours dès le début
     for (int i = 0; i < numTowers; ++i) {
         SDL_Texture* texture = IMG_LoadTexture(renderer, "assets/images/Mordor/Tower.jpg");
         if (texture) {
@@ -37,8 +41,8 @@ void Player::addTower(int x, int y, SDL_Renderer* renderer, Grid& grid) {
     if (numTowers > 0) {
         if (grid.isCellEmpty(x, y)) {
             towers.push_back(std::make_unique<Tower>(x, y, 10.0f, 100.0f, 0, 10.0, false, 1, 2));
-            grid.setCellTexture(x, y, nullptr); // Marque la cellule comme occupée
-            --numTowers;  // Décrémenter le nombre de tours disponibles
+            grid.setCellTexture(x, y, nullptr);
+            --numTowers;
             std::cout << "Tower added at position (" << x << ", " << y << ")" << std::endl;
         } else {
             std::cout << "Cell is already occupied." << std::endl;

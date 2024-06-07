@@ -4,6 +4,10 @@
 #include <vector>
 #include <algorithm>
 
+// Forward declaration
+// Observer interface
+// This class is used to update the observer
+
 class Observer;
 
 // Subject interface

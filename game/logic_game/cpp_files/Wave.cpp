@@ -5,12 +5,16 @@
 #include <iostream>
 #include <stdio.h>
 
+// This file is a class that creates a wave
+// The wave can be created with a number of enemies and a grid
+// The wave can be displayed with the number of enemies, the grid, the last spawn time, the number of spawned enemies and the number of enemies at the exit
+// The wave can be rendered with a current time and the number of enemies at the exit
+
 Wave::Wave(int numEnemies, const std::vector<std::vector<Cell>>& grid)
     : numEnemies(numEnemies), grid(grid), lastSpawnTime(0), spawnedEnemies(0), enemiesAtExit(0) {
 }
 
 Wave::~Wave() {
-    // Destructeur, si des ressources dynamiques sont allouées, libérez-les ici
 }
 
 void Wave::attach(Observer* observer){
@@ -78,7 +82,6 @@ void Wave::increaseEnemies(int additionalEnemies) {
 
 void Wave::gameOver() {
     std::cout << "Game Over! You lost." << std::endl;
-    // exit(0);
 }
 
 int Wave::getEnemiesAtExit() const {

@@ -5,6 +5,10 @@
 #include <vector>
 #include "Cell.hpp"
 
+// Class to create an enemy with a life bar, a height and a path
+// The enemy can move on the path
+// The enemy can set a path
+
 class Enemy : public Entities{
 public:
     float lifeBar;

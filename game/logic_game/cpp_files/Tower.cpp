@@ -3,6 +3,10 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
+//This file is a class that creates a tower
+//The tower can be created with a position, an attack power, a life bar, an evolve status, a damage, a selected state, a shot rate and a range
+//The tower can be displayed with the position
+//The tower can upgrade, attack an enemy, draw, set a position and update
 
 Tower::Tower(int x, int y, float attackPower, float lifeBar, int evolveStatus, double damage, bool selected, int shotRate, int range)
     : Entities(x, y), attackPower(attackPower), lifeBar(lifeBar), evolveStatus(evolveStatus), damage(damage), selected(selected), shotRate(shotRate), range(range), texture(nullptr) {
@@ -19,11 +23,9 @@ Tower::~Tower() {
 
 
 void Tower::upgrade() {
-    // Implémentez la logique pour améliorer la tour ici
 }
 
 void Tower::someVirtualMethod() {
-    // Implémentez la méthode virtuelle ici
 }
 
 void Tower::draw(SDL_Renderer* renderer) {
@@ -60,12 +62,7 @@ void Tower::setPosition(int x, int y) {
     posY = y;
 }
 
-    // texture = IMG_LoadTexture(renderer, "assets/images/Mordor/Tower.jpg");
-    // if (!texture) {
-    //     std::cerr << "Failed to load tower texture: " << IMG_GetError() << std::endl;
-    // } else {
-    //     std::cout << "Tower texture loaded successfully!" << std::endl;
-    // }
+
 
 
 void Tower::update(Wave& wave) {

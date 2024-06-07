@@ -62,7 +62,6 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
                                 stateChanged = true;
                             }
                         } else if (world.getCurrentState() == State::EnterName) {
-                            // Ne rien faire, l'entrée est gérée par le clavier
                         } else if (world.getCurrentState() == State::Menu) {
                             if (buttons[2]->isClickedAtPosition(x, y)) {
                                 buttons[2]->click();
@@ -185,7 +184,6 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
             lastFrameTime = currentTime;
         }
 
-        // Mettre à jour la vague d'ennemis
         if (world.getCurrentState() == State::Game) {
             wave.update(currentTime, enemiesAtExit);
             if (wave.getEnemies().empty() && elapsedTime > 0) {
@@ -227,15 +225,15 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
                 renderTimer(world, elapsedTime);
                 if (wave.update(currentTime, enemiesAtExit)) {
                     int gameTime = elapsedTime;
-                    std::cout << "End of game. Player: " << player->getName() << ", Time: " << gameTime << "s, Waves: " << waveNumber << std::endl; // Debug log
+                    std::cout << "End of game. Player: " << player->getName() << ", Time: " << gameTime << "s, Waves: " << waveNumber << std::endl;
                     endGame(*player, grid, gameTime, false, waveNumber);
                     world.switchState(State::Menu);
-                    resetGame(world, player, grid, wave);  // Réinitialiser le jeu en cas de défaite
-                    waveNumber = 1;  // Reset wave number
-                    enemiesPerWave = 10;  // Reset the number of enemies per wave
+                    resetGame(world, player, grid, wave);
+                    waveNumber = 1; 
+                    enemiesPerWave = 10;
                     enemiesKilled = 0;
                     enemiesAtExit = 0;
-                    std::cout << "Game reset complete. Returning to menu." << std::endl; // Debug log
+                    std::cout << "Game reset complete. Returning to menu." << std::endl; 
                 }
                 break;
             default:

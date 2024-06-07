@@ -5,6 +5,11 @@
 #include <iostream>
 #include <SDL2/SDL_image.h>
 
+// This file is a class that creates a grid
+// The grid can be created with a width, a height and a matrix
+// The grid can be displayed with the matrix
+// The grid can be rendered with a renderer, textures, a wave, a player, an enemy texture and a tower texture
+
 Grid::Grid(int width, int height, const std::vector<std::vector<int>>& matrix)
     : width(width), height(height) {
     initializeGrid(matrix);

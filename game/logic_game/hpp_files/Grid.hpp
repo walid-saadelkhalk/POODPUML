@@ -9,6 +9,10 @@
 #include "Wave.hpp"
 #include "Player.hpp"
 
+// Class to create a grid with a width, a height and a vector of cells
+// The grid can be initialized with a matrix
+// The grid can be displayed with the matrix
+
 class Player;
 
 class Grid {

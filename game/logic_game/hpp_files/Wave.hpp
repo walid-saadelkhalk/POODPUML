@@ -9,6 +9,11 @@
 #include <SDL2/SDL.h>
 #include <algorithm> 
 
+// This class represents a wave of enemies
+// The wave can be created with a number of enemies and a grid
+// The wave can be displayed with the number of enemies, the grid, the last spawn time, the number of spawned enemies and the number of enemies at the exit
+// The wave can be rendered with a current time and the number of enemies at the exit
+
 class Wave : public Subject{
 public:
     Wave(int numEnemies, const std::vector<std::vector<Cell>>& grid);
