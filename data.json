@@ -10,5 +10,59 @@
         "nom": "caramel",
         "time": 12,
         "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "barbara",
+        "time": 12,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "barbzer",
+        "time": 1,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "",
+        "time": 12,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "",
+        "time": 12,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "",
+        "time": 12,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "",
+        "time": 12,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "",
+        "time": 14,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "",
+        "time": 14,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "",
+        "time": 47,
+        "wave": 1
     }
 ]

@@ -28,7 +28,7 @@ std::vector<std::vector<int>> loadMatrix(World& world) {
 
 void renderMatrix(World& world, Grid& grid, Wave& wave, Player& player) {
     std::vector<SDL_Texture*> textures;
-    for (int i = 0; i <= 6; ++i) {
+    for (int i = 0; i <= 17; ++i) {
         std::string path = "assets/images/" + std::to_string(i) + ".png";
         SDL_Texture* texture = world.loadTexture(path);
         if (texture) {
@@ -36,12 +36,12 @@ void renderMatrix(World& world, Grid& grid, Wave& wave, Player& player) {
         }
     }
 
-    SDL_Texture* enemyTexture = world.loadTexture("assets/images/Mordor/Boromir.jpg");
+    SDL_Texture* enemyTexture = world.loadTexture("assets/images/Mordor/Boromir.png");
     if (!enemyTexture) {
         std::cerr << "Erreur lors du chargement de l'image de l'ennemi" << std::endl;
     }
 
-    SDL_Texture* towerTexture = world.loadTexture("assets/images/Mordor/Tower.jpg");
+    SDL_Texture* towerTexture = world.loadTexture("assets/images/Mordor/Tower.png");
     if (!towerTexture) {
         std::cerr << "Erreur lors du chargement de l'image de la tour" << std::endl;
     }

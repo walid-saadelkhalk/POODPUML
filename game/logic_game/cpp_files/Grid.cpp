@@ -40,10 +40,10 @@ std::vector<std::vector<int>> Grid::readMatrixFromFile(const std::string& filena
     while (std::getline(file, line)) {
         std::vector<int> row;
         std::stringstream ss(line);
-        char ch;
-        while (ss >> ch) {
-            if (isdigit(ch)) {
-                row.push_back(ch - '0');
+        std::string value;
+        while (std::getline(ss, value, ',')) { // split by comma
+            if (!value.empty() && std::all_of(value.begin(), value.end(), ::isdigit)) {
+                row.push_back(std::stoi(value));
             }
         }
         if (!row.empty()) {
@@ -102,7 +102,11 @@ void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& t
 
     // Render all towers
     for (const auto& tower : player.getTowers()) {
-        SDL_Rect towerRect = { tower->posX * cellWidth, tower->posY * cellHeight, cellWidth, cellHeight };
+        int towerWidth = cellWidth * 1.5; // 1.5 times the width of the cell
+        int towerHeight = cellHeight * 1.5; // 1.5 times the height of the cell
+        int towerPosX = tower->posX * cellWidth - (towerWidth - cellWidth) / 2; // Adjust position to center the tower
+        int towerPosY = tower->posY * cellHeight - (towerHeight - (cellHeight - 50)) / 2; // Adjust position to center the tower
+        SDL_Rect towerRect = { towerPosX, towerPosY, towerWidth, towerHeight };
         SDL_RenderCopy(renderer, towerTexture, nullptr, &towerRect);
     }
 
