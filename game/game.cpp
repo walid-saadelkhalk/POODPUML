@@ -28,7 +28,7 @@ std::vector<std::vector<int>> loadMatrix(World& world) {
 
 void renderMatrix(World& world, Grid& grid, Wave& wave, Player& player) {
     std::vector<SDL_Texture*> textures;
-    for (int i = 0; i <= 20; ++i) {
+    for (int i = 0; i <= 21; ++i) {
         std::string path = "assets/images/" + std::to_string(i) + ".png";
         SDL_Texture* texture = world.loadTexture(path);
         if (texture) {
