@@ -24,6 +24,11 @@ public:
     void setPath(const std::vector<std::vector<Cell>>& grid);
     bool hasReachedGoal() const;
     float getLifeBar() const;
+    int getTextureIndex() const;
+    void setTextureIndex(int index);
+
+private:
+    int textureIndex;
 };
 
 #endif

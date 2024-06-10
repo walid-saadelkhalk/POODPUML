@@ -69,3 +69,12 @@ float Enemy::getLifeBar() const {
     return lifeBar;
 }   
 
+int Enemy::getTextureIndex() const {
+    return textureIndex;
+}
+
+void Enemy::setTextureIndex(int index) {
+    textureIndex = index;
+}
+
+

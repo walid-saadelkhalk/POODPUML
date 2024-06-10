@@ -67,6 +67,7 @@ bool Wave::update(Uint32 currentTime, int& enemiesAtExit) {
 
 void Wave::spawnEnemy() {
     auto enemy = std::make_unique<Enemy>(0, 0, 90.0f, 50);
+    enemy->setTextureIndex(rand() % 6);
     enemy->setPath(grid);
     enemies.push_back(std::move(enemy));
     spawnedEnemies++;

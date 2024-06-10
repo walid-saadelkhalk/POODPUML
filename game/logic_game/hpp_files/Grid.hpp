@@ -27,7 +27,7 @@ public:
     void initializeGrid(const std::vector<std::vector<int>>& matrix);
     static std::vector<std::vector<int>> readMatrixFromFile(const std::string& filename);
     void displayMatrix() const;
-    void renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Wave& wave, Player& player,SDL_Texture* enemyTexture, SDL_Texture* towerTexture);
+    void renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Wave& wave, Player& player, const std::vector<SDL_Texture*>& enemyTextures, SDL_Texture* towerTexture);
 
     int getWidth() const;
     int getHeight() const;

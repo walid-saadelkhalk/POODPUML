@@ -36,9 +36,13 @@ void renderMatrix(World& world, Grid& grid, Wave& wave, Player& player) {
         }
     }
 
-    SDL_Texture* enemyTexture = world.loadTexture("assets/images/Mordor/Boromir.png");
-    if (!enemyTexture) {
-        std::cerr << "Erreur lors du chargement de l'image de l'ennemi" << std::endl;
+    std::vector<SDL_Texture*> enemyTextures;
+    for (int i = 0; i <= 5; ++i) {
+        std::string path = "assets/images/Mordor/enemy/" + std::to_string(i) + ".png";
+        SDL_Texture* texture = world.loadTexture(path);
+        if (texture) {
+            enemyTextures.push_back(texture);
+        }
     }
 
     SDL_Texture* towerTexture = world.loadTexture("assets/images/Mordor/Tower.png");
@@ -46,16 +50,17 @@ void renderMatrix(World& world, Grid& grid, Wave& wave, Player& player) {
         std::cerr << "Erreur lors du chargement de l'image de la tour" << std::endl;
     }
 
-    grid.renderGrid(world.getRenderer(), textures, wave, player,enemyTexture, towerTexture);
-
-
+    grid.renderGrid(world.getRenderer(), textures, wave, player, enemyTextures, towerTexture);
 
     for (SDL_Texture* texture : textures) {
         SDL_DestroyTexture(texture);
     }
-    SDL_DestroyTexture(enemyTexture);
+    for (SDL_Texture* texture : enemyTextures) {
+        SDL_DestroyTexture(texture);
+    }
     SDL_DestroyTexture(towerTexture);
 }
+
 
 
 void endGame(Player& player, const Grid& grid, int gameTime, bool won, int nb_wave) {

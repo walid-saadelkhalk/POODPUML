@@ -69,7 +69,7 @@ void Grid::displayMatrix() const {
     }
 }
 
-void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Wave& wave, Player& player,SDL_Texture* enemyTexture, SDL_Texture* towerTexture) {
+void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Wave& wave, Player& player, const std::vector<SDL_Texture*>& enemyTextures, SDL_Texture* towerTexture) {
     const int cellWidth = 40;
     const int cellHeight = 40;
     const int maxWidth = 1000;
@@ -93,11 +93,12 @@ void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& t
             }
         }
     }
-    
-    // Render all enemies in the wave
+
+    // Render all enemies in the wave with their respective textures
     for (const auto& enemy : wave.getEnemies()) {
+        int textureIndex = enemy->getTextureIndex(); // Get the texture index assigned to this enemy
         SDL_Rect enemyRect = { enemy->posX * cellWidth, enemy->posY * cellHeight, cellWidth, cellHeight };
-        SDL_RenderCopy(renderer, enemyTexture, nullptr, &enemyRect);
+        SDL_RenderCopy(renderer, enemyTextures[textureIndex], nullptr, &enemyRect);
     }
 
     // Render all towers
@@ -112,6 +113,7 @@ void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& t
 
     SDL_RenderSetViewport(renderer, nullptr);
 }
+
 
 int Grid::getWidth() const {
     return width;
