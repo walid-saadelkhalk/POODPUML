@@ -7,6 +7,8 @@
 #include "Enemy.hpp"
 #include "Wave.hpp"
 #include <SDL2/SDL.h>
+#include <vector>
+#include <memory>
 
 // This class represents a tower 
 // The tower can be created with a position, an attack power, a life bar, an evolve status, a damage, a selected state, a shot rate and a range
@@ -33,8 +35,13 @@ public:
     void setPosition(int x, int y);
     void update(Wave& wave) override;
     void attack(Enemy& enemy);
-    
+    void shoot(Enemy* target);
+    void renderLaser(SDL_Renderer* renderer);
 
+private:
+    Uint32 lastShotTime;
+    Enemy* currentTarget;
+    
 };
 
 #endif

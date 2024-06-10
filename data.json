@@ -82,5 +82,29 @@
         "nom": "",
         "time": 47,
         "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "Sam Gamgeez",
+        "time": 12,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "Sam Gamgeez",
+        "time": 12,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "Sam Gamgeez",
+        "time": 24,
+        "wave": 1
+    },
+    {
+        "death": 0,
+        "nom": "Sam Gamgeez",
+        "time": 14,
+        "wave": 1
     }
 ]

@@ -26,7 +26,6 @@ void Wave::detach(Observer* observer){
 }
 
 void Wave::notify(){
-    std::cout << "Enemy notify" << std::endl;
     for (Observer* tower : towers) {
 
         tower->update(*this);
@@ -62,6 +61,8 @@ bool Wave::update(Uint32 currentTime, int& enemiesAtExit) {
     }
 
     return false;
+
+    notify();
 }
 
 

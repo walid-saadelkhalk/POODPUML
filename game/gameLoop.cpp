@@ -193,9 +193,11 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
                 player->incrementTowers();
                 resetTimer = true;
             }
-            for (auto& tower : player->getTowers()) {
+
+            for (auto& tower : player->getTowers()) {  
                 tower->update(wave);
-            }
+                    }
+
         }
 
         switch (world.getCurrentState()) {
@@ -223,6 +225,9 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
                 gamePage(world, buttons, waveNumber, player, *player);
                 renderMatrix(world, grid, wave, *player);
                 renderTimer(world, elapsedTime);
+                for (auto& tower : player->getTowers()) {
+                    tower->renderLaser(world.getRenderer()); 
+                }
                 if (wave.update(currentTime, enemiesAtExit)) {
                     int gameTime = elapsedTime;
                     std::cout << "End of game. Player: " << player->getName() << ", Time: " << gameTime << "s, Waves: " << waveNumber << std::endl;
@@ -239,6 +244,10 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
             default:
                 std::cerr << "État invalide !" << std::endl;
                 break;
+        }
+
+        if (world.getCurrentState() == State::Game) {
+
         }
 
         SDL_RenderPresent(world.getRenderer());
