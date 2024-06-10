@@ -25,86 +25,20 @@
     },
     {
         "death": 0,
-        "nom": "",
-        "time": 12,
-        "wave": 1
+        "nom": "barbzer",
+        "time": 1,
+        "wave": 6
     },
     {
         "death": 0,
-        "nom": "",
-        "time": 12,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "",
-        "time": 12,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "",
-        "time": 12,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "",
-        "time": 14,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "",
-        "time": 14,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "",
+        "nom": "Barb",
         "time": 47,
         "wave": 1
     },
     {
         "death": 0,
-        "nom": "",
+        "nom": "Alicia",
         "time": 47,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "",
-        "time": 47,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "",
-        "time": 47,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "Sam Gamgeez",
-        "time": 12,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "Sam Gamgeez",
-        "time": 12,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "Sam Gamgeez",
-        "time": 24,
-        "wave": 1
-    },
-    {
-        "death": 0,
-        "nom": "Sam Gamgeez",
-        "time": 14,
         "wave": 1
     }
 ]

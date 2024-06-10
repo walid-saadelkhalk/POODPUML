@@ -188,7 +188,7 @@ void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Playe
             wave.update(currentTime, enemiesAtExit);
             if (wave.getEnemies().empty() && elapsedTime > 0) {
                 waveNumber++;
-                enemiesPerWave += 0;
+                enemiesPerWave += 5;
                 wave = Wave(enemiesPerWave, grid.cells);
                 player->incrementTowers();
                 resetTimer = true;

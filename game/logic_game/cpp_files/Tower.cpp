@@ -113,21 +113,19 @@ void Tower::renderLaser(SDL_Renderer* renderer) {
 
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 
-        // Initialiser le générateur de nombres aléatoires
         srand(time(nullptr));
 
-        // Calculer la direction du laser
         float dx = enemyCenterX - towerCenterX;
         float dy = enemyCenterY - towerCenterY;
         float distance = sqrt(dx * dx + dy * dy);
         float stepX = dx / distance;
         float stepY = dy / distance;
 
-        // Dessiner chaque segment du laser avec plusieurs points
-        int pointSize = 10; // Ajustez la taille du point selon vos préférences
-        float stepSize = 6; // Ajustez la taille de l'intervalle entre les points selon vos préférences
-        float randomness = 3.0f; // Ajustez l'amplitude de la variation aléatoire
-        float speedFactor = 1.0f; // Ajustez le facteur de vitesse pour rendre le laser plus rapide
+
+        int pointSize = 10; 
+        float stepSize = 6; 
+        float randomness = 3.0f; 
+        float speedFactor = 1.0f; 
 
         for (float i = 0; i < distance; i += stepSize * speedFactor) {
             int startX = towerCenterX + stepX * i;
@@ -135,7 +133,6 @@ void Tower::renderLaser(SDL_Renderer* renderer) {
             int endX = towerCenterX + stepX * (i + stepSize * speedFactor);
             int endY = towerCenterY + stepY * (i + stepSize * speedFactor);
 
-            // Dessiner plusieurs points le long du segment avec une variation aléatoire
             for (int j = 0; j < pointSize; ++j) {
                 int x = startX + (endX - startX) * j / pointSize + (rand() % (int)(2 * randomness) - randomness);
                 int y = startY + (endY - startY) * j / pointSize + (rand() % (int)(2 * randomness) - randomness);
