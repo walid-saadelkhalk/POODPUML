@@ -2,7 +2,17 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 #include <iostream>
+#include "../hpp_files/Sound.hpp"
+#include <string>
 
+#include <string>
+
+//This file contains the different pages of the game
+//The intro page, the menu page, the settings page, the score page and the game page
+//Each page is displayed with the world, the buttons and the player
+//The pages are displayed with the different buttons and the different textures
+
+extern std::string menuBackgroundPath;
 
 void cleanUpTextures(std::vector<SDL_Texture*>& textures) {
     for (SDL_Texture* texture : textures) {
@@ -40,7 +50,7 @@ void introPage(World& world, std::vector<Button*>& buttons, std::vector<SDL_Text
 }
 
 void menuPage(World& world, std::vector<Button*>& buttons) {
-    SDL_Texture* bgMenuTexture = world.loadTexture("assets/images/menu_page.png");
+    SDL_Texture* bgMenuTexture = world.loadTexture(menuBackgroundPath.c_str());
     world.renderTexture(bgMenuTexture, 0, 0, 1500, 720);
 
     if (!buttons.empty()) {
@@ -52,7 +62,6 @@ void menuPage(World& world, std::vector<Button*>& buttons) {
     SDL_DestroyTexture(bgMenuTexture);
     SDL_RenderPresent(world.getRenderer());
 }
-
 
 void settingsPage(World& world, std::vector<Button*>& buttons) {
     SDL_Texture* background = world.loadTexture("assets/images/settings.png");
@@ -72,17 +81,53 @@ void settingsPage(World& world, std::vector<Button*>& buttons) {
         buttons[7]->draw();
         buttons[8]->draw();
     }
+
     SDL_RenderPresent(world.getRenderer());
 
     if (background) {
         SDL_DestroyTexture(background);
     }
+
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
+            int x = event.button.x;
+            int y = event.button.y;
+
+            if (buttons[5]->isClickedAtPosition(x, y)) {
+                buttons[5]->click();
+                menuBackgroundPath = "assets/images/menu_page2.png";
+                std::cout << "THE SHIRE" << std::endl;
+                world.switchState(State::Menu);
+            } else if (buttons[6]->isClickedAtPosition(x, y)) {
+                buttons[6]->click();
+                menuBackgroundPath = "assets/images/menu_page.png";
+                std::cout << "MORDOR" << std::endl;
+                world.switchState(State::Menu);
+            } else if (buttons[7]->isClickedAtPosition(x, y)) {
+                buttons[7]->click();
+                Sound::getInstance().playMusic("assets/song/gameSong.mp3");
+                std::cout << "ON" << std::endl;
+                world.switchState(State::Menu);
+            } else if (buttons[8]->isClickedAtPosition(x, y)) {
+                buttons[8]->click();
+                Sound::getInstance().stopMusic();
+                std::cout << "OFF" << std::endl;
+                world.switchState(State::Menu);
+            } else if (buttons[1]->isClickedAtPosition(x, y)) {
+                buttons[1]->click();
+                world.switchState(State::Menu);
+            }
+        }
+    }
 }
 
-void scorePage(World& world, std::vector<Button*>& buttons) {
+void scorePage(World& world, std::vector<Button*>& buttons, std::unique_ptr<Player>& player) {
     SDL_Texture* background = world.loadTexture("assets/images/score.png");
     SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(world.getRenderer());
+
+    std::string playerName = player->getName();
 
     if (background) {
         int width, height;
@@ -92,7 +137,6 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
 
     if (!buttons.empty()) {
         buttons[1]->draw();
-
     }
 
     std::ifstream i("data.json");
@@ -108,12 +152,13 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
     int count = 1;
     
     // Display only the top 10 scores
-    for(const auto& joueur : j) {
-        if (joueur["nom"] == "Sam Gamgeez") {
-            world.drawText(count == 1 ? "1st" : std::to_string(count), 620, y_offset, 40);
-            world.drawText("Death : " + std::to_string(static_cast<int>(joueur["death"])), 730, y_offset, 40);
-            world.drawText("Wave : " + std::to_string(static_cast<int>(joueur["wave"])), 980, y_offset, 40);
-            world.drawText("Time : " + std::to_string(static_cast<int>(joueur["time"])), 1230, y_offset, 40);
+    for (const auto& joueur : j) {
+        if (joueur.contains("nom")) {
+            world.drawText(count == 1 ? "1st" : std::to_string(count), 620, y_offset, 30);
+            world.drawText("Player : " + joueur["nom"].get<std::string>(), 700, y_offset, 30);
+            world.drawText("Death : " + std::to_string(joueur["death"].get<int>()), 950, y_offset, 30);
+            world.drawText("Wave : " + std::to_string(joueur["wave"].get<int>()), 1100, y_offset, 30);
+            world.drawText("Time : " + std::to_string(joueur["time"].get<int>()), 1250, y_offset, 30);
             y_offset += 55;
             count++;
             if (count >= 11) {
@@ -129,30 +174,29 @@ void scorePage(World& world, std::vector<Button*>& buttons) {
     }
 }
 
-void gamePage(World& world, std::vector<Button*>& buttons) {
+
+void gamePage(World& world, std::vector<Button*>& buttons, int waveNumber, std::unique_ptr<Player>& player, Player& players) {  
     SDL_Rect viewport;
     viewport.x = 1000;
     viewport.y = 0;
     viewport.w = 500;
     viewport.h = 720;
+    std::string playerName = player->getName();
     SDL_RenderSetViewport(world.getRenderer(), &viewport);
-    SDL_Texture* square = world.loadTexture("assets/images/1.png");
+
     SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(world.getRenderer());
 
-    world.drawText("SHOP", 10, 10, 80);
-    if (square) {
-        world.renderTexture(square, 0, 100, 500, 100);
-    }
-
+    world.drawText("RECAP", 10, 10, 80);
+    world.drawText("Player: " + playerName, 40, 150, 40);
+    world.drawText("Wave: " + std::to_string(waveNumber), 40, 350, 40);
+    // world.drawText("EKIA: compteur a mettre ici", 40, 450, 40);
+    // world.drawText("Towers level: mettre logique", 40, 550, 40);    
+    world.drawText("Towers available: " + std::to_string(players.getNumTowers()), 40, 450, 40);
     if (!buttons.empty()) {
         buttons[9]->draw();
-        buttons[10]->draw();
     }
- 
-    if (square) {
-        SDL_DestroyTexture(square);
-    }
+
     SDL_RenderSetViewport(world.getRenderer(), nullptr);
 }
 

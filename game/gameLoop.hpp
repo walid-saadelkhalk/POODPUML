@@ -12,7 +12,7 @@
 // It will handle the events and render the game based on the current state 
 // The main loop will call different functions to render the different pages of the game
 
-void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid& grid, Enemy& enemy);
+void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Player>& player, Grid& grid) ;
 
 
 #endif

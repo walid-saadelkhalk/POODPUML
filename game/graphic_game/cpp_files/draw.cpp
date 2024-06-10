@@ -1,6 +1,10 @@
 #include "../hpp_files/World.hpp"
 #include <iostream>
 
+// Method to draw text on the screen
+// The text is displayed at the specified position with the specified size and color 
+
+
 void World::drawText(const std::string &text, int x, int y, int size) {
     TTF_Font* font = TTF_OpenFont("assets/font/MorrisRoman-Black.ttf", size);
 
@@ -43,8 +47,6 @@ SDL_Texture* World::loadTexture(const std::string &file) {
     SDL_Texture* newTexture = IMG_LoadTexture(renderer, file.c_str());
     if (newTexture == nullptr) {
         std::cerr << "Erreur lors du chargement de l'image " << file << " : " << IMG_GetError() << std::endl;
-    } else {
-        // std::cout << "Image chargée avec succès : " << file << std::endl;
     }
     return newTexture;
 }

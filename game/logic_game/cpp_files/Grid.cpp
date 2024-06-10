@@ -1,8 +1,14 @@
 #include "../hpp_files/Grid.hpp"
+#include "../hpp_files/PLayer.hpp"
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <SDL2/SDL_image.h>
+
+// This file is a class that creates a grid
+// The grid can be created with a width, a height and a matrix
+// The grid can be displayed with the matrix
+// The grid can be rendered with a renderer, textures, a wave, a player, an enemy texture and a tower texture
 
 Grid::Grid(int width, int height, const std::vector<std::vector<int>>& matrix)
     : width(width), height(height) {
@@ -34,10 +40,10 @@ std::vector<std::vector<int>> Grid::readMatrixFromFile(const std::string& filena
     while (std::getline(file, line)) {
         std::vector<int> row;
         std::stringstream ss(line);
-        char ch;
-        while (ss >> ch) {
-            if (isdigit(ch)) {
-                row.push_back(ch - '0');
+        std::string value;
+        while (std::getline(ss, value, ',')) { // split by comma
+            if (!value.empty() && std::all_of(value.begin(), value.end(), ::isdigit)) {
+                row.push_back(std::stoi(value));
             }
         }
         if (!row.empty()) {
@@ -63,9 +69,9 @@ void Grid::displayMatrix() const {
     }
 }
 
-void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Enemy& enemy, SDL_Texture* enemyTexture) {
-    const int cellWidth = 20;
-    const int cellHeight = 20;
+void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& textures, Wave& wave, Player& player, const std::vector<SDL_Texture*>& enemyTextures, SDL_Texture* towerTexture) {
+    const int cellWidth = 40;
+    const int cellHeight = 40;
     const int maxWidth = 1000;
     const int maxHeight = 720;
     const int maxColumns = maxWidth / cellWidth;
@@ -88,12 +94,26 @@ void Grid::renderGrid(SDL_Renderer* renderer, const std::vector<SDL_Texture*>& t
         }
     }
 
-    // Render enemy
-    SDL_Rect enemyRect = { enemy.posX * cellWidth, enemy.posY * cellHeight, cellWidth, cellHeight };
-    SDL_RenderCopy(renderer, enemyTexture, nullptr, &enemyRect);
+    // Render all enemies in the wave with their respective textures
+    for (const auto& enemy : wave.getEnemies()) {
+        int textureIndex = enemy->getTextureIndex(); // Get the texture index assigned to this enemy
+        SDL_Rect enemyRect = { enemy->posX * cellWidth, enemy->posY * cellHeight, cellWidth, cellHeight };
+        SDL_RenderCopy(renderer, enemyTextures[textureIndex], nullptr, &enemyRect);
+    }
+
+    // Render all towers
+    for (const auto& tower : player.getTowers()) {
+        int towerWidth = cellWidth * 1.5; // 1.5 times the width of the cell
+        int towerHeight = cellHeight * 1.5; // 1.5 times the height of the cell
+        int towerPosX = tower->posX * cellWidth - (towerWidth - cellWidth) / 2; // Adjust position to center the tower
+        int towerPosY = tower->posY * cellHeight - (towerHeight - (cellHeight - 50)) / 2; // Adjust position to center the tower
+        SDL_Rect towerRect = { towerPosX, towerPosY, towerWidth, towerHeight };
+        SDL_RenderCopy(renderer, towerTexture, nullptr, &towerRect);
+    }
 
     SDL_RenderSetViewport(renderer, nullptr);
 }
+
 
 int Grid::getWidth() const {
     return width;
@@ -103,20 +123,37 @@ int Grid::getHeight() const {
     return height;
 }
 
+bool Grid::isCellEmpty(int x, int y) {
+    if (cells[y][x].typeCell == 1) {
+        std::cout << "Cellule non occupée" << std::endl;
+    return cells[y][x].occupied == false;
+    }
+    return false;
+}
+
+bool Grid::setCellTexture(int x, int y, SDL_Texture* towerTexture) {
+    if (cells[y][x].occupied == false) {
+        cells[y][x].occupied = true;
+        return true;
+    }
+    SDL_Texture *texture = towerTexture;
+    if (texture == nullptr) {
+        std::cerr << "Erreur lors de la lecture de la texture." << std::endl;
+        return false;
+    }
+    return false;
+}
+
 Cell* Grid::getCellAt(int row, int col) {
     return &cells[row][col];
 }
 
-// std::vector<Cell*> Grid::exitCell() {
-//     std::vector<Cell*> cellsMarkedOne;
-//     for (int i = 0; i < getHeight(); ++i) {
-//         for (int j = 0; j < getWidth(); ++j) {
-//             if (cells[i][j].typeCell == 1) {
-//                 cellsMarkedOne.push_back(&cells[i][j]);
-//             }
-//         }
-//     }
-//     return cellsMarkedOne;
-// }
-
+void Grid::reset(const std::vector<std::vector<int>>& matrix) {
+    std::cout << "Resetting grid..." << std::endl;
+    this->width = matrix[0].size();
+    this->height = matrix.size();
+    this->cells.clear();
+    initializeGrid(matrix);
+    std::cout << "Grid reset complete." << std::endl;
+}
 

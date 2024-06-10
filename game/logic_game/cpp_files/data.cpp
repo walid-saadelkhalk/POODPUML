@@ -1,8 +1,11 @@
 #include "nlohmann/json.hpp"
-#include "./logic_game/hpp_files/player.hpp"
+#include "./logic_game/hpp_files/Player.hpp"
 #include <fstream>
 #include <iostream>
 
+// This file permits to save the scores of the players in a JSON file
+// The JSON file is created if it does not exist
+// The JSON file is updated with the new scores of the players
 
 
 void json(const Player& player, int nb_death, int nb_wave, int time) {
@@ -34,12 +37,5 @@ void json(const Player& player, int nb_death, int nb_wave, int time) {
 
     std::cout << joueur["nom"] << " a terminé la partie avec " << joueur["death"] << " morts et " << joueur["wave"] << " vagues. En " << joueur["time"] << " secondes." << std::endl;
 
-    // return 0;
 }
 
-// nlohmann::json playerToJson(Player& player) {
-//     nlohmann::json j;
-//     j["name"] = player.getName(); // Assuming Player has a getName() method
-//     // Add other Player attributes to the JSON object as needed
-//     return j;
-// }

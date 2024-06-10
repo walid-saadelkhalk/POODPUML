@@ -4,6 +4,10 @@
 
 using namespace std;
 
+//his file is a class that creates a button with a text on it
+//The button can be clicked and the text can be displayed
+//The button can be created with a renderer, a position, a size, a text and a size of the text
+
 
 Button::Button(SDL_Renderer *renderer, int x, int y, int w, int h, const std::string &text, int size) : clicked(false){
     this->renderer = renderer;
@@ -43,13 +47,6 @@ Button::~Button() {
 
 void Button::draw() {
     SDL_RenderCopy(renderer, texture, nullptr, &rect);
-    // if (clicked) {
-    //     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    // } else {
-    //     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    // }
-
-    // SDL_RenderDrawRect(renderer, &rect);
 }
 
 void Button::click() {
@@ -67,9 +64,3 @@ bool Button::isClickedAtPosition(int x, int y) {
     return x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h;
 }
 
-// void Button::highlight() {
-
-//     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); 
-
-//     SDL_RenderDrawRect(renderer, &rect);
-// }

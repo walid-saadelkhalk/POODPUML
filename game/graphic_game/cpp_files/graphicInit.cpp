@@ -2,6 +2,12 @@
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
 
+
+// Method to initialize the graphic library
+// This method initializes SDL and SDL_ttf
+// Returns true if the initialization was successful, false otherwise
+
+
 bool initGraphic() {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;

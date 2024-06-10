@@ -4,6 +4,10 @@
 #include <SDL2/SDL.h>
 #include <string>
 
+// Class to create a button with a text on it
+// The button can be clicked and the text can be displayed
+// The button can be created with a renderer, a position, a size, a text and a size of the text
+
 class Button {
     bool clicked;
 private:
@@ -21,7 +25,6 @@ public:
     void resetClick();
     bool isClicked() const { return clicked; }
     bool isClickedAtPosition(int x, int y);
-    // void highlight();
 };
 
 #endif

@@ -1,23 +1,27 @@
 #include "./logic_game/hpp_files/timer.hpp"
 #include <iostream>
 
+//This file is a function that displays the timer
+//The timer is displayed with the world and the elapsed time
+//The timer is displayed with the font, the color, the text, the surface, the texture and the destination rectangle
+
 void renderTimer(World& world, Uint32 elapsedTime) {
     if (TTF_WasInit() == 0) {
         TTF_Init();
     }
 
-    TTF_Font* font = TTF_OpenFont("assets/font/MorrisRoman-Black.TTF", 54);
+    TTF_Font* font = TTF_OpenFont("assets/font/MorrisRoman-Black.TTF", 40);
     if (!font) {
         std::cerr << "Erreur de chargement de la police : " << TTF_GetError() << std::endl;
         return;
     }
 
     SDL_Color color = {255, 199, 118};
-    std::string timeText = "Temps : " + std::to_string(elapsedTime) + "s";
+    std::string timeText = "Time : " + std::to_string(elapsedTime) + "s";
     SDL_Surface* surface = TTF_RenderText_Solid(font, timeText.c_str(), color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(world.getRenderer(), surface);
 
-    SDL_Rect dstRect = {1200, 650, surface->w, surface->h};
+    SDL_Rect dstRect = {1040, 250, surface->w, surface->h};
 
     SDL_RenderCopy(world.getRenderer(), texture, NULL, &dstRect);
 

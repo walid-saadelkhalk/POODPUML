@@ -2,44 +2,48 @@
 #include "./game.hpp"
 #include "graphic_game/hpp_files/pages.hpp"
 #include "logic_game/hpp_files/timer.hpp"
+#include "logic_game/hpp_files/Wave.hpp"
+#include "logic_game/hpp_files/InputBox.hpp"
+
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
-// The main loop of the game
-// It will handle the events and render the game based on the current state
-// The main loop will call different functions to render the different pages of the game
-
-void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid& grid, Enemy& enemy) {
+void mainLoop(World& world, std::vector<Button*>& buttons, std::unique_ptr<Player>& player, Grid& grid) {
     std::cout << "Game loop started!" << std::endl;
 
+    int waveNumber = 1;
+    int enemiesPerWave = 10;
+    int enemiesKilled = 0;
+    int enemiesAtExit = 0;
+    Wave wave(enemiesPerWave, grid.cells);
+
     bool stateChanged = true;
-    bool levelSelected = false; 
-    const int FPS = 60;
-    const int frameDelay = 1000 / FPS;
+    bool levelSelected = false;
+    const int FPS = 20;
+    const int frameDelay = 20000 / FPS;
 
     Uint32 frameStart;
     int frameTime;
     SDL_Event event;
     bool gameisrunning = true;
 
-    std::vector<SDL_Texture*> gifFrames = world.loadGifFrames("assets/images/intro", 40); 
+    std::vector<SDL_Texture*> gifFrames = world.loadGifFrames("assets/images/intro", 40);
 
     int currentFrame = 0;
     Uint32 lastFrameTime = 0;
-    const Uint32 frameInterval = 45; 
+    const Uint32 frameInterval = 45;
 
-    Uint32 lastMoveTime = 0;
-    const Uint32 moveInterval = 500;  // Intervalle de 500 ms entre chaque mouvement de l'ennemi    Uint32 startTime = SDL_GetTicks();
     Uint32 startTime = 0;
     Uint32 currentTime = 0;
     Uint32 elapsedTime = 0;
     bool resetTimer = true;
 
-
+    InputBox inputBox(400, 300, 200, 50, world.getRenderer());
 
     while (gameisrunning) {
-
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_QUIT:
@@ -54,14 +58,17 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                         if (world.getCurrentState() == State::Intro) {
                             if (buttons[0]->isClickedAtPosition(x, y)) {
                                 buttons[0]->click();
-                                world.switchState(State::Menu);
+                                world.switchState(State::EnterName);
                                 stateChanged = true;
                             }
+                        } else if (world.getCurrentState() == State::EnterName) {
                         } else if (world.getCurrentState() == State::Menu) {
                             if (buttons[2]->isClickedAtPosition(x, y)) {
                                 buttons[2]->click();
                                 world.switchState(State::Game);
                                 resetTimer = true;
+                                startTime = SDL_GetTicks();
+                                std::cout << "Starting game..." << std::endl;
                             } else if (buttons[3]->isClickedAtPosition(x, y)) {
                                 buttons[3]->click();
                                 world.switchState(State::Settings);
@@ -96,39 +103,65 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                             if (buttons[1]->isClickedAtPosition(x, y)) {
                                 buttons[1]->click();
                                 world.switchState(State::Menu);
-                                elapsedTime = (SDL_GetTicks() - startTime) / 1000;   
-                            } else if (buttons[11]->isClickedAtPosition(x, y)) {
-                                buttons[11]->click();
-                                endGame(player, grid, elapsedTime);
-                                std::cout << "LOSE" << std::endl;
+                                elapsedTime = (SDL_GetTicks() - startTime) / 1000;
+                            } else {
+                                int cellWidth = 40;
+                                int cellHeight = 40;
+
+                                int xCell = x / cellWidth;
+                                int yCell = y / cellHeight;
+                                if (grid.isCellEmpty(xCell, yCell)) {
+                                    player->addTower(xCell, yCell, world.getRenderer(), grid);
+                                }
                             }
                         }
                     }
                     break;
 
                 case SDL_KEYDOWN:
-                    if (event.key.keysym.sym == SDLK_RETURN) {
-                        State newState;
-                        switch (world.getCurrentState()) {
-                            case State::Intro:
-                                newState = State::Menu;
-                                break;
-                            case State::Menu:
-                                newState = State::Settings;
-                                break;
-                            case State::Settings:
-                                newState = State::Game;
-                                resetTimer = true;
-                                break;
-                            case State::Game:
-                                newState = State::Score;
-                                break;
-                            default:
-                                newState = State::Intro;
-                                break;
+                    if (world.getCurrentState() == State::EnterName) {
+                        if (event.key.keysym.sym == SDLK_RETURN) {
+                            player->setName(inputBox.getText());
+                            world.switchState(State::Menu);
+                            stateChanged = true;
                         }
-                        world.switchState(newState);
-                        stateChanged = true;
+                    } else {
+                        if (event.key.keysym.sym == SDLK_RETURN) {
+                            State newState;
+                            switch (world.getCurrentState()) {
+                                case State::Intro:
+                                    newState = State::EnterName;
+                                    break;
+                                case State::Menu:
+                                    newState = State::Settings;
+                                    break;
+                                case State::Settings:
+                                    newState = State::Game;
+                                    resetTimer = true;
+                                    startTime = SDL_GetTicks();
+                                    break;
+                                case State::Game:
+                                    newState = State::Score;
+                                    break;
+                                default:
+                                    newState = State::Intro;
+                                    break;
+                            }
+                            world.switchState(newState);
+                            stateChanged = true;
+                        }
+                    }
+                    break;
+
+                case SDL_TEXTINPUT:
+                    if (world.getCurrentState() == State::EnterName) {
+                        inputBox.handleEvent(&event);
+                    }
+                    break;
+
+                case SDL_KEYUP:
+                    if (world.getCurrentState() == State::EnterName && event.key.keysym.sym == SDLK_BACKSPACE) {
+                        inputBox.handleEvent(&event);
                     }
                     break;
             }
@@ -140,27 +173,42 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 startTime = SDL_GetTicks();
                 resetTimer = false;
             }
-            elapsedTime = (currentTime - startTime) / 1000; // Temps écoulé en secondes
+            elapsedTime = (currentTime - startTime) / 1000;
         }
 
-        // SDL_SetRenderDrawColor(world.getRenderer(), 0, 0, 0, 255);
         SDL_RenderClear(world.getRenderer());
 
-        Uint32 currentTime = SDL_GetTicks();
+        currentTime = SDL_GetTicks();
         if (currentTime - lastFrameTime > frameInterval && currentFrame < gifFrames.size() - 1) {
             currentFrame++;
             lastFrameTime = currentTime;
         }
 
-        // Déplacer l'ennemi à intervalles réguliers
-        if (currentTime - lastMoveTime > moveInterval) {
-            enemy.move();
-            lastMoveTime = currentTime;
+        if (world.getCurrentState() == State::Game) {
+            wave.update(currentTime, enemiesAtExit);
+            if (wave.getEnemies().empty() && elapsedTime > 0) {
+                waveNumber++;
+                enemiesPerWave += 5;
+                wave = Wave(enemiesPerWave, grid.cells);
+                player->incrementTowers();
+                resetTimer = true;
+            }
+
+            for (auto& tower : player->getTowers()) {  
+                tower->update(wave);
+                    }
+
         }
 
         switch (world.getCurrentState()) {
             case State::Intro:
                 introPage(world, buttons, gifFrames, currentFrame);
+                break;
+            case State::EnterName:
+                world.drawText("ENTER YOUR NAME", 370, 150, 80);
+                world.drawText("&", 700, 300, 80);
+                world.drawText("PRESS ENTER:", 440, 450, 80);
+                inputBox.render();
                 break;
             case State::Menu:
                 menuPage(world, buttons);
@@ -170,18 +218,36 @@ void mainLoop(World& world, std::vector<Button*>& buttons, Player& player, Grid&
                 settingsPage(world, buttons);
                 break;
             case State::Score:
-                scorePage(world, buttons);
+                scorePage(world, buttons, player);
                 break;
             case State::Game:
                 frameStart = SDL_GetTicks();
-                gamePage(world, buttons);
-                renderMatrix(world, grid, enemy);
-                enemy.setPath(grid.cells);
+                gamePage(world, buttons, waveNumber, player, *player);
+                renderMatrix(world, grid, wave, *player);
                 renderTimer(world, elapsedTime);
+                for (auto& tower : player->getTowers()) {
+                    tower->renderLaser(world.getRenderer()); 
+                }
+                if (wave.update(currentTime, enemiesAtExit)) {
+                    int gameTime = elapsedTime;
+                    std::cout << "End of game. Player: " << player->getName() << ", Time: " << gameTime << "s, Waves: " << waveNumber << std::endl;
+                    endGame(*player, grid, gameTime, false, waveNumber);
+                    world.switchState(State::Menu);
+                    resetGame(world, player, grid, wave);
+                    waveNumber = 1; 
+                    enemiesPerWave = 10;
+                    enemiesKilled = 0;
+                    enemiesAtExit = 0;
+                    std::cout << "Game reset complete. Returning to menu." << std::endl; 
+                }
                 break;
             default:
                 std::cerr << "État invalide !" << std::endl;
                 break;
+        }
+
+        if (world.getCurrentState() == State::Game) {
+
         }
 
         SDL_RenderPresent(world.getRenderer());
